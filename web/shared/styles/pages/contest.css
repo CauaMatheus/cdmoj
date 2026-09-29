@@ -66,7 +66,10 @@
 .prob-cols.only-editor .prob-statement-col { display:none; }
 .prob-viewmode { display:flex; gap:.3rem; flex-wrap:wrap; margin:.5rem 0; }
 .prob-viewmode .btn { padding:.3rem .7rem; font-size:.85rem; }
-.prob-viewmode .btn.active { background:var(--color-primary); color:var(--color-text-inverse); }
+.prob-viewmode .btn.active { background:var(--color-primary-fill); color:var(--color-text-inverse); }
 .subfilter { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:.6rem; }
 .subfilter .tag { cursor:pointer; }
-.subfilter .tag.active { background:var(--color-primary); color:var(--color-text-inverse); }
+.subfilter .tag.active { background:var(--color-primary-fill); color:var(--color-text-inverse); }
+/* tema escuro: o TOM CLARO do balão (--bln-tint, calculado no JS) vira a cor do balão misturada à
+   superfície escura — o texto claro do escuro ficaria ilegível sobre o tom claro. */
+:root[data-theme="dark"] .prob-item.accepted { background:color-mix(in srgb, var(--bln,var(--contest-prob-item-accepted-bg)) 18%, var(--color-surface)); }

@@ -11,6 +11,7 @@
 import { el } from '/shared/ui.js';
 import { T, getLang } from '/shared/i18n.js';
 import { mkLangToggle } from '/shared/lang-toggle.js';
+import { mkThemeToggle } from '/shared/theme.js';
 
 const NAV = [
   { key: 'home',     href: '/',          pt: 'Início',       en: 'Home',          es: 'Inicio' },
@@ -68,7 +69,7 @@ export function mountSiteHeader(opts = {}) {
   bar.append(nav);
 
   // seletor de idioma, entre o nav e a área de auth
-  bar.append(mkLangToggle());
+  bar.append(mkLangToggle(), mkThemeToggle());
 
   // placeholder: a página preenche (chip do usuário / login), como hoje
   bar.append(el('span', { id: 'authArea', class: 'row', style: 'margin-left:.5rem' }));

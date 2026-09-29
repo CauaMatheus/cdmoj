@@ -1,7 +1,7 @@
 /* styles/components/topbar.css — barra do topo, seletor de idioma, menu do usuário, quicknav
    Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
 /* topbar */
-.topbar { background:linear-gradient(105deg,var(--color-primary-deep) 0%,var(--color-primary-strong) 45%,var(--color-primary) 100%);
+.topbar { background:linear-gradient(105deg,var(--color-primary-deep) 0%,var(--color-primary-fill-strong) 45%,var(--color-primary-fill) 100%);
   color:var(--color-text-inverse); box-shadow:0 2px 16px rgba(var(--rgb-shadow),.18); position:sticky; top:0; z-index:50; }
 .topbar .bar { max-width:var(--page-max); margin:0 auto; padding:.7rem 1.2rem; display:flex;
   align-items:center; gap:var(--space-4); flex-wrap:wrap; }
@@ -13,7 +13,7 @@
 .topbar .spacer { flex:1; }
 .topbar a { color:var(--topbar-link); opacity:.92; font-weight:500; } .topbar a:hover { opacity:1; color:var(--color-text-inverse); }
 .topbar .navlinks a.active { opacity:1; color:var(--color-text-inverse); font-weight:700; text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:2px; }
-.badge-beta { background:var(--color-accent); color:var(--color-text-inverse); font-size:.62rem; padding:.12rem .42rem;
+.badge-beta { background:var(--color-accent-fill); color:var(--color-text-inverse); font-size:.62rem; padding:.12rem .42rem;
   border-radius:var(--radius-pill); font-weight:800; letter-spacing:.06em; vertical-align:middle;
   box-shadow:0 1px 6px rgba(var(--rgb-accent),.5); }
 .navlinks { display:flex; gap:1.1rem; flex-wrap:wrap; align-items:center; font-size:var(--text-md); }
@@ -55,3 +55,7 @@
    no <style> de 20 e 18 páginas de contest (três páginas tinham esquecido a cópia) */
 .contest-topbar-title { font-weight:800; font-size:1.25rem; }
 .quicknav a.active { text-decoration:underline; }
+/* seletor claro/escuro (shared/theme.js): mesma discrição do seletor de idioma */
+.theme-toggle { background:none; border:0; cursor:pointer; color:var(--topbar-link); opacity:.7; font-size:1rem;
+  line-height:1; padding:.15rem .35rem; border-radius:6px; transition:opacity .12s, background .12s; }
+.theme-toggle:hover, .theme-toggle:focus-visible { opacity:1; background:rgba(var(--rgb-white),.1); }

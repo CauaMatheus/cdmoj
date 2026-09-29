@@ -15,7 +15,7 @@
 .stmt-chip { border:1px solid var(--color-primary-strong); background:var(--color-surface); color:var(--color-primary-strong); font-weight:700;
   font-size:.74rem; letter-spacing:.03em; padding:.08rem .55rem; border-radius:var(--radius-pill); cursor:pointer; line-height:1.5; }
 .stmt-chip:hover { background:var(--color-primary-soft); }
-.stmt-chip.active { background:var(--color-primary-strong); color:var(--color-text-inverse); cursor:default; }
+.stmt-chip.active { background:var(--color-primary-fill-strong); color:var(--color-text-inverse); cursor:default; }
 .stmt-chip.add { border-style:dashed; font-weight:600; }
 .stmt-badge { display:inline-block; margin-left:.4rem; font-size:.68rem; font-weight:700; letter-spacing:.04em;
   color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:4px; padding:0 .3rem; vertical-align:middle; }

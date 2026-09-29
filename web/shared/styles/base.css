@@ -10,3 +10,6 @@ body { margin:0; color:var(--color-text); line-height:1.6; font-size:16px;
 a { color:var(--color-primary); text-decoration:none; } a:hover { color:var(--color-primary-strong); text-decoration:underline; }
 h1,h2,h3 { line-height:1.25; letter-spacing:-.01em; }
 .container { max-width:var(--page-max); margin:0 auto; padding:1.4rem 1.2rem 3rem; }
+/* tema escuro: o fundo além do <body> (página curta) acompanha a página — o padrão do navegador
+   com color-scheme:dark é um cinza que destoa. No claro nada muda (o canvas branco de sempre). */
+:root[data-theme="dark"] { background-color:var(--color-page); }

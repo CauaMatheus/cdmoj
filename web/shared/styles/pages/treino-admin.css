@@ -3,7 +3,7 @@
    O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
 /* ---- abas ---- */
 .tabs { display:flex; gap:.5rem; flex-wrap:wrap; margin:1.2rem 0 .2rem; }
-.tabs .btn.ghost.active { background:linear-gradient(180deg,var(--color-primary),var(--color-primary-strong)); color:var(--color-text-inverse);
+.tabs .btn.ghost.active { background:linear-gradient(180deg,var(--color-primary-fill),var(--color-primary-fill-strong)); color:var(--color-text-inverse);
   border-color:transparent; box-shadow:0 2px 8px rgba(var(--rgb-primary),.28); }
 .tab-panel[hidden] { display:none; }
 /* ---- cartões de métricas (reusa o visual de stat) ---- */
@@ -26,7 +26,7 @@ td.ip a { color:var(--color-primary-strong); border-bottom:1px dotted; }
 .cell-user .lg { font-family:var(--font-mono); font-size:.82rem; color:var(--color-text-muted); }
 .row-actions { display:flex; gap:.4rem; flex-wrap:wrap; }
 .row-actions .btn { padding:.3rem .7rem; font-size:.82rem; }
-.btn.danger { background:linear-gradient(180deg,var(--treino-admin-btn-danger-bg),var(--color-danger)); box-shadow:0 2px 8px rgba(var(--rgb-danger),.28); }
+.btn.danger { background:linear-gradient(180deg,var(--treino-admin-btn-danger-bg),var(--color-danger-fill)); box-shadow:0 2px 8px rgba(var(--rgb-danger),.28); }
 .btn.danger:hover { box-shadow:0 4px 14px rgba(var(--rgb-danger),.36); }
 .access-restricted { text-align:center; font-size:1.2rem; color:var(--color-text-muted); padding:2.4rem 1rem; }
 .judge-dot { font-weight:800; }

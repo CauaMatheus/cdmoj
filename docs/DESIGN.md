@@ -135,6 +135,32 @@ números ficam em `server/test/css-ratchet.baseline`. Se algum subir, o teste re
 ele avisa, e `bash server/test/css-ratchet.sh --update` trava o novo patamar (o `--update` só
 aceita descer).
 
+## Tema escuro (opt-in)
+
+O padrão é o **claro**. O escuro vale só para quem clica no **☾** da barra (no cabeçalho do site,
+ao lado do idioma, e no chip de usuário das páginas de contest). A escolha fica salva no navegador
+(`localStorage` `moj_theme`).
+
+- **Como funciona:** `<html data-theme="dark">` redefine os tokens no fim do `tokens.css`
+  (bloco "TEMA ESCURO"). Nenhum componente conhece o tema: ele só lê tokens. Quem troca é o
+  `shared/theme.js` (sem recarregar); o `shared/theme-boot.js`, um script clássico síncrono no
+  `<head>`, aplica a escolha **antes da primeira pintura**, para a página não piscar clara.
+- **Semânticos à mão; o resto derivado.** Os tokens `--color-*` do escuro foram escolhidos à mão.
+  Os de componente, página e JS são **derivados** em OKLCH pelo papel do nome: `-bg` vira
+  superfície escura com a mesma matiz, `-text` vira texto claro, `-border` vira borda média, e o
+  que já era de tema escuro (os chips do editor) fica como está. O contraste de 149 pares texto ×
+  fundo foi conferido: todos ≥ 4,5:1 (WCAG AA).
+- **Papel duplo:** a mesma cor de marca não serve para texto e para fundo sob texto branco. Por
+  isso existem os `--color-*-fill` (fundo de botão, topbar, hero, chip ativo). No claro eles têm o
+  mesmo valor do texto de marca; no escuro o texto clareia e o preenchimento continua saturado.
+  **Fundo sob texto branco usa `-fill`.**
+- **O que fica claro de propósito:** a impressão (o bloco é `@media screen`), o relatório offline
+  (força `color-scheme: light`), os roteiros de ensaio (documentos), as paletas de dados (balões,
+  gráficos) e o conteúdo dos enunciados.
+- **Cor que vem de dado** e é aplicada como tom claro precisa de regra própria no escuro. Exemplo:
+  o problema resolvido na tela do contest mistura a cor do balão à superfície escura
+  (`pages/contest.css`).
+
 ## Diff visual (`server/test/visual/css-visual-diff.sh`)
 
 A prova de que uma refatoração de estilo "não mudou nada", ou a lista exata do que mudou. Ele
@@ -234,4 +260,4 @@ Conclusões:
 3. **Páginas**: migrar os 41 blocos `<style>` para `domains/`, dos maiores para os menores
    (`problemas/editar.html`, `treino/index.html`, `contest/index.html`…).
 4. **JS**: trocar `style:`/`.style.x =` de aparência por classes, começando pelas abas do admin.
-5. **Tema escuro** (opcional), redefinindo os semânticos.
+5. **Tema escuro** (feito, opt-in): semânticos à mão, o resto derivado, contraste conferido.

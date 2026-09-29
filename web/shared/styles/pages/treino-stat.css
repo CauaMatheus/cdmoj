@@ -24,7 +24,7 @@
 svg.chart { max-width:100%; height:auto; display:block; margin:auto; }
 /* barra de progresso (coleções) */
 .pbar { height:8px; background:var(--color-primary-soft); border-radius:999px; overflow:hidden; }
-.pbar > i { display:block; height:100%; background:linear-gradient(90deg,var(--color-primary),var(--color-primary-strong)); border-radius:999px; }
+.pbar > i { display:block; height:100%; background:linear-gradient(90deg,var(--color-primary-fill),var(--color-primary-fill-strong)); border-radius:999px; }
 .pbar.done > i { background:linear-gradient(90deg,var(--treino-stat-pbar-done-i-bg),var(--color-success)); }
 /* conquistas */
 .badge-strip { display:flex; gap:.5rem; flex-wrap:wrap; }

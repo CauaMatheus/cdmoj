@@ -1,5 +1,6 @@
 // shared/contest-shell.js — topbar + nav + auth comuns às telas internas do contest.
 // As novas telas (log, tarefas, clarification, jplag) chamam initContestShell(contest).
+import { mkThemeToggle } from '/shared/theme.js';
 import { apiGet } from '/shared/api.js';
 import { status, logout } from '/shared/auth.js';
 import { el, avatarEl } from '/shared/ui.js';
@@ -21,6 +22,8 @@ export function mountContestUserChip(st) {
       avatarEl(st.login, st.name, 22, st.has_photo), el('span', {}, st.name || st.login),
       (st.name && st.name !== st.login) ? el('span', { class: 'muted', style: 'margin-left:.3rem' }, st.login) : null),
     anchor);
+  // claro/escuro (opt-in, shared/theme.js) ao lado de quem está logado — toda página de contest monta este chip
+  if (!document.querySelector('.topbar .theme-toggle')) anchor.parentNode.insertBefore(mkThemeToggle(), anchor);
 }
 
 // resolve o url do botão de nav -> caminho absoluto com ?c=. Botões já vêm em

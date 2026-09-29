@@ -77,6 +77,10 @@
   --color-primary-soft:var(--blue-100);        /* fundo de destaque suave */
   --color-primary-deep:var(--blue-900);        /* início do degradê da marca */
   --color-accent:var(--violet-500);
+  /* PREENCHIMENTO de marca (fundo de botão, topbar, hero, chip ativo — sob texto BRANCO). No claro é o
+     mesmo valor do texto de marca; no escuro o TEXTO clareia e o preenchimento fica saturado. */
+  --color-primary-fill:var(--blue-600); --color-primary-fill-strong:var(--blue-700);
+  --color-accent-fill:var(--violet-500); --color-danger-fill:var(--red-700);
   --color-focus-ring:rgba(43,108,176,.16);
 
   --color-success:var(--green-700); --color-success-bg:var(--green-100);
@@ -285,4 +289,159 @@
      num site claro — barra fixa do editor quase preta, texto cinza-claro sobre branco. */
   --border:var(--color-border-strong); --fg:var(--color-text); --bg:var(--color-page);
   --bg-soft:var(--color-surface-sunken); --card-bg:var(--color-surface-muted);
+}
+
+/* ---------- TEMA ESCURO (OPT-IN) ----------
+   Só vale com <html data-theme="dark">, que o seletor da barra liga (shared/theme.js) e o
+   shared/theme-boot.js aplica antes da 1ª pintura. Fora de @media screen de propósito: a
+   IMPRESSÃO sai sempre no tema claro. Semânticos escolhidos à mão; os tokens de componente,
+   página e JS são DERIVADOS em OKLCH pelo papel do nome (-bg → superfície escura com a mesma
+   matiz, -text → texto claro, -border → borda média) — gerado, ajuste à mão se precisar.
+   Contraste conferido: texto sobre superfície ≥ 4,5:1 (WCAG AA). */
+@media screen {
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --color-text:#e6edf3;
+    --color-text-muted:#9aa7b8;
+    --color-text-subtle:#7d8a9a;
+    --color-text-inverse:#ffffff;
+    --color-page:#0d1117;
+    --color-surface:#161b22;
+    --color-surface-alt:#1a212b;
+    --color-surface-sunken:#10151c;
+    --color-surface-muted:#1a212b;
+    --color-primary-faint:#1b2635;
+    --color-pending-bg:#222a35;
+    --color-border:#2a3441;
+    --color-border-strong:#3b4758;
+    --color-border-control:#3b4758;
+    --color-neutral:#4b5563;
+    --color-primary:#58a6ff;
+    --color-primary-strong:#8cc4ff;
+    --color-primary-soft:#1f3350;
+    --color-primary-deep:#102a4d;
+    --color-accent:#a79bff;
+    --color-success:#3fb950;
+    --color-success-bg:#11301c;
+    --color-danger:#ff7b72;
+    --color-danger-bg:#3b1519;
+    --color-warning:#e3b341;
+    --color-warning-bg:#3a2d0c;
+    --color-code-bg:#0b0f14;
+    --color-code-text:#e2e8f0;
+    --color-focus-ring:rgba(88,166,255,.35);
+    --rgb-shadow:0,0,0;
+    --rgb-primary:88,166,255;
+    --elev-1:0 1px 3px rgba(0,0,0,.45);
+    --elev-2:0 1px 2px rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.4);
+    --elev-3:0 2px 4px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+    /* derivados (componentes, páginas, JS) */
+    --table-head-bg:#171a1d; --tag-hover-bg:#172230; --collection-bg:#1e1b28;
+    --collection-hover-bg:#241e36; --collection-text:#b0b7ff; --badge-upcoming-bg:#1e1c2a;
+    --notice-border:#61521a; --alert-bg:#1e1909; --alert-border:#64520c; --alert-text:#daba6f;
+    --btn-danger-top:#6d4048; --dash-card-border:#4f545d; --dash-card-warn-bg:#1d1811;
+    --dash-card-warn-border:#794d1a; --dash-card-warn-val:#fea194; --sample-copy-ok:#85d485;
+    --news-pre-bg:#18191b; --tutorial-warn:#503912; --medal-gold-bg:#272003; --medal-gold-text:#f0ae6e;
+    --medal-silver-bg:#1d1f24; --medal-silver-text:#b0c1d8; --medal-bronze-bg:#341d02;
+    --medal-bronze-text:#fea575; --week-rank-bg:#221a05; --score-row-hover:#161a1f;
+    --score-try-bg:#231b03; --bdot-default:#2c2c2c; --bdot-edge-default:#666666; --qual-bg:#151b16;
+    --qual-accent:#297a3f; --qual-chip-border:#327f43; --qual-sub:#81d493; --qual-draft-bg:#1d190c;
+    --qual-draft-accent:#755c07; --qual-draft-text:#d0be79; --qual-draft-chip-bg:#271f02;
+    --qual-draft-sub:#d4bd6d; --virtual-pill-text:#9dbffa; --virtual-pill-text-dark:#9cc0ff;
+    --contest-admin-td-ua-text:#b0c1d8; --contest-admin-flag-anom-text:#fea194;
+    --contest-admin-flag-warn-text:#f6ac57; --contest-admin-pill-warn-bg:#221a05;
+    --contest-admin-pill-warn-text:#daba6f; --contest-admin-pill-warn-border:#64520c;
+    --contest-admin-tr-flag-row-bad-td-bg:#1d1717; --contest-admin-v-ok-text:#7bd49f;
+    --contest-admin-spark-row-peak-bg:#201817; --contest-admin-spark-bar-bg:#51658a;
+    --contest-admin-spark-bar-bg-2:#83554e; --contest-admin-tr-audit-login-td-text:#b0c1d8;
+    --contest-admin-tr-audit-admin-td-bg:#17191c; --contest-admin-lang-chip-border:#4d5259;
+    --contest-admin-acc-item-border:#4f545d; --contest-admin-acc-head-bg:#16191d;
+    --contest-admin-ck-border:#4d5054; --contest-admin-gen-card-border:#4f545d;
+    --contest-badges-sheet-text:#e4e4e4; --contest-badges-univ-text:#e4e4e4;
+    --contest-badges-cred-shared-text:#e4e4e4; --contest-badges-tag-text:#e4e4e4;
+    --contest-badges-foot-text:#d2d2d2; --contest-badges-lbl-border:#5c5c5c;
+    --contest-chief-tabbar-border:#4d5259; --contest-chief-tabbar-button-border:#4f545d;
+    --contest-chief-button-active-bg:#51658a; --contest-chief-button-active-border:#496fb6;
+    --contest-clarification-clar-border:#4d5259; --contest-clarification-clar-answered-border:#336044;
+    --contest-clarification-clar-notice-border:#64520c; --contest-clarification-clar-notice-bg:#181712;
+    --contest-clarification-ans-bg:#171b18; --contest-clarification-asker-text:#9dbef9;
+    --contest-clarification-clar-sec-border:#4d5259; --contest-jplag-sim-high-text:#fea194;
+    --contest-jplag-jp-bar-bg:#17181a; --contest-log-td-ua-text:#b0c1d8; --contest-log-alert-bg:#1e1909;
+    --contest-log-alert-border:#64520c; --contest-log-alert-text:#daba6f;
+    --contest-log-flag-anom-text:#fea194; --contest-score-reveal-body-bg:#0f172a;
+    --contest-score-reveal-muted-text:#b0bfd5; --contest-score-reveal-flash-up-0-bg:#0e2314;
+    --contest-score-reveal-flash-down-0-bg:#2c1a1d; --contest-score-flash-up-0-bg:#0e2314;
+    --contest-score-flash-down-0-bg:#2c1a1d; --contest-staff-pr-auto-on-border:#057853;
+    --contest-statistics-stat-card-border:#4d5259; --contest-notifypulse-50-bg:#2b2100;
+    --contest-notify-banner-urgent-bg:#2b2100; --contest-prob-item-accepted-border:#116337;
+    --contest-prob-item-accepted-bg:#0a1f11; --contest-prob-row-bg:#16191d;
+    --problemas-editar-box-header-border:#505050; --problemas-editar-box-header-text:#e4e4e4;
+    --problemas-editar-caliblog-text:#e4e4e4; --problemas-editar-td-bad-text:#ff8a8a;
+    --problemas-editar-td-drift-text:#eab308; --problemas-editar-got-text:#e0a64b;
+    --problemas-editar-solsum-ok-border:#448159; --problemas-editar-solsum-todo-border:#876727;
+    --problemas-editar-solsum-bad-border:#b05551; --problemas-editar-dot-bg:#4b330c;
+    --problemas-editar-running-text:#ffd98a; --problemas-editar-spin-border:#6a4f0b;
+    --problemas-editar-collchip-on-bg:#173d23; --problemas-editar-collchip-on-text:#7ee2a0;
+    --problemas-editar-pill-ok-bg:#173d23; --problemas-editar-pill-ok-text:#7ee2a0;
+    --problemas-editar-pill-no-bg:#3d1717; --problemas-editar-pill-no-text:#ffb0b0;
+    --problemas-editar-pill-mut-bg:#22262e; --problemas-editar-pill-mut-text:#9fb0c8;
+    --problemas-editar-pill-warn-bg:#3d3217; --problemas-editar-pill-warn-text:#ffd98a;
+    --problemas-editar-dot-bg-2:#5b6471; --problemas-editar-dot-bg-3:#1b4229;
+    --problemas-editar-dot-bg-4:#6b3f3a; --problemas-editar-gtotal-ok-text:#7ee2a0;
+    --problemas-editar-gtotal-no-text:#ffd98a; --problemas-editar-sb-good-bg:#173d23;
+    --problemas-editar-sb-good-text:#7ee2a0; --problemas-editar-sb-wrong-bg:#3d1717;
+    --problemas-editar-sb-wrong-text:#ffb0b0; --problemas-editar-sb-slow-bg:#3d3417;
+    --problemas-editar-sb-slow-text:#ffd98a; --problemas-editar-sb-pass-bg:#22262e;
+    --problemas-editar-sb-pass-text:#9fb0c8; --problemas-editar-sb-upcoming-bg:#1c2030;
+    --problemas-editar-sb-upcoming-text:#a7bdef; --problemas-editar-sb-scr-bg:#1c2c3d;
+    --problemas-editar-sb-scr-text:#8ec9ff; --problemas-pill-ok-bg:#173d23;
+    --problemas-pill-ok-text:#7ee2a0; --problemas-pill-no-bg:#3d1717; --problemas-pill-no-text:#ffb0b0;
+    --problemas-pill-warn-bg:#3d3417; --problemas-pill-warn-text:#ffe08a;
+    --problemas-pill-mut-bg:#22262e; --problemas-pill-mut-text:#9fb0c8; --problemas-x-text:#ffa09c;
+    --status-banner-ok-bg:#141e17; --status-banner-ok-text:#7ad691; --status-banner-ok-border:#336044;
+    --status-banner-warn-bg:#1e1909; --status-banner-warn-border:#64520c;
+    --status-banner-down-bg:#251919; --status-banner-down-text:#fea194;
+    --status-banner-down-border:#754a48; --status-dot-ok-bg:#345a3f; --status-dot-warn-bg:#4d3910;
+    --status-dot-down-bg:#724540; --status-stat-card-border:#4d5259; --status-ind-ok-text:#7ad691;
+    --status-ind-down-text:#fea194; --status-upd-text:#b0bfd5;
+    --treino-admin-stat-card-hl-border:#475567; --treino-admin-btn-danger-bg:#6d4048;
+    --treino-ajuda-pre-code-bg:#0f172a; --treino-cadastro-btn-bg:#495b7f;
+    --treino-cadastro-tg-bg:#315772; --treino-cadastro-msg-ok-text:#88d39b;
+    --treino-cadastro-msg-err-bg:#2b1a1a; --treino-cadastro-msg-err-text:#fba69c;
+    --treino-cadastro-msg-info-bg:#121e26; --treino-cadastro-msg-info-text:#83c8fa;
+    --treino-criar-prob-row-border:#4d5259; --treino-criar-bank-results-border:#4d5259;
+    --treino-criar-i-text:#b0bfd5; --treino-criar-result-card-bg:#141e17;
+    --treino-criar-result-card-border:#336044; --treino-criar-tabs-button-border:#4f545d;
+    --treino-criar-button-active-bg:#51658a; --treino-criar-button-active-border:#496fb6;
+    --treino-criar-warn-box-bg:#1e1909; --treino-criar-warn-box-border:#64520c;
+    --treino-criar-warn-box-text:#daba6f; --treino-criar-tag-chip-bg:#181d25;
+    --treino-criar-tag-chip-text:#9bbff9; --treino-criar-tag-chip-border:#45566e;
+    --treino-criar-tag-chip-a-text:#9bbff9; --treino-criar-lang-chip-border:#4d5259;
+    --treino-criar-steps-button-border:#4f545d; --treino-criar-button-done-border:#3c694d;
+    --treino-criar-button-done-bg:#161b17; --treino-criar-start-card-border:#4d5259;
+    --treino-stat-stat-card-hl-border:#475567; --treino-stat-pbar-done-i-bg:#30563b;
+    --treino-stat-abadge-bg:#181710; --treino-stat-abadge-border:#5b522c;
+    --treino-stat-abadge-text:#dbb970; --treino-stat-abadge-lock-bg:#18191b;
+    --treino-stat-abadge-lock-text:#a9b4c3; --treino-virtual-vr-clock-low-text:#fea192;
+    --treino-virtual-ok-text:#78d695; --treino-virtual-no-text:#fea192; --treino-bn-purple-bg:#63668e;
+    --treino-bn-green-bg:#274f35; --treino-bn-orange-bg:#472c07; --treino-bn-orange-bg-2:#663f2a;
+    --treino-bn-teal-bg:#084d4a; --treino-bn-teal-bg-2:#2b6969; --treino-bn-pink-bg:#5d3547;
+    --treino-bn-pink-bg-2:#774d61; --treino-bn-slate-bg:#485466; --treino-bn-slate-bg-2:#4a5568;
+    --treino-pbar-done-i-bg:#30563b; --treino-trend-li-bg:#17191d; --treino-sorttabs-a-bg:#171a1d;
+    --treino-input-type-checkbox-accentcolo:#b0b7ff; --treino-kids-border:#4d5159;
+    --treino-collection-on-bg:#63668e; --js-machines-tab-span-bg:#7c4e47;
+    --js-modules-tab-div-text:#daba6f; --js-rounds-tab-li-text:#56daa4;
+    --js-settings-tab-div-border:#4d5259; --js-status-tab-span-text:#fea193;
+    --js-status-tab-b-text:#fea193; --js-status-tab-div-bg:#1d1811; --js-status-tab-div-border:#794d1a;
+    --js-tasks-span-text:#fea193; --js-chief-div-border:#a74e42; --js-judge-div-border:#057853;
+    --js-judge-div-bg:#121916; --js-reveal-el-outline:#496fb6; --js-score-colors-el-bg:#0a1f11;
+    --js-score-colors-el-text:#e4e4e4; --js-score-obi-el-css:#181f2e; --js-score-obi-el-css-2:#a7c5fb;
+    --js-score-obi-el-css-3:#261a1b; --js-score-obi-el-css-4:#fe9fa5; --js-score-div-border:#4d5259;
+    --js-score-div-text:#c7d8f1; --js-staff-div-text:#daba6f; --js-editar-el-text:#7ee2a0;
+    --js-editar-el-text-2:#ffd98a; --js-editar-el-text-3:#7ad689; --js-problemas-div-border:#75600d;
+    --js-problemas-button-text:#ffa09c; --js-problemas-button-border:#a94e4d;
+    --js-bank-panel-span-bg:#3d3417; --js-bank-panel-span-text:#ffe08a; --js-bank-panel-div-bg:#161718;
+    --js-settings-editor-p-text:#ffa473; --js-teams-div-border:#4d5259; --js-teams-span-text:#e8b44e;
+    --js-problemas-div-text:#e8b44e; --js-virtual-div-text:#fea192; --js-virtual-el-text:#fea192;
+  }
 }

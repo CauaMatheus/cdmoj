@@ -17,6 +17,6 @@
 }
 .yearbar { display:flex; flex-wrap:wrap; gap:.35rem; margin:0 0 .7rem; }
 .yearbar .btn { padding:.25rem .7rem; font-size:.85rem; }
-.yearbar .btn.on { background:var(--color-primary-strong); color:var(--color-text-inverse); border-color:var(--color-primary-strong); }
+.yearbar .btn.on { background:var(--color-primary-fill-strong); color:var(--color-text-inverse); border-color:var(--color-primary-strong); }
 .avatar-cloud { display:flex; flex-wrap:wrap; gap:.45rem; }
 .avatar-cloud .avatar-mini { width:40px; height:40px; font-size:15px; }
