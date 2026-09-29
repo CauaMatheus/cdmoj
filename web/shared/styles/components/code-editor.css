@@ -6,11 +6,11 @@
 .cm-mojeditor { overflow:hidden; }
 .cm-mojeditor .cm-editor { border-radius:12px; }
 .cm-mojeditor .cm-focused { outline:0; }
-.code-fallback { padding:.8rem; background:#0d1626; color:#e2e8f0; line-height:1.5; }
+.code-fallback { padding:.8rem; background:var(--color-code-bg); color:var(--color-code-text); line-height:1.5; }
 .submit-steps { font-size:.86rem; color:var(--muted); margin:.5rem 0; min-height:1.2em; }
 /* caixa do editor: altura inicial fixa, redimensionável e com toggle */
 .editor-box { height:380px; min-height:120px; max-height:82vh; overflow:hidden; resize:vertical;
-  border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow-sm); background:#fff; transition:height .15s; }
+  border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow-sm); background:var(--color-surface); transition:height .15s; }
 .editor-box .cm-mojeditor,.editor-box .cm-editor { height:100% !important; min-height:0; border:0; box-shadow:none; }
 .editor-box .cm-mojeditor .cm-scroller { overflow:auto; }
 .editor-box .code-fallback { height:100%; min-height:0; border:0; border-radius:12px; resize:none; }

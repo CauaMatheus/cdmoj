@@ -3,5 +3,5 @@
 /* utils */
 .muted { color:var(--muted); } .center { text-align:center; } .small { font-size:.85rem; }
 .hidden { display:none !important; }
-.notice { background:var(--warn-bg); color:var(--warn); padding:.6rem .9rem; border-radius:10px; border:1px solid #f2e2a8; }
+.notice { background:var(--warn-bg); color:var(--warn); padding:.6rem .9rem; border-radius:10px; border:1px solid var(--notice-border); }
 .error-box { background:var(--err-bg); color:var(--err); padding:.6rem .9rem; border-radius:10px; }

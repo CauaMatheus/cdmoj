@@ -14,8 +14,8 @@
 .news-body p { margin:.7rem 0; } .news-body ul,.news-body ol { margin:.7rem 0 .7rem 1.3rem; }
 .news-body a { color:var(--blue); }
 .news-body img { max-width:100%; height:auto; border-radius:8px; }
-.news-body pre { background:#f6f8fb; border:1px solid var(--line); border-radius:8px; padding:.8rem 1rem; overflow-x:auto; font-size:.9em; }
-.news-body code { background:#eef3fb; padding:.1em .35em; border-radius:4px; font-size:.9em; }
+.news-body pre { background:var(--news-pre-bg); border:1px solid var(--line); border-radius:8px; padding:.8rem 1rem; overflow-x:auto; font-size:.9em; }
+.news-body code { background:var(--color-primary-faint); padding:.1em .35em; border-radius:4px; font-size:.9em; }
 .news-body pre code { background:none; padding:0; }
 .news-body blockquote { border-left:3px solid var(--blue-soft); margin:.8rem 0; padding:.2rem 1rem; color:var(--muted); }
 .news-body table { border-collapse:collapse; margin:1rem 0; } .news-body th,.news-body td { border:1px solid var(--line); padding:.4rem .6rem; }

@@ -3,27 +3,27 @@
 /* cartões da home (treino: top10 + recentes) */
 .two-col { display:grid; grid-template-columns:1fr; gap:1.2rem; }
 @media (min-width:760px){ .two-col { grid-template-columns:1fr 1fr; } }
-.subcard { background:#fafcff; border:1px solid var(--line); border-radius:12px; padding:.9rem 1.1rem; }
+.subcard { background:var(--color-surface-alt); border:1px solid var(--line); border-radius:12px; padding:.9rem 1.1rem; }
 .subcard > h3 { margin:.1rem 0 .7rem; font-size:.98rem; color:var(--blue-dark); display:flex; align-items:center; gap:.4rem; }
 .rank-list { display:flex; flex-direction:column; gap:.12rem; }
 .rank-row { display:flex; align-items:center; gap:.7rem; padding:.4rem .5rem; border-radius:10px; color:inherit; }
 .rank-row:hover { background:var(--blue-soft); text-decoration:none; }
 .rank-num { flex:0 0 1.7rem; height:1.7rem; display:grid; place-items:center; border-radius:50%;
   background:var(--blue-soft); color:var(--blue-dark); font-weight:800; font-size:.78rem; }
-.rank-row.r1 .rank-num { background:#fde68a; color:#92560a; }
-.rank-row.r2 .rank-num { background:#e5e9f0; color:#475569; }
-.rank-row.r3 .rank-num { background:#fcd9b6; color:#9a4a16; }
+.rank-row.r1 .rank-num { background:var(--medal-gold-bg); color:var(--medal-gold-text); }
+.rank-row.r2 .rank-num { background:var(--medal-silver-bg); color:var(--medal-silver-text); }
+.rank-row.r3 .rank-num { background:var(--medal-bronze-bg); color:var(--medal-bronze-text); }
 .rank-name { flex:1; min-width:0; display:flex; flex-direction:column; }
 .rank-name .rn-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; }
 .ed-tag { font-size:.68rem; color:var(--muted); line-height:1.15; }
 .rank-chip { background:var(--ok-bg); color:var(--ok); font-weight:700; font-size:.76rem; padding:.1rem .55rem; border-radius:999px; white-space:nowrap; }
 /* avatar mini + chip de usuário (topbar / listas do treino) */
 .avatar-mini { display:inline-block; border-radius:50%; overflow:hidden; flex:0 0 auto; vertical-align:middle;
-  background:#cbd5e1; line-height:0; box-shadow:0 1px 3px rgba(20,40,80,.25); }
+  background:var(--color-neutral); line-height:0; box-shadow:0 1px 3px rgba(var(--rgb-shadow),.25); }
 .avatar-mini img { width:100%; height:100%; object-fit:cover; display:block; border-radius:50%; }
-.avatar-mini.ini { display:inline-grid; place-items:center; color:#fff; font-weight:800; line-height:1; }
+.avatar-mini.ini { display:inline-grid; place-items:center; color:var(--color-text-inverse); font-weight:800; line-height:1; }
 .user-chip { display:inline-flex; align-items:center; gap:.45rem; font-weight:600; }
-.topbar .user-chip { color:#fff; }
+.topbar .user-chip { color:var(--color-text-inverse); }
 .user-chip:hover { text-decoration:none; opacity:.92; }
 .recent-row { display:flex; flex-direction:column; gap:.05rem; padding:.4rem .5rem; border-radius:10px; color:inherit; }
 .recent-row:hover { background:var(--blue-soft); text-decoration:none; }
@@ -41,7 +41,7 @@
 .week-row.editor-top { background:var(--blue-soft); }
 .week-row.editor-top .wk-ttl { font-weight:800; }
 .wk-rank { flex:0 0 1.5rem; height:1.5rem; display:grid; place-items:center; border-radius:7px;
-  background:#fff3d6; color:#92560a; font-weight:800; font-size:.74rem; }
+  background:var(--week-rank-bg); color:var(--medal-gold-text); font-weight:800; font-size:.74rem; }
 .wk-ttl { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; }
 /* feed "resolvidos recentemente": problema + quem resolveu + quando */
 .feed { display:flex; flex-direction:column; gap:.1rem; }

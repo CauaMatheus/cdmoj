@@ -11,7 +11,7 @@
    14 problemas apareciam). O número da célula fica em fonte menor (`.pv`) para a REFERÊNCIA da
    coluna (letra + balão) continuar legível. */
 table.score { width:100%; table-layout:fixed; border-collapse:separate; border-spacing:0;
-  background:#fff; border-radius:10px; overflow:hidden; font-size:.92rem;
+  background:var(--color-surface); border-radius:10px; overflow:hidden; font-size:.92rem;
   /* cenário (o JS carimba): --nprob, --w-flag, --w-pen, --w-total; o resto é conta daqui.
      A divisão fecha SEMPRE em 100%: colunas fixas + os problemas ficam com a FRAÇÃO
      `--w-prob-share` do que sobra e o time com o resto. Cada faixa de tela só mexe nas
@@ -39,7 +39,7 @@ table.score th { background:var(--blue-soft); color:var(--blue-dark); font-weigh
 table.score th.prob { font-size:.95em; }
 table.score td.team { text-align:left; line-height:1.25; }
 table.score td.team .u { color:var(--muted); font-size:.8em; }
-table.score tr:hover td { background:#f0f7ff; }
+table.score tr:hover td { background:var(--score-row-hover); }
 table.score .cl-place, table.score td.place { font-weight:800; color:var(--blue-dark); }
 /* o número é uma unidade: não quebra no meio (só a coluna encolhe a fonte) */
 table.score td.cell .pv { font-size:.78em; font-variant-numeric:tabular-nums;
@@ -53,12 +53,12 @@ table.score td.cell .fts { position:absolute; top:.05em; left:.15em; font-size:.
    A BORDA é a informação, não acabamento: sobre o verde de acerto um ponto branco dá 1,1:1.
    Ela vem do balloonEdge (score-colors.js) e chega por --bdot-edge. Ver docs/SCOREBOARD.md. */
 table.score td.cell .bdot { display:inline-block; width:.62em; height:.62em; border-radius:50%;
-  border:1px solid var(--bdot-edge,#8a8a8a); background:var(--bdot,#ccc);
+  border:1px solid var(--bdot-edge,var(--bdot-edge-default)); background:var(--bdot,var(--bdot-default));
   vertical-align:-.02em; margin-right:.2em; }
 /* a bandeira vem com ALTURA inline (flags.js) e largura livre: numa coluna estreita ela
    TRANSBORDA e encosta na 1ª letra do nome do time (a célula não corta). O teto é da coluna. */
 table.score .flag-mini { max-width:100%; }
-.prob-wait-cell, table.score td.c-try { background:#fdf1d0; color:var(--warn); font-weight:700; }
+.prob-wait-cell, table.score td.c-try { background:var(--score-try-bg); color:var(--warn); font-weight:700; }
 .balloon-svg { width:20px; height:23px; vertical-align:middle; }
 /* embrulho do placar: ao contrário do .chart-wrap, NÃO rola — o layout já garante o encaixe */
 .board-wrap { overflow-x:visible; }
@@ -69,12 +69,12 @@ table.score .flag-mini { max-width:100%; }
   border:1px solid var(--line); border-radius:var(--radius); padding:.6rem .9rem; margin:.7rem 0;
   box-shadow:var(--shadow-sm); }
 .fbar label { font-size:.85rem; color:var(--muted); display:flex; align-items:center; gap:.35rem; }
-.fbar select { padding:.35rem .5rem; border:1px solid #c8cfd9; border-radius:8px; background:#fff;
+.fbar select { padding:.35rem .5rem; border:1px solid var(--color-border-control); border-radius:8px; background:var(--color-surface);
   font:inherit; font-size:.85rem; max-width:15rem; }
-.fbar input.filter { margin:0; width:16rem; padding:.35rem .5rem; border:1px solid #c8cfd9;
+.fbar input.filter { margin:0; width:16rem; padding:.35rem .5rem; border:1px solid var(--color-border-control);
   border-radius:8px; font:inherit; font-size:.85rem; max-width:100%; }
 .fbar .fcount { font-size:.85rem; color:var(--muted); margin-left:auto; }
-.fbar button { padding:.35rem .7rem; border:1px solid #c8cfd9; border-radius:8px; background:#fff;
+.fbar button { padding:.35rem .7rem; border:1px solid var(--color-border-control); border-radius:8px; background:var(--color-surface);
   font:inherit; font-size:.85rem; cursor:pointer; color:var(--blue-dark); }
 .fbar button:hover { background:var(--blue-soft); }
 /* posição no placar GERAL, dentro da coluna # do placar de coorte (o número grande é a posição
@@ -83,17 +83,17 @@ table.score .flag-mini { max-width:100%; }
 /* CLASSIFICADO p/ a próxima fase — 3 camadas (pedido de 31/08: claro E elegante):
    linha tintada + barra de acento, pill 🎓 com rótulo, e sub-linha estilo PDA sob o nome.
    Rascunho (só admin) = âmbar tracejado. Classes próprias (não reusar .pill — cascata). */
-table.score tr.qual-row td { background:#f0faf2; }
-table.score tr.qual-row td:first-child { border-left:3px solid #2f9e50; }
-table.score tr.qual-row.draft td { background:#fdf7e3; }
-table.score tr.qual-row.draft td:first-child { border-left:3px dashed #c9a227; }
+table.score tr.qual-row td { background:var(--qual-bg); }
+table.score tr.qual-row td:first-child { border-left:3px solid var(--qual-accent); }
+table.score tr.qual-row.draft td { background:var(--qual-draft-bg); }
+table.score tr.qual-row.draft td:first-child { border-left:3px dashed var(--qual-draft-accent); }
 .qual-chip { display:inline-block; font-size:.72em; font-weight:700; letter-spacing:.02em;
   padding:.12em .5em; border-radius:.8em; vertical-align:middle; cursor:help; white-space:nowrap;
-  color:#fff; background:#2f9e50; border:1px solid #27853f; }
-.qual-chip.draft { color:#6b5a10; background:#f5e8b8; border:1px dashed #c9a227; }
-.qual-sub { display:block; font-size:.72em; font-weight:600; color:#237a3e; line-height:1.25;
+  color:var(--color-text-inverse); background:var(--qual-accent); border:1px solid var(--qual-chip-border); }
+.qual-chip.draft { color:var(--qual-draft-text); background:var(--qual-draft-chip-bg); border:1px dashed var(--qual-draft-accent); }
+.qual-sub { display:block; font-size:.72em; font-weight:600; color:var(--qual-sub); line-height:1.25;
   margin-top:.1em; }
-tr.qual-row.draft .qual-sub { color:#8a7420; }
+tr.qual-row.draft .qual-sub { color:var(--qual-draft-sub); }
 @media (max-width:640px) {
   table.score .qual-chip { padding:.05em .3em; }
   table.score .qual-sub { display:none; }   /* no celular: pill + tooltip bastam */
@@ -154,11 +154,11 @@ tr.qual-row.draft .qual-sub { color:#8a7420; }
   table.score { --w-prob-share:.56; }
   table.score th { font-size:.7em; }
 }
-table.score tr.guest-row { background: rgba(120,120,120,.07) }
-table.score tr.guest-row .cl-place { color: var(--muted, #777); font-style: italic }
+table.score tr.guest-row { background: rgba(var(--rgb-neutral),.07) }
+table.score tr.guest-row .cl-place { color: var(--muted); font-style: italic }
 /* PARTICIPAÇÃO VIRTUAL (treino/virtual): linha virtual é um convidado com marca própria; `you` = quem olha */
-table.score tr.virtual-row { background: rgba(52,120,246,.07) }
-table.score tr.you-row { background: rgba(52,120,246,.18); outline: 2px solid rgba(52,120,246,.55); outline-offset: -2px }
+table.score tr.virtual-row { background: rgba(var(--rgb-virtual),.07) }
+table.score tr.you-row { background: rgba(var(--rgb-virtual),.18); outline: 2px solid rgba(var(--rgb-virtual),.55); outline-offset: -2px }
 /* porta de serviço da organização na tela de login (antes da abertura): canto inferior direito,
    apagada. NÃO pode chamar atenção — o competidor que clica à toa só se frustra. */
 #orgLoginLink { position:fixed; right:.5rem; bottom:.35rem; z-index:2; font-size:.68rem;
@@ -167,9 +167,9 @@ table.score tr.you-row { background: rgba(52,120,246,.18); outline: 2px solid rg
 .pinbtn { border: 0; background: transparent; cursor: pointer; padding: 0 .2rem; font-size: .95em; opacity: .35; filter: grayscale(1) }
 .pinbtn:hover, .pinbtn:focus-visible { opacity: .8 }
 .pinbtn[aria-pressed="true"] { opacity: 1; filter: none }
-table.score tr.pinned-row { background: rgba(245,166,35,.13) }
-.pill.virtual { background: rgba(52,120,246,.15); color: #1f4fa8; border-color: rgba(52,120,246,.45) }
-@media (prefers-color-scheme: dark) { .pill.virtual { color: #9cc0ff } table.score tr.virtual-row { background: rgba(90,150,255,.10) } }
+table.score tr.pinned-row { background: rgba(var(--rgb-pinned),.13) }
+.pill.virtual { background: rgba(var(--rgb-virtual),.15); color: var(--virtual-pill-text); border-color: rgba(var(--rgb-virtual),.45) }
+@media (prefers-color-scheme: dark) { .pill.virtual { color: var(--virtual-pill-text-dark) } table.score tr.virtual-row { background: rgba(var(--rgb-virtual-dark),.10) } }
 /* numeração PRÓPRIA dos convidados (GUEST_NUMBERING, flag g do TXT — issue #25) */
-.gplace { font-style: italic; color: var(--muted, #777); font-weight: 600; }
-@media (prefers-color-scheme: dark) { table.score tr.guest-row { background: rgba(255,255,255,.05) } }
+.gplace { font-style: italic; color: var(--muted); font-weight: 600; }
+@media (prefers-color-scheme: dark) { table.score tr.guest-row { background: rgba(var(--rgb-white),.05) } }

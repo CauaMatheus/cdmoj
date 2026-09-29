@@ -5,7 +5,7 @@
 .v-ok { background:var(--ok-bg); color:var(--ok); }
 .v-err { background:var(--err-bg); color:var(--err); }
 .v-warn { background:var(--warn-bg); color:var(--warn); }
-.v-pending { background:#eef2f8; color:var(--muted); }
-.spin { display:inline-block; width:1em; height:1em; border:2px solid #cbd5e1;
+.v-pending { background:var(--color-pending-bg); color:var(--muted); }
+.spin { display:inline-block; width:1em; height:1em; border:2px solid var(--color-neutral);
   border-top-color:var(--blue); border-radius:50%; animation:spin .8s linear infinite; vertical-align:-.15em; }
 @keyframes spin { to { transform:rotate(360deg); } }

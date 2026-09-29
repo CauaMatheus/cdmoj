@@ -2,11 +2,11 @@
    Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
 /* buttons / forms */
 .btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(180deg,var(--blue),var(--blue-dark));
-  color:#fff; border:0; border-radius:10px; padding:.58rem 1.1rem; font-size:.95rem; font-weight:650;
-  cursor:pointer; transition:transform .08s, box-shadow .15s, filter .15s; box-shadow:0 2px 8px rgba(43,108,176,.28); }
-.btn:hover { filter:brightness(1.06); text-decoration:none; box-shadow:0 4px 14px rgba(43,108,176,.36); color:#fff; }
+  color:var(--color-text-inverse); border:0; border-radius:10px; padding:.58rem 1.1rem; font-size:.95rem; font-weight:650;
+  cursor:pointer; transition:transform .08s, box-shadow .15s, filter .15s; box-shadow:0 2px 8px rgba(var(--rgb-primary),.28); }
+.btn:hover { filter:brightness(1.06); text-decoration:none; box-shadow:0 4px 14px rgba(var(--rgb-primary),.36); color:var(--color-text-inverse); }
 .btn:active { transform:translateY(1px); }
 .btn:disabled { opacity:.5; cursor:not-allowed; box-shadow:none; filter:grayscale(.3); }
 .btn.secondary { background:var(--blue-soft); color:var(--blue-dark); box-shadow:none; }
-.btn.ghost { background:#fff; color:var(--blue-dark); border:1px solid var(--line); box-shadow:none; }
+.btn.ghost { background:var(--color-surface); color:var(--blue-dark); border:1px solid var(--line); box-shadow:none; }
 .btn.ghost:hover { background:var(--blue-soft); }

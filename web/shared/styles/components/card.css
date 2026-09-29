@@ -3,9 +3,9 @@
 /* sections / cards */
 .section { background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
   box-shadow:var(--shadow); padding:1.3rem 1.4rem; margin:1.2rem 0; transition:box-shadow .15s; }
-.section:hover { box-shadow:0 2px 4px rgba(20,40,80,.05), 0 10px 30px rgba(20,40,80,.09); }
+.section:hover { box-shadow:0 2px 4px rgba(var(--rgb-shadow),.05), 0 10px 30px rgba(var(--rgb-shadow),.09); }
 .section > h2 { margin:.05rem 0 .9rem; color:var(--blue-dark); font-size:1.3rem; font-weight:800;
   display:flex; align-items:center; gap:.5rem; }
 .section > h3 { color:var(--blue-dark); }
-.section-head { background:linear-gradient(90deg,var(--blue-soft),#fff); color:var(--blue-dark);
+.section-head { background:linear-gradient(90deg,var(--blue-soft),var(--color-surface)); color:var(--blue-dark);
   font-weight:700; padding:.45rem .9rem; border-left:4px solid var(--blue); border-radius:8px; margin:1.1rem 0 .6rem; }

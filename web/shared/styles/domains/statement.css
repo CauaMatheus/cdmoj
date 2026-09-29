@@ -12,15 +12,15 @@
 /* chips de IDIOMA DO ENUNCIADO (shared/statement-langs.js): treino, sanfona do contest, editor.
    Ativo = cheio; os outros = contorno. Vazio quando o problema tem um idioma só. */
 .stmt-chips { display:inline-flex; gap:.3rem; align-items:center; flex-wrap:wrap; }
-.stmt-chip { border:1px solid var(--blue-dark); background:#fff; color:var(--blue-dark); font-weight:700;
+.stmt-chip { border:1px solid var(--blue-dark); background:var(--color-surface); color:var(--blue-dark); font-weight:700;
   font-size:.74rem; letter-spacing:.03em; padding:.08rem .55rem; border-radius:999px; cursor:pointer; line-height:1.5; }
 .stmt-chip:hover { background:var(--blue-soft); }
-.stmt-chip.active { background:var(--blue-dark); color:#fff; cursor:default; }
+.stmt-chip.active { background:var(--blue-dark); color:var(--color-text-inverse); cursor:default; }
 .stmt-chip.add { border-style:dashed; font-weight:600; }
 .stmt-badge { display:inline-block; margin-left:.4rem; font-size:.68rem; font-weight:700; letter-spacing:.04em;
   color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:0 .3rem; vertical-align:middle; }
 .tl-label { font-size:.82rem; font-weight:700; color:var(--blue-dark); margin-right:.15rem; }
-.tl-chip { display:inline-flex; align-items:center; gap:.45rem; background:#fafcff; border:1px solid var(--line);
+.tl-chip { display:inline-flex; align-items:center; gap:.45rem; background:var(--color-surface-alt); border:1px solid var(--line);
   border-radius:999px; padding:.18rem .65rem; font-size:.82rem; }
 .tl-chip b { color:var(--blue-dark); font-weight:700; }
 .tl-chip .tl-time { font-variant-numeric:tabular-nums; color:var(--muted); font-family:var(--mono); }
@@ -29,27 +29,27 @@
 .statement-content { line-height:1.7; font-size:1.04rem; }
 .statement-content h1.title { display:none !important; }
 .statement-content h1,.statement-content h2,.statement-content h3 { color:var(--blue-dark); }
-.statement-content code { font-family:var(--mono); color:var(--blue-dark); background:#eef3fb;
+.statement-content code { font-family:var(--mono); color:var(--blue-dark); background:var(--color-primary-faint);
   padding:.05em .35em; border-radius:5px; font-size:.92em; }
-.statement-content pre { font-family:var(--mono); background:#0d1626; color:#e2e8f0;
+.statement-content pre { font-family:var(--mono); background:var(--color-code-bg); color:var(--color-code-text);
   border-radius:10px; padding:.9em 1.2em; overflow-x:auto; box-shadow:var(--shadow-sm); }
 .statement-content pre code { background:none; color:inherit; padding:0; }
 .statement-content footer,.statement-content #footer { color:var(--muted); text-align:right; font-size:.95em; margin-top:2em; }
 .statement-content img { max-width:100%; border-radius:8px; }
 .statement-content h1.moj-title { color:var(--blue-dark); margin:.2rem 0 1rem; }
 .statement-content ul,.statement-content ol { padding-left:1.5em; }
-.statement-content blockquote { border-left:3px solid var(--border,#d0d7de); margin:.8em 0; padding:.1em .9em; color:var(--muted); }
+.statement-content blockquote { border-left:3px solid var(--border); margin:.8em 0; padding:.1em .9em; color:var(--muted); }
 .statement-content table { border-collapse:collapse; margin:.7rem 0; }
-.statement-content th,.statement-content td { border:1px solid var(--border,#d0d7de); padding:.25rem .55rem; }
+.statement-content th,.statement-content td { border:1px solid var(--border); padding:.25rem .55rem; }
 /* exemplos (mesmo markup do render-statement.sh: .moj-exemplos / .moj-exemplo / .moj-exemplo-nota) */
 .statement-content .moj-exemplos h2 { margin-top:1.3rem; }
-.statement-content .moj-exemplo { border:1px solid var(--border,#d0d7de); border-radius:8px; padding:.2rem .85rem; margin:.7rem 0; }
+.statement-content .moj-exemplo { border:1px solid var(--border); border-radius:8px; padding:.2rem .85rem; margin:.7rem 0; }
 .statement-content .moj-exemplo h3,.statement-content .moj-exemplo h4 { margin:.5rem 0 .2rem; color:var(--blue-dark); }
 /* botão "Copiar" de cada bloco de exemplo (shared/statement-samples.js): o h3 vira uma linha flex
    com o botão à direita; sempre visível (celular não tem hover) */
 .statement-content .moj-exemplo h3.sample-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
-.sample-copy { font:600 .72rem/1.4 inherit; font-family:inherit; padding:.1rem .6rem; border:1px solid var(--border,#d0d7de);
-  border-radius:999px; background:#fff; color:var(--blue-dark); cursor:pointer; white-space:nowrap; }
-.sample-copy:hover { background:#eef3fb; }
-.sample-copy.ok { border-color:#2e7d32; color:#2e7d32; }
+.sample-copy { font:600 .72rem/1.4 inherit; font-family:inherit; padding:.1rem .6rem; border:1px solid var(--border);
+  border-radius:999px; background:var(--color-surface); color:var(--blue-dark); cursor:pointer; white-space:nowrap; }
+.sample-copy:hover { background:var(--color-primary-faint); }
+.sample-copy.ok { border-color:var(--sample-copy-ok); color:var(--sample-copy-ok); }
 .statement-content .moj-exemplo-nota { margin:.1rem 0 .6rem; color:var(--muted); }
