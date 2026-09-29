@@ -54,7 +54,9 @@ const send = (method, params = {}, sessionId, ms = 30000) => Promise.race([
 // O snapshot fica na página e vem em fatias: um retorno de vários MB trava a sessão CDP.
 const SNAP = `(() => {
   const out = {};
-  for (const e of document.querySelectorAll('*')) {
+  // só o que RENDERIZA: <html>, <body> e o que está dentro dele. O <head> fica fora — trocar um
+  // <style> por <link> (ou tirar um <style> vazio) mexe nele e não muda nada na tela
+  for (const e of [document.documentElement, ...document.querySelectorAll('body, body *')]) {
     const path = []; let n = e;
     while (n && n.parentElement) { path.unshift(n.tagName + [...n.parentElement.children].indexOf(n)); n = n.parentElement; }
     const v = {};
