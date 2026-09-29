@@ -1652,6 +1652,9 @@ mexa na outra. O índice separa as coleções por `\u001f` (nome é texto livre:
   concatenação) e o nginx o serve NO ENDEREÇO `/shared/ui.css` (`location =` com `try_files`; sem
   ele, o manifesto) — tira a cascata de 25 requisições da 1ª visita. Editou módulo num checkout com
   bundle ⇒ `make css-bundle` (ou apague o bundle), senão o nginx segue servindo o velho.
+  **Refatorou estilo? Prove com o DIFF VISUAL**: `server/test/visual/css-visual-diff.sh [REF]` compara o
+  estilo computado de todo elemento (deslogado + as telas logadas de `pages.txt`, sobre o fixture do
+  `shots-ajuda.sh --serve`) entre REF e a árvore — 0 diferença = refatoração neutra.
 - Editar e recarregar vale na hora (sem bundler). Validar: `node --check web/**/<arquivo>.js`.
 - Editor de problema: `web/problemas/editar.{html,js}` (abas; chama `/problems/*`).
   **🧪 testar no juiz** (2026-09-24): sub-aba de Soluções & Correção = o `moj testrun` na web — módulo

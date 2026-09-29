@@ -122,6 +122,37 @@ números ficam em `server/test/css-ratchet.baseline`. Se algum subir, o teste re
 ele avisa, e `bash server/test/css-ratchet.sh --update` trava o novo patamar (o `--update` só
 aceita descer).
 
+## Diff visual (`server/test/visual/css-visual-diff.sh`)
+
+A prova de que uma refatoração de estilo "não mudou nada", ou a lista exata do que mudou. Ele
+compara o **estilo computado** de todo elemento (e dos `::before`/`::after`) entre um commit de
+referência e a árvore de trabalho, em desktop (1366 px) e celular (390 px), no Chrome headless:
+
+```
+bash server/test/visual/css-visual-diff.sh            # referência = HEAD
+bash server/test/visual/css-visual-diff.sh main --only 'admin|score' --widths 1366
+bash server/test/visual/css-visual-diff.sh abc123 --b def456   # dois commits (dá p/ seguir editando)
+```
+
+- **Páginas:** todo `web/**/*.html` deslogado, mais as telas **logadas com dados** de
+  `server/test/visual/pages.txt` (competidor, juiz, juiz-chefe, staff, telão e todos os painéis do
+  admin). Os dados vêm do contest fictício do `server/bin/shots-ajuda.sh --serve`, com a API de
+  verdade (`router.sh`) e sem tocar em dado real. Os dois lados usam o mesmo fixture e o mesmo
+  ambiente.
+- **Ruído tratado:** cada página é carregada duas vezes na referência, e o que muda entre as duas
+  cargas (horário relativo, sorteio) fica fora da comparação. A página só é comparada depois que o
+  DOM para de mudar por 500 ms. Página que diverge é recarregada até 3 vezes (a Central monta as
+  seções na ordem em que a API responde). As animações ficam paradas.
+- **Saída:** uma linha por página e largura; `report.json` e `pairs.txt` (cada mudança
+  "propriedade: antes → depois", com a contagem) ficam em `/tmp/moj-visual-diff/last/`. O código
+  de saída é 1 se houve diferença.
+- **Validado** (29/09/2026): o teste nulo (`HEAD` contra a árvore com o `web/` igual) dá 216/216
+  iguais, e 0,1 rem de padding a mais num módulo aparece como diferença em 96 elementos.
+- Leva cerca de 25 minutos com todas as páginas. `--only` restringe por regex. Precisa de node,
+  python3, jq e Chrome/Chromium (`CHROME=<binário>`). Não está no `make check`, por ser pesado.
+
+Painel novo do admin ou aba nova do chefe: acrescente uma linha em `pages.txt`.
+
 ## Cache do CSS
 
 Todo o estático do site, **CSS inclusive**, é servido com `Cache-Control: no-cache` (issue #22:
@@ -184,7 +215,7 @@ Conclusões:
 ## Roteiro
 
 1. **Fundação** (feita): tokens em três níveis, `ui.css` dividido em módulos, expansores, catraca,
-   tokens indefinidos corrigidos e bundle no deploy.
+   tokens indefinidos corrigidos e bundle no deploy; diff visual (`css-visual-diff.sh`).
 2. **Componentes**: extrair os padrões repetidos nos `<style>` das páginas (sub-abas, chips,
    grades de formulário, caixas de aviso) e passar os módulos a usar tokens semânticos.
 3. **Páginas**: migrar os 41 blocos `<style>` para `domains/`, dos maiores para os menores

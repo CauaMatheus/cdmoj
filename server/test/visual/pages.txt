@@ -1,0 +1,64 @@
+# Páginas do DIFF VISUAL que precisam de PAPEL logado: <caminho[#aba]> <sessão>
+# (as sessões são as do fixture do server/bin/shots-ajuda.sh; o `c=demo` é acrescentado sozinho).
+# As páginas estáticas (todo web/**/*.html, deslogado) entram automaticamente pelo css-visual-diff.sh.
+# Painel novo do admin / aba nova do chefe ⇒ uma linha aqui.
+
+# ---- competidor
+/contest/ s_comp
+/contest/score/ s_comp
+/contest/submissions/ s_comp
+/contest/clarification/ s_comp
+/contest/backup/ s_comp
+/contest/print/ s_comp
+/contest/docs/ s_comp
+/contest/rounds/ s_comp
+
+# ---- juiz e juiz-chefe
+/contest/judge/ s_judge
+/contest/score/ s_judge
+/contest/allsubmissions/ s_judge
+/contest/statistics/ s_judge
+/contest/clarification/ s_judge
+/contest/log/ s_judge
+/contest/jplag/ s_cjudge
+/contest/chief/#sit s_cjudge
+/contest/chief/#conf s_cjudge
+/contest/chief/#opts s_cjudge
+/contest/chief/#auto s_cjudge
+/contest/chief/#langs s_cjudge
+/contest/chief/#docs s_cjudge
+/contest/chief/#rounds s_cjudge
+
+# ---- staff, sede e telão
+/contest/staff/ s_staff
+/contest/staff/ s_cstaff
+/contest/badges/ s_cstaff
+/contest/mlinux/ s_cstaff
+/contest/animeitor/ s_anim
+
+# ---- admin do contest: todos os painéis (os de módulo precisam do SHOT_MODULES do css-visual-diff.sh)
+/contest/admin/#central/central s_admin
+/contest/admin/#central/modulos s_admin
+/contest/admin/#central/regras s_admin
+/contest/admin/#prova/problemas s_admin
+/contest/admin/#prova/relatorio s_admin
+/contest/admin/#pessoas/contas s_admin
+/contest/admin/#pessoas/inscricoes s_admin
+/contest/admin/#pessoas/sessoes s_admin
+/contest/admin/#operacao/situacao s_admin
+/contest/admin/#operacao/staff s_admin
+/contest/admin/#operacao/juizes s_admin
+/contest/admin/#operacao/auditoria s_admin
+/contest/admin/#evento/rodadas s_admin
+/contest/admin/#evento/documentos s_admin
+/contest/admin/#evento/baloes s_admin
+/contest/admin/#evento/classificacao s_admin
+/contest/admin/#evento/virtual s_admin
+/contest/admin/#evento/times s_admin
+/contest/admin/#evento/coortes s_admin
+/contest/admin/#evento/sedes s_admin
+/contest/admin/#maquinas/gate s_admin
+/contest/admin/#maquinas/anomalias s_admin
+/contest/admin/#maquinas/mlinux s_admin
+/contest/admin_tasks/ s_admin
+/contest/score/reveal.html s_admin

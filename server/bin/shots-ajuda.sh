@@ -14,9 +14,13 @@
 #      dados DEPOIS. O servidor injeta um <img> que só termina em SHOT_DELAY_MS, segurando o
 #      `load` até o app ter renderizado.
 #
-# Uso:  bash server/bin/shots-ajuda.sh [--keep] [--only <papel>]
+# Uso:  bash server/bin/shots-ajuda.sh [--keep] [--only <papel>] [--serve]
 #       --keep  não apaga o fixture (p/ inspecionar/depurar)
-#       --only  captura só um papel (comp|staff|cstaff|anim|judge|cjudge — com ou sem o `s_`)
+#       --only  captura só um papel (comp|staff|cstaff|anim|judge|cjudge|admin — com ou sem o `s_`)
+#       --serve NÃO captura: monta o fixture, sobe o servidor e fica no ar até ser morto (TERM),
+#               imprimindo `SERVE port=… fix=… run=… sess=…`. É o que o diff visual do design
+#               system usa (server/test/visual/css-visual-diff.sh). SHOT_MODULES troca a lista de
+#               módulos do contest (padrão: a das fotos) p/ cobrir mais painéis do admin.
 set -uo pipefail
 cd "$(dirname "$(readlink -f "$0")")/../.." || exit 1   # raiz do cdmoj
 ROOT="$PWD"
@@ -28,12 +32,13 @@ case "${SHOT_LOCALE:-en}" in en) ;; pt|es) [[ -n "${SHOT_OUT:-}" ]] || { echo "S
 : "${SHOT_DELAY_MS:=2600}"
 : "${SHOT_W:=1280}"
 : "${SHOT_H:=900}"
-KEEP=0; ONLY=""
+KEEP=0; ONLY=""; SERVE=0
 while [[ $# -gt 0 ]]; do case "$1" in
-  --keep) KEEP=1;; --only) ONLY="${2:-}"; shift;; *) echo "opção desconhecida: $1" >&2; exit 2;;
+  --keep) KEEP=1;; --only) ONLY="${2:-}"; shift;; --serve) SERVE=1;;
+  *) echo "opção desconhecida: $1" >&2; exit 2;;
 esac; shift; done
 
-command -v firefox >/dev/null || { echo "firefox não encontrado (headless é obrigatório)" >&2; exit 1; }
+(( SERVE )) || command -v firefox >/dev/null || { echo "firefox não encontrado (headless é obrigatório)" >&2; exit 1; }
 command -v python3 >/dev/null || { echo "python3 não encontrado (servidor de captura)" >&2; exit 1; }
 
 FIX="$(mktemp -d)"; RUNF="$(mktemp -d)"; SESS="$(mktemp -d)"; PROF="$(mktemp -d)"
@@ -64,7 +69,7 @@ mkdir -p "$C/var" "$C/users" "$C/print-requests" "$C/review" "$C/enunciados"
   # MÓDULOS ligados (2026-09-05): sem eles a aba Documentos do chefe, o botão Rodadas, os balões
   # da fila e a página do telão NÃO EXISTEM — o `?click=Documents` não achava nada e a foto saía
   # na aba Situação, em silêncio (descoberto em 16/09). Lista = ids de lib/modules.sh.
-  printf 'CONTEST_MODULES=%q\n' "sedes,rodadas,documentos,baloes,telao"
+  printf 'CONTEST_MODULES=%q\n' "${SHOT_MODULES:-sedes,rodadas,documentos,baloes,telao}"
   # PROBS = tuplas de CINCO campos: <source> <problem_id> <nome> <letra> <chave-do-enunciado>
   # OITO problemas, como uma prova de verdade — é o que dá sentido à paleta oficial (A..H) e o
   # que faz o placar ter a largura que ele tem no dia.
@@ -94,7 +99,7 @@ mk_user time-gama    "Gamma Radiation"     UFPR  "Curitiba" br
 mk_user time-delta   "Dirac Delta"         USP   "São Paulo" br
 mk_user time-epsilon "Sufficient Epsilon"  UNESP "São Paulo" br
 mk_user time-zeta    "Zeta Zero"           USP   "São Paulo" ar
-for r in sala.staff chefe.cstaff telao.animeitor juri.judge decano.cjudge; do
+for r in sala.staff chefe.cstaff telao.animeitor juri.judge decano.cjudge demo.admin; do
   d="$C/users/$r"; mkdir -p "$d"
   jq -cn --arg l "$r" '{login:$l, password:"demo1234", fullname:"Contest crew", email:"",
      created_at:0, updated_at:0, status:"active", uname_changes:[]}' > "$d/account.json"
@@ -485,6 +490,7 @@ mksess chefe.cstaff     "Site chief"      s_cstaff
 mksess telao.animeitor  "Big-screen desk" s_anim
 mksess juri.judge       "Judge"           s_judge
 mksess decano.cjudge    "Chief judge"     s_cjudge
+mksess demo.admin       "Contest admin"   s_admin
 
 # --------------------------------------------------- 2. servidor de captura (estático + API)
 PORT="$(python3 - <<'PY'
@@ -497,6 +503,11 @@ python3 "$ROOT/server/bin/shots-server.py" & SRV=$!
 for i in $(seq 1 40); do
   curl -sf "http://127.0.0.1:$PORT/__ping" >/dev/null 2>&1 && break; sleep 0.25
 done
+if (( SERVE )); then
+  printf 'SERVE port=%s fix=%s run=%s sess=%s pid=%s\n' "$PORT" "$FIX" "$RUNF" "$SESS" "$SRV"
+  trap 'exit 0' TERM INT          # o trap de EXIT (cleanup) mata o servidor e apaga o fixture
+  wait "$SRV"; exit 0
+fi
 
 # (Não há mais imagem recortada à mão: a staff-pega.png, que era um recorte das linhas da fila,
 # passou a sair do próprio `?hide=` — ver a captura dela lá embaixo. Enquadramento que só existe
