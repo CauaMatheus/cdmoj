@@ -51,3 +51,7 @@
 .quicknav { background:var(--color-surface); border-bottom:1px solid var(--color-border); position:sticky; top:52px; z-index:40; }
 .quicknav .bar { max-width:var(--page-max); margin:0 auto; padding:.55rem 1.2rem; display:flex; gap:1.3rem; flex-wrap:wrap; }
 .quicknav a { color:var(--color-primary-strong); font-weight:600; font-size:.92rem; }
+/* título da prova na barra do contest e o link da página atual no quicknav — eram uma cópia idêntica
+   no <style> de 20 e 18 páginas de contest (três páginas tinham esquecido a cópia) */
+.contest-topbar-title { font-weight:800; font-size:1.25rem; }
+.quicknav a.active { text-decoration:underline; }
