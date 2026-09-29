@@ -57,6 +57,21 @@ elemento das 56 páginas foi comparado no Chrome. Reordenar módulos pede a mesm
 - Os tokens de espaçamento (`--space-*`), tamanho de texto (`--text-*`) e raio (`--radius-*`) já
   existem. O CSS migrado da Fase 1 ainda usa os valores literais; a adoção vem nas próximas fases.
 
+### Exportação para ferramentas de design (formato DTCG)
+
+`web/shared/styles/tokens.json` e `tokens.dark.json` são os mesmos tokens no formato do W3C Design
+Tokens Community Group, o que Style Dictionary, Tokens Studio (Figma) e afins leem. São **gerados**
+do `tokens.css` por `python3 server/bin/tokens-export.py`: mudou um token, rode o comando e
+commite os `.json` junto. O `css-ratchet.sh` reprova se eles estiverem desatualizados.
+
+- Os grupos são os níveis (`primitive`, `semantic`, `component`, `page`, `js`). Alias continua
+  alias (`"{primitive.blue-600}"`), e o nível legado fica de fora.
+- O `tokens.dark.json` traz só o que o tema escuro redefine, nos mesmos caminhos (mescle por cima).
+- O exportador confere a **ida e volta**: resolver cada alias no JSON tem de dar o mesmo valor
+  final que resolver a cadeia de `var()` no CSS. Se divergir, não grava.
+- O caminho é CSS → JSON. Para importar uma mudança feita na ferramenta de design, edite o
+  `tokens.css` e exporte de novo.
+
 ## Como estilizar uma tela nova
 
 1. Procure o componente em `styles/components/`. `.section`, `.btn` (+ `secondary`, `ghost`,
@@ -124,6 +139,7 @@ os módulos. Para editar CSS localmente, o mais simples é apagar o bundle
   viveu com `var(--border,#2a2a2a)` e `var(--bg,#14171c)`: fallbacks de tema escuro num site
   claro, porque `--border`/`--bg`/`--fg` nunca foram definidos;
 - o CSS expandido é seguro para o relatório offline;
+- o `tokens.json`/`tokens.dark.json` (DTCG) está em dia com o `tokens.css`;
 - se `web/shared/ui.bundle.css` existe, ele é idêntico ao expandido de agora (fora a linha de
   cabeçalho). Bundle velho significa produção servindo estilo velho sem ninguém perceber.
 - todo arquivo de `styles/pages/` é carregado por alguma página, e todo `<link>` para `pages/`

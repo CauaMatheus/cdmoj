@@ -69,6 +69,10 @@ if [[ -f $UB ]]; then
   ck "shared/ui.bundle.css em dia com os módulos" 'tail -n +2 "$UB" | cmp -s - "$B"'
 fi
 
+# o tokens.json/tokens.dark.json (formato DTCG, p/ ferramentas de design) é derivado do tokens.css
+DBG="$(python3 "$ROOT/bin/tokens-export.py" --check 2>&1 | tr '\n' ' ')"
+ck "tokens.json (DTCG) em dia com o tokens.css" '[[ -z "$DBG" ]]'
+
 echo "== catraca (legado fora do design system) =="
 # conta ocorrências (grep -o) de uma ERE nos arquivos que chegam por NUL no stdin
 occ(){ local n; n="$(xargs -0 grep -ohE -- "$1" 2>/dev/null | wc -l)"; echo "${n//[^0-9]/}"; }
