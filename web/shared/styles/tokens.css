@@ -102,6 +102,7 @@
   --dash-card-warn-bg:#fff7ec; --dash-card-warn-border:#f3c08e; --dash-card-warn-val:#b3261e;
   --sample-copy-ok:#2e7d32;
   --news-pre-bg:#f6f8fb;
+  --tutorial-warn:#d99a2b;                     /* caixa "⚠" dos tutoriais (components/tutorial.css) */
   --medal-gold-bg:#fde68a; --medal-gold-text:#92560a;
   --medal-silver-bg:#e5e9f0; --medal-silver-text:#475569;
   --medal-bronze-bg:#fcd9b6; --medal-bronze-text:#9a4a16;

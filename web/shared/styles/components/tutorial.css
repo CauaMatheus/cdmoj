@@ -1,0 +1,31 @@
+/* styles/components/tutorial.css — página de TUTORIAL/guia: índice lateral (.ttoc) + texto (.tmain),
+   caixas de dica/aviso, ciclo de etapas e tabela de comandos (table.cheat).
+   Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css.
+   Era uma cópia idêntica no <style> de contest/cli.html, treino/cli.html, problemas/tutorial.html,
+   treino/criar/tutorial.html e em contest/ajuda/_tutorial.css. O que cada um tem de PRÓPRIO
+   (largura do .tmain nos tutoriais de papel, 1ª coluna da tabela nos guias de CLI) segue lá.
+   `.tip`/`.warn`/`.cycle` são nomes genéricos (`.pill.warn`, `.dash-card.warn` existem no admin):
+   por isso `:where(.tmain)`, que escopa SEM somar especificidade (a cascata fica a de antes).
+   ⚠ A ordem é a original, inclusive o @media ANTES do `.ttoc`: no celular o `position:sticky`
+   da regra base ainda vence o `static` da media query (comportamento de antes, preservado). */
+.tlayout{display:grid;grid-template-columns:15rem 1fr;gap:var(--space-8);align-items:start}
+@media(max-width:900px){.tlayout{grid-template-columns:1fr}.ttoc{position:static}}
+.ttoc{position:sticky;top:var(--space-4);font-size:.88rem;border:1px solid var(--color-border-strong);border-radius:.6rem;padding:.8rem var(--space-4)}
+.ttoc a{display:block;padding:.15rem 0;text-decoration:none;color:inherit;opacity:.85}
+.ttoc a:hover{color:var(--color-accent);opacity:1}
+.tmain{max-width:50rem;min-width:0}
+.tmain h2{margin:var(--space-8) 0 .6rem;padding-top:var(--space-2);border-top:1px solid var(--color-border-strong)}
+.tmain h2:first-child{border-top:none;margin-top:.4rem}
+.tmain h3{margin:1.3rem 0 .4rem}
+.tmain p, .tmain li{line-height:1.55}
+.tmain pre{background:color-mix(in srgb, var(--color-accent) 6%, transparent);border:1px solid var(--color-border-strong);border-radius:.5rem;padding:.6rem .9rem;overflow-x:auto;font-size:var(--text-sm);line-height:1.55}
+:where(.tmain) .tip{border-left:3px solid var(--color-accent);background:color-mix(in srgb, var(--color-accent) 6%, transparent);border-radius:0 .5rem .5rem 0;padding:var(--space-2) .8rem;margin:.6rem 0;font-size:.92rem}
+:where(.tmain) .tip::before{content:"💡 ";font-weight:700}
+:where(.tmain) .warn{border-left:3px solid var(--tutorial-warn);background:color-mix(in srgb, var(--tutorial-warn) 8%, transparent);border-radius:0 .5rem .5rem 0;padding:var(--space-2) .8rem;margin:.6rem 0;font-size:.92rem}
+:where(.tmain) .warn::before{content:"⚠ ";font-weight:700}
+:where(.tmain) .cycle{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;font-weight:600;margin:.6rem 0}
+:where(.tmain) .cycle span{border:1px solid var(--color-border-strong);border-radius:.5rem;padding:.3rem .7rem}
+:where(.tmain) .cycle b{color:var(--color-accent)}
+table.cheat{border-collapse:collapse;width:100%;font-size:.88rem;margin:var(--space-2) 0}
+.cheat th,.cheat td{border:1px solid var(--color-border-strong);padding:.3rem .55rem;text-align:left;vertical-align:top}
+.cheat th{background:color-mix(in srgb, var(--color-accent) 8%, transparent)}
