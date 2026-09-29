@@ -6,13 +6,13 @@
    (largura do .tmain nos tutoriais de papel, 1ª coluna da tabela nos guias de CLI) segue lá.
    `.tip`/`.warn`/`.cycle` são nomes genéricos (`.pill.warn`, `.dash-card.warn` existem no admin):
    por isso `:where(.tmain)`, que escopa SEM somar especificidade (a cascata fica a de antes).
-   ⚠ A ordem é a original, inclusive o @media ANTES do `.ttoc`: no celular o `position:sticky`
-   da regra base ainda vence o `static` da media query (comportamento de antes, preservado). */
+   O @media vem DEPOIS do `.ttoc`: antes vinha antes e, no celular, o `sticky` da regra base vencia
+   o `static` — o índice ficava grudado e transparente POR CIMA do texto ao rolar. */
 .tlayout{display:grid;grid-template-columns:15rem 1fr;gap:var(--space-8);align-items:start}
-@media(max-width:900px){.tlayout{grid-template-columns:1fr}.ttoc{position:static}}
 .ttoc{position:sticky;top:var(--space-4);font-size:.88rem;border:1px solid var(--color-border-strong);border-radius:.6rem;padding:.8rem var(--space-4)}
 .ttoc a{display:block;padding:.15rem 0;text-decoration:none;color:inherit;opacity:.85}
 .ttoc a:hover{color:var(--color-accent);opacity:1}
+@media(max-width:900px){.tlayout{grid-template-columns:1fr}.ttoc{position:static}}
 .tmain{max-width:50rem;min-width:0}
 .tmain h2{margin:var(--space-8) 0 .6rem;padding-top:var(--space-2);border-top:1px solid var(--color-border-strong)}
 .tmain h2:first-child{border-top:none;margin-top:.4rem}
