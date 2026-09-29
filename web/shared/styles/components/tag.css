@@ -1,13 +1,13 @@
 /* styles/components/tag.css — tags, coleções, dificuldade e dirt
    Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
 /* difficulty / tags */
-.tag { display:inline-block; background:var(--color-primary-soft); color:var(--color-primary-strong); border-radius:999px;
-  padding:.15rem .65rem; font-size:.78rem; font-weight:600; margin:.12rem; transition:.12s; }
+.tag { display:inline-block; background:var(--color-primary-soft); color:var(--color-primary-strong); border-radius:var(--radius-pill);
+  padding:.15rem .65rem; font-size:var(--text-xs); font-weight:600; margin:.12rem; transition:.12s; }
 .tag:hover { background:var(--tag-hover-bg); text-decoration:none; transform:translateY(-1px); }
 .tags-blur .tag { filter:blur(4px); } .tags-blur:hover .tag { filter:none; }
 /* coleções (curso/organização — cor distinta das tags; NUNCA borradas) */
-.collection { display:inline-block; background:var(--collection-bg); color:var(--collection-text); border-radius:999px;
-  padding:.15rem .65rem; font-size:.78rem; font-weight:600; margin:.12rem; transition:.12s; }
+.collection { display:inline-block; background:var(--collection-bg); color:var(--collection-text); border-radius:var(--radius-pill);
+  padding:.15rem .65rem; font-size:var(--text-xs); font-weight:600; margin:.12rem; transition:.12s; }
 .collection:hover { background:var(--collection-hover-bg); text-decoration:none; transform:translateY(-1px); }
 .diff { font-weight:700; } .diff-easy{color:var(--color-success);} .diff-med{color:var(--color-warning);} .diff-hard{color:var(--color-danger);}
 /* dirt (shared/difficulty.js): baixo ≤20% · médio ≤50% · alto */

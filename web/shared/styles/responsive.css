@@ -14,14 +14,14 @@
   .navlinks a{ white-space:nowrap; }
   /* login (deslogado) numa linha compacta; logado = só avatar (o nome some, .un) */
   .topbar .bar > #authArea{ order:4; flex-basis:100%; display:flex; flex-wrap:wrap; gap:.35rem; margin-left:0 !important; }
-  .topbar #authArea input{ flex:1 1 90px; min-width:70px; width:auto; padding:.35rem .5rem; font-size:.9rem; }
+  .topbar #authArea input{ flex:1 1 90px; min-width:70px; width:auto; padding:.35rem var(--space-2); font-size:.9rem; }
   .topbar #authArea .btn{ padding:.35rem .7rem; }
   .user-menu-btn .un{ display:none; }
   .quicknav{ top:0; position:static; }
-  .quicknav .bar{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; gap:1rem; padding:.5rem .7rem; }
+  .quicknav .bar{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; gap:var(--space-4); padding:var(--space-2) .7rem; }
   .quicknav .bar a{ white-space:nowrap; }
-  .container{ padding:1rem .8rem 2rem; }
-  .hero{ padding:1.4rem 1rem; }
+  .container{ padding:var(--space-4) .8rem var(--space-8); }
+  .hero{ padding:1.4rem var(--space-4); }
   .hero h1{ font-size:1.5rem; }
   /* PAINÉIS (admin/chief/judge — "dados no celular"): abas em tira rolável de 1 linha,
      tabelas mais densas, cards de dashboard em grade sem buracos, tabela rola até a borda.
@@ -29,8 +29,8 @@
      arquivo — sem o boost de especificidade, o flex-wrap local venceria o mobile daqui. */
   body .tabbar{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
   body .tabbar::-webkit-scrollbar{ display:none; }
-  body .tabbar button, body .tabbar a{ white-space:nowrap; padding:.35rem .6rem; font-size:.85rem; }
-  body table.moj th, body table.moj td{ padding:.42rem .5rem; font-size:.85rem; }
+  body .tabbar button, body .tabbar a{ white-space:nowrap; padding:.35rem .6rem; font-size:var(--text-sm); }
+  body table.moj th, body table.moj td{ padding:.42rem var(--space-2); font-size:var(--text-sm); }
   body .dash-cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
   body .dash-card{ min-width:0; }
   body .chart-wrap{ margin:0 -.8rem; padding:0 .8rem; }

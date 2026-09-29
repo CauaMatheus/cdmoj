@@ -2,7 +2,7 @@
    Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
 /* tables */
 table.moj { width:100%; border-collapse:separate; border-spacing:0; background:var(--color-surface);
-  border:1px solid var(--color-border); border-radius:12px; overflow:hidden; font-size:.93rem; }
+  border:1px solid var(--color-border); border-radius:var(--radius-lg); overflow:hidden; font-size:.93rem; }
 table.moj th,table.moj td { padding:.6rem .9rem; text-align:left; border-bottom:1px solid var(--color-border);
   font-variant-numeric:tabular-nums; }
 table.moj thead th { background:var(--table-head-bg); color:var(--color-primary-strong); font-weight:700; font-size:.82rem;

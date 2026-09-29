@@ -13,7 +13,7 @@
    Ativo = cheio; os outros = contorno. Vazio quando o problema tem um idioma só. */
 .stmt-chips { display:inline-flex; gap:.3rem; align-items:center; flex-wrap:wrap; }
 .stmt-chip { border:1px solid var(--color-primary-strong); background:var(--color-surface); color:var(--color-primary-strong); font-weight:700;
-  font-size:.74rem; letter-spacing:.03em; padding:.08rem .55rem; border-radius:999px; cursor:pointer; line-height:1.5; }
+  font-size:.74rem; letter-spacing:.03em; padding:.08rem .55rem; border-radius:var(--radius-pill); cursor:pointer; line-height:1.5; }
 .stmt-chip:hover { background:var(--color-primary-soft); }
 .stmt-chip.active { background:var(--color-primary-strong); color:var(--color-text-inverse); cursor:default; }
 .stmt-chip.add { border-style:dashed; font-weight:600; }
@@ -21,7 +21,7 @@
   color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:4px; padding:0 .3rem; vertical-align:middle; }
 .tl-label { font-size:.82rem; font-weight:700; color:var(--color-primary-strong); margin-right:.15rem; }
 .tl-chip { display:inline-flex; align-items:center; gap:.45rem; background:var(--color-surface-alt); border:1px solid var(--color-border);
-  border-radius:999px; padding:.18rem .65rem; font-size:.82rem; }
+  border-radius:var(--radius-pill); padding:.18rem .65rem; font-size:.82rem; }
 .tl-chip b { color:var(--color-primary-strong); font-weight:700; }
 .tl-chip .tl-time { font-variant-numeric:tabular-nums; color:var(--color-text-muted); font-family:var(--font-mono); }
 
@@ -32,24 +32,24 @@
 .statement-content code { font-family:var(--font-mono); color:var(--color-primary-strong); background:var(--color-primary-faint);
   padding:.05em .35em; border-radius:5px; font-size:.92em; }
 .statement-content pre { font-family:var(--font-mono); background:var(--color-code-bg); color:var(--color-code-text);
-  border-radius:10px; padding:.9em 1.2em; overflow-x:auto; box-shadow:var(--shadow-raised); }
+  border-radius:var(--radius-md); padding:.9em 1.2em; overflow-x:auto; box-shadow:var(--shadow-raised); }
 .statement-content pre code { background:none; color:inherit; padding:0; }
 .statement-content footer,.statement-content #footer { color:var(--color-text-muted); text-align:right; font-size:.95em; margin-top:2em; }
-.statement-content img { max-width:100%; border-radius:8px; }
-.statement-content h1.moj-title { color:var(--color-primary-strong); margin:.2rem 0 1rem; }
+.statement-content img { max-width:100%; border-radius:var(--radius-sm); }
+.statement-content h1.moj-title { color:var(--color-primary-strong); margin:.2rem 0 var(--space-4); }
 .statement-content ul,.statement-content ol { padding-left:1.5em; }
 .statement-content blockquote { border-left:3px solid var(--color-border-strong); margin:.8em 0; padding:.1em .9em; color:var(--color-text-muted); }
 .statement-content table { border-collapse:collapse; margin:.7rem 0; }
-.statement-content th,.statement-content td { border:1px solid var(--color-border-strong); padding:.25rem .55rem; }
+.statement-content th,.statement-content td { border:1px solid var(--color-border-strong); padding:var(--space-1) .55rem; }
 /* exemplos (mesmo markup do render-statement.sh: .moj-exemplos / .moj-exemplo / .moj-exemplo-nota) */
 .statement-content .moj-exemplos h2 { margin-top:1.3rem; }
-.statement-content .moj-exemplo { border:1px solid var(--color-border-strong); border-radius:8px; padding:.2rem .85rem; margin:.7rem 0; }
-.statement-content .moj-exemplo h3,.statement-content .moj-exemplo h4 { margin:.5rem 0 .2rem; color:var(--color-primary-strong); }
+.statement-content .moj-exemplo { border:1px solid var(--color-border-strong); border-radius:var(--radius-sm); padding:.2rem .85rem; margin:.7rem 0; }
+.statement-content .moj-exemplo h3,.statement-content .moj-exemplo h4 { margin:var(--space-2) 0 .2rem; color:var(--color-primary-strong); }
 /* botão "Copiar" de cada bloco de exemplo (shared/statement-samples.js): o h3 vira uma linha flex
    com o botão à direita; sempre visível (celular não tem hover) */
-.statement-content .moj-exemplo h3.sample-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+.statement-content .moj-exemplo h3.sample-head { display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); }
 .sample-copy { font:600 .72rem/1.4 inherit; font-family:inherit; padding:.1rem .6rem; border:1px solid var(--color-border-strong);
-  border-radius:999px; background:var(--color-surface); color:var(--color-primary-strong); cursor:pointer; white-space:nowrap; }
+  border-radius:var(--radius-pill); background:var(--color-surface); color:var(--color-primary-strong); cursor:pointer; white-space:nowrap; }
 .sample-copy:hover { background:var(--color-primary-faint); }
 .sample-copy.ok { border-color:var(--sample-copy-ok); color:var(--sample-copy-ok); }
 .statement-content .moj-exemplo-nota { margin:.1rem 0 .6rem; color:var(--color-text-muted); }
