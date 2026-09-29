@@ -34,7 +34,7 @@ export function makeAnomaliesTab(CONTEST) {
   function stateBar(d) {
     const g = d.gate || {};
     const on = g.mode === 'enforce';
-    const bar = el('div', { class: 'row', style: 'gap:.6rem;flex-wrap:wrap;align-items:center;margin:.2rem 0 .6rem' },
+    const bar = el('div', { class: 'row u-mt-.2 u-mb-.6 u-mx-0 u-gap-.6 u-wrap u-items-center' },
       el('span', { class: 'pill ' + (g.active ? 'ok' : '') }, g.active ? T('gate de UA ativo', 'UA gate active', 'gate de UA activo') : on ? T('gate armado sem regra', 'gate armed, no rule', 'gate armado sin regla') : T('gate desligado', 'gate off', 'gate apagado')),
       el('span', { class: 'pill ' + (g.single_session && g.active ? 'ok' : '') }, g.single_session ? T('sessão única por time', 'single session per team', 'sesión única por equipo') : T('sessão única DESLIGADA', 'single session OFF', 'sesión única APAGADA')),
       el('a', { href: '#maquinas/gate', class: 'small' }, T('Gate & trava →', 'Gate & lock →', 'Gate y bloqueo →')),
@@ -58,7 +58,7 @@ export function makeAnomaliesTab(CONTEST) {
     const L = c.logins || {}, S = c.submissions || {};
     const cell = (v, lbl) => el('div', { class: 'dash-card' }, el('div', { class: 'dash-val' }, String(v || 0)), el('div', { class: 'dash-lbl' }, lbl));
     return el('div', {},
-      el('div', { class: 'small muted', style: 'margin:.4rem 0 .1rem' },
+      el('div', { class: 'small muted u-mt-.4 u-mb-.1 u-mx-0' },
         T('Canal dos pedidos na prova (pelo User-Agent: a CLI se marca "moj-comp/<build>")', 'Request channel in the contest (by User-Agent: the CLI marks itself "moj-comp/<build>")', 'Canal de los pedidos en la competencia (por User-Agent: la CLI se marca "moj-comp/<build>")')),
       el('div', { class: 'dash-cards' },
         cell(L.web, T('logins web', 'web logins', 'logins web')), cell(L.cli, T('logins CLI', 'CLI logins', 'logins CLI')), cell(L.other, T('logins outros', 'other logins', 'otros logins')),
@@ -89,7 +89,7 @@ export function makeAnomaliesTab(CONTEST) {
   }
 
   // --- 3. linha do tempo ------------------------------------------------------------------
-  const fText = el('input', { type: 'search', placeholder: T('time, sede, máquina…', 'team, site, machine…', 'equipo, sede, máquina…'), style: 'min-width:220px' });
+  const fText = el('input', { class: 'u-minw-220px', type: 'search', placeholder: T('time, sede, máquina…', 'team, site, machine…', 'equipo, sede, máquina…') });
   fText.addEventListener('input', () => { filterText = fText.value; if (SK.tlBody) SK.tlBody(); });
   function timeline(d) {
     const K = KINDS();
@@ -103,7 +103,7 @@ export function makeAnomaliesTab(CONTEST) {
       return items.filter((x) => (!filterKind || x.kind === filterKind)
         && (!f || [x.login, x.name, x.region, x.machine, JSON.stringify(x.detail || {})].join(' ').toLowerCase().includes(f)));
     };
-    const chips = el('div', { class: 'row', style: 'gap:.3rem;flex-wrap:wrap' },
+    const chips = el('div', { class: 'row u-gap-.3 u-wrap' },
       ...Object.keys(K).map((k) => el('button', { class: 'btn ghost small' + (filterKind === k ? ' active' : ''),
         style: filterKind === k ? 'outline:2px solid #1e57c4' : '', title: K[k].hint,
         onclick: () => { filterKind = (filterKind === k ? '' : k); render(); } }, K[k].icon + ' ' + K[k].label)));
@@ -146,7 +146,7 @@ export function makeAnomaliesTab(CONTEST) {
     function renderBody() {
       body.innerHTML = '';
       const rws = filtered();
-      body.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' }, rws.length + T(' evento(s).', ' event(s).', ' evento(s).')));
+      body.append(el('div', { class: 'small muted u-my-.3 u-mx-0' }, rws.length + T(' evento(s).', ' event(s).', ' evento(s).')));
       if (!rws.length) { body.append(el('div', { class: 'muted' }, T('Nada fora do lugar.', 'Nothing out of place.', 'Nada fuera de lugar.'))); return; }
       const tb = el('tbody');
       rws.slice(0, 400).forEach((x) => {
@@ -163,7 +163,7 @@ export function makeAnomaliesTab(CONTEST) {
         el('th', {}, T('Quando', 'When', 'Cuándo')), el('th', {}, T('Tipo', 'Type', 'Tipo')), el('th', {}, T('Time', 'Team', 'Equipo')), el('th', {}, T('Máquina', 'Machine', 'Máquina')), el('th', {}, T('Detalhe', 'Detail', 'Detalle')), el('th', {}, ''))), tb)));
     }
     renderBody(); SK.tlBody = renderBody;
-    box.append(el('div', { class: 'row', style: 'gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.4rem' }, fText, dl), chips, body);
+    box.append(el('div', { class: 'row u-gap-.5 u-wrap u-items-center u-mb-.4' }, fText, dl), chips, body);
     return box;
   }
 
@@ -173,7 +173,7 @@ export function makeAnomaliesTab(CONTEST) {
     const all = d.teams || [];
     const rows = (showAll ? all : all.filter((t) => (t.flags || []).length)).filter((t) => !filterKind || (t.flags || []).includes(filterKind));
     const box = el('div', {});
-    const tog = el('label', { class: 'small', style: 'display:inline-flex;gap:.3rem;align-items:center' },
+    const tog = el('label', { class: 'small u-gap-.3 u-items-center', style: 'display:inline-flex' },
       el('input', { type: 'checkbox', checked: showAll, onchange: (ev) => { showAll = ev.target.checked; render(); } }),
       T('mostrar todos os times com sessão', 'show all teams with a session', 'mostrar todos los equipos con sesión'));
     const tb = el('tbody');
@@ -185,10 +185,10 @@ export function makeAnomaliesTab(CONTEST) {
         el('td', { class: 'n' }, String((t.sessions || []).length) + (keys.length > 1 ? ' ' + T('em', 'on', 'en') + ' ' + keys.length + ' ' + T('máq.', 'mach.', 'máq.') : '')),
         el('td', { class: 'small' }, ...(t.machines || []).filter((m) => m.in > 0).flatMap((m, i) => [i ? ' → ' : '', mk(m.key), el('span', { class: 'muted' }, ' ' + fmtClock(m.first))])),
         el('td', { class: 'small' }, ls ? [fmtClock(ls.at), ' ', mk(ls.key), ' ', el('span', { class: ls.same_as_session && ls.same_as_login_machine ? 'v-ok' : 'flag-anom' }, ls.same_as_session && ls.same_as_login_machine ? '✓' : '✗')] : '—'),
-        el('td', {}, ...(t.flags || []).map((f) => el('span', { class: 'pill small', style: 'margin-right:.2rem', title: K[f] ? K[f].hint : f }, (K[f] || {}).icon + ' ' + ((K[f] || {}).label || f)))),
+        el('td', {}, ...(t.flags || []).map((f) => el('span', { class: 'pill small u-mr-.2', title: K[f] ? K[f].hint : f }, (K[f] || {}).icon + ' ' + ((K[f] || {}).label || f)))),
         el('td', {}, el('button', { class: 'btn ghost small', onclick: () => logoutUser(t.login) }, T('deslogar', 'log out', 'cerrar sesión')))));
     });
-    box.append(el('div', { class: 'row', style: 'gap:.6rem;align-items:center;margin-bottom:.3rem' }, tog,
+    box.append(el('div', { class: 'row u-gap-.6 u-items-center u-mb-.3' }, tog,
       el('span', { class: 'small muted' }, rows.length + T(' time(s).', ' team(s).', ' equipo(s).'))),
     el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' }, el('thead', {}, el('tr', {},
       el('th', {}, T('Time', 'Team', 'Equipo')), el('th', { class: 'n' }, T('Sessões', 'Sessions', 'Sesiones')), el('th', {}, T('Máquinas na prova', 'Machines in contest', 'Máquinas en la competencia')),
@@ -200,8 +200,8 @@ export function makeAnomaliesTab(CONTEST) {
   function legend() {
     const K = KINDS();
     const li = (k, txt) => el('li', {}, el('b', {}, k + ': '), txt);
-    return el('details', { class: 'small', style: 'margin:.5rem 0' }, el('summary', {}, T('📖 Como ler', '📖 How to read', '📖 Cómo leer')),
-      el('ul', { style: 'margin:.2rem 0 0 1.1rem' },
+    return el('details', { class: 'small u-my-.5 u-mx-0' }, el('summary', {}, T('📖 Como ler', '📖 How to read', '📖 Cómo leer')),
+      el('ul', { class: 'u-mt-.2 u-mb-0 u-ml-1.1 u-mr-0' },
         li(T('Máquina', 'Machine', 'Máquina'), T('a chave vem do navegador do mlinux (machine_id/boot_id). Um reboot muda o boot_id: a mesma máquina aparece como outra. Login sem essa chave (navegador comum) só tem o IP, que atrás de NAT é a sede inteira — por isso IP nunca conta como máquina.', 'the key comes from the mlinux browser (machine_id/boot_id). A reboot changes the boot_id: the same machine shows up as another. A login without that key (regular browser) only has the IP, which behind NAT is the whole site — so an IP never counts as a machine.', 'la clave viene del navegador del mlinux (machine_id/boot_id). Un reinicio cambia el boot_id: la misma máquina aparece como otra. Un login sin esa clave (navegador común) solo tiene el IP, que detrás de NAT es la sede entera — por eso un IP nunca cuenta como máquina.')),
         li(T('Sessão única', 'Single session', 'Sesión única'), T('com o gate ligado, um login em outra máquina derruba a sessão anterior do time. Recarregar a página na mesma máquina não derruba nada. Cada queda vira um evento aqui.', 'with the gate on, a login on another machine ends the team\'s previous session. Reloading the page on the same machine ends nothing. Each drop becomes an event here.', 'con el gate activo, un login en otra máquina termina la sesión anterior del equipo. Recargar la página en la misma máquina no termina nada. Cada caída se vuelve un evento aquí.')),
         ...Object.keys(K).map((k) => li(K[k].icon + ' ' + K[k].label, K[k].hint)),

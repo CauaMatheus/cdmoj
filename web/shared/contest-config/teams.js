@@ -47,7 +47,7 @@ export async function makeTeamsEditor(opts = {}) {
     logoInp.addEventListener('change', () => { const f = logoInp.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { r.logo = rd.result; showLogo(); }; rd.readAsDataURL(f); });
     showLogo();
     const rm = el('button', { class: 'btn danger ghost', title: T('remover', 'remove', 'quitar'), onclick: () => { rules.splice(i, 1); render(); } }, '✕');
-    return el('div', { style: 'border:1px solid #e3e9f2;border-radius:8px;padding:.5rem;margin:.4rem 0;background:#fafcff' },
+    return el('div', { style: 'border:1px solid var(--js-teams-div-border);border-radius:8px;padding:.5rem;margin:.4rem 0;background:var(--color-surface-alt)' },
       el('div', { class: 'row' }, el('span', { class: 'small muted' }, T('login casa:', 'login matches:', 'login coincide:')), regex),
       el('div', { class: 'row' }, country, flagPrev, school,
         el('span', { class: 'small muted' }, 'logo:'), logoPrev,
@@ -91,7 +91,7 @@ export async function makeTeamsEditor(opts = {}) {
       const flag = x.rule && x.rule.country ? flagEl(x.rule.country, { height: 14 }) : null;
       tb.append(el('tr', {},
         el('td', { class: 'small', style: 'font-family:var(--mono,monospace)' }, x.login),
-        el('td', { class: 'small', style: 'font-family:var(--mono,monospace)' }, x.rule ? x.rule.regex : el('span', { style: 'color:#b8860b' }, T('— sem match —', '— no match —', '— sin coincidencia —'))),
+        el('td', { class: 'small', style: 'font-family:var(--mono,monospace)' }, x.rule ? x.rule.regex : el('span', { style: 'color:var(--js-teams-span-text)' }, T('— sem match —', '— no match —', '— sin coincidencia —'))),
         el('td', {}, flag || '', x.rule && x.rule.country ? ' ' + x.rule.country : ''),
         el('td', { class: 'small' }, x.rule ? (x.rule.school || '') : '')));
     });

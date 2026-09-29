@@ -38,16 +38,16 @@ export function makeProblemsTab(CONTEST) {
     const stop = (e) => e.stopPropagation();
     const head = el('div', { class: 'acc-head' },
       tog, el('b', {}, p.letter), ' ', el('span', {}, p.name || ''),
-      el('span', { class: 'small muted', style: 'font-family:var(--mono); margin-left:.4rem' }, (p.source || 'cdmoj') + '/' + p.problem_id),
-      el('span', { style: 'flex:1' }),
+      el('span', { class: 'small muted u-mono u-ml-.4' }, (p.source || 'cdmoj') + '/' + p.problem_id),
+      el('span', { class: 'u-grow' }),
       el('button', { class: 'btn ghost', title: T('subir', 'move up', 'subir'), onclick: (e) => { stop(e); if (i > 0) { const o = letters.slice(); [o[i - 1], o[i]] = [o[i], o[i - 1]]; act({ action: 'reorder', order: o }); } } }, '↑'),
       el('button', { class: 'btn ghost', title: T('descer', 'move down', 'bajar'), onclick: (e) => { stop(e); if (i < ps.length - 1) { const o = letters.slice(); [o[i + 1], o[i]] = [o[i], o[i + 1]]; act({ action: 'reorder', order: o }); } } }, '↓'),
       el('button', { class: 'btn danger', title: T('remover', 'remove', 'quitar'), onclick: (e) => { stop(e); if (confirm(T('Remover ', 'Remove ', 'Quitar ') + p.letter + '?')) act({ action: 'remove', letter: p.letter }); } }, '✕'));
     head.addEventListener('click', () => { const hid = body.classList.toggle('hidden'); tog.textContent = hid ? '▶' : '▼'; });
 
     // --- renomear (nome E identificador: a letra pode ser custom — W1, Q… — e o reorder a preserva) ---
-    const nameInp = el('input', { value: p.name || '', style: 'max-width:280px' });
-    const letInp = el('input', { value: p.letter || '', maxlength: '3', style: 'width:4.5rem; font-family:var(--mono)' });
+    const nameInp = el('input', { class: 'u-maxw-280px', value: p.name || '' });
+    const letInp = el('input', { class: 'u-w-4.5 u-mono', value: p.letter || '', maxlength: '3' });
     const rnMsg = el('div', { class: 'small' });
     const saveRename = () => {
       const payload = { action: 'rename', letter: p.letter, name: nameInp.value };
@@ -63,24 +63,24 @@ export function makeProblemsTab(CONTEST) {
     const jMsg = el('div', { class: 'small' });
     // --- enunciado: atualizar do banco / enviar HTML / enviar PDF ---
     const sMsg = el('div', { class: 'small' });
-    const htmlIn = el('input', { type: 'file', accept: '.html,.htm,text/html', style: 'max-width:200px' });
-    const pdfIn = el('input', { type: 'file', accept: '.pdf,application/pdf', style: 'max-width:200px' });
+    const htmlIn = el('input', { class: 'u-maxw-200px', type: 'file', accept: '.html,.htm,text/html' });
+    const pdfIn = el('input', { class: 'u-maxw-200px', type: 'file', accept: '.pdf,application/pdf' });
     // idioma do arquivo enviado/removido: <skey>.html (PT) ou <skey>.<lang>.html
     const langSel = el('select', { title: T('Idioma do arquivo', 'File language', 'Idioma del archivo') },
       ...STMT_LANGS.map((l) => el('option', { value: l }, STMT_SHORT[l] + ' — ' + stmtName(l))));
     const sendStmt = async (payload) => postProb({ action: 'statement', letter: p.letter, lang: langSel.value, ...payload }, sMsg, false);
 
     body.append(
-      el('div', { class: 'row', style: 'margin:.3rem 0; flex-wrap:wrap' },
+      el('div', { class: 'row u-my-.3 u-mx-0 u-wrap' },
         el('span', { class: 'small muted' }, T('Identificador:', 'Identifier:', 'Identificador:')), letInp,
         el('span', { class: 'small muted' }, T('Nome:', 'Name:', 'Nombre:')), nameInp,
         el('button', { class: 'btn ghost', onclick: saveRename }, T('Renomear', 'Rename', 'Renombrar')), rnMsg),
-      el('div', { style: 'margin:.5rem 0' }, el('div', { class: 'small muted' }, T('💻 Linguagens (nenhuma marcada = herda do contest):', '💻 Languages (none checked = inherits from contest):', '💻 Lenguajes (ninguno marcado = hereda de la competencia):')),
+      el('div', { class: 'u-my-.5 u-mx-0' }, el('div', { class: 'small muted' }, T('💻 Linguagens (nenhuma marcada = herda do contest):', '💻 Languages (none checked = inherits from contest):', '💻 Lenguajes (ninguno marcado = hereda de la competencia):')),
         picker.el, el('div', { class: 'row' }, el('button', { class: 'btn', onclick: () => postProb({ action: 'langs', letter: p.letter, languages: picker.get() }, lMsg, false) }, T('Salvar linguagens', 'Save languages', 'Guardar lenguajes')), lMsg)),
-      el('div', { style: 'margin:.5rem 0' }, el('div', { class: 'small muted' }, T('🖥️ Máquinas de juiz deste problema (nenhuma marcada = herda o pool do contest):', '🖥️ Judge machines for this problem (none checked = inherits the contest pool):', '🖥️ Máquinas de juez para este problema (ninguna marcada = hereda el pool de la competencia):')),
+      el('div', { class: 'u-my-.5 u-mx-0' }, el('div', { class: 'small muted' }, T('🖥️ Máquinas de juiz deste problema (nenhuma marcada = herda o pool do contest):', '🖥️ Judge machines for this problem (none checked = inherits the contest pool):', '🖥️ Máquinas de juez para este problema (ninguna marcada = hereda el pool de la competencia):')),
         jPicker.el, el('div', { class: 'row' }, el('button', { class: 'btn', onclick: () => postProb({ action: 'judges', letter: p.letter, judges: jPicker.get() }, jMsg, false) }, T('Salvar máquinas', 'Save machines', 'Guardar máquinas')), jMsg)),
-      el('div', { style: 'margin:.5rem 0' }, el('div', { class: 'small muted' }, T('📄 Enunciado:', '📄 Statement:', '📄 Enunciado:')),
-        el('div', { class: 'row', style: 'flex-wrap:wrap; gap:.4rem' },
+      el('div', { class: 'u-my-.5 u-mx-0' }, el('div', { class: 'small muted' }, T('📄 Enunciado:', '📄 Statement:', '📄 Enunciado:')),
+        el('div', { class: 'row u-wrap u-gap-.4' },
           el('button', { class: 'btn ghost', title: T('Re-buscar do banco de problemas (regenera o enunciado em todos os idiomas)', 'Re-fetch from the problem bank (regenerates the statement in every language)', 'Volver a traer del banco de problemas (regenera el enunciado en todos los idiomas)'), onclick: () => sendStmt({ refresh: true }).then(loadList) }, T('↻ Atualizar do banco', '↻ Refresh from bank', '↻ Actualizar desde el banco')),
           el('span', { class: 'small muted' }, T('Idioma:', 'Language:', 'Lenguaje:')), langSel,
           el('span', { class: 'small muted' }, 'HTML:'), htmlIn,
@@ -120,7 +120,7 @@ export function makeProblemsTab(CONTEST) {
         noQueryFilter: (items) => items.filter((it) => it.private),
         emptyHint: T('o dono do contest não tem problemas privados — digite para buscar no banco público', 'the contest owner has no private problems — type to search the public bank', 'el dueño de la competencia no tiene problemas privados — escribe para buscar en el banco público'),
       });
-      panel.append(list, stmtLangs.el, el('h3', { style: 'margin:1rem 0 .3rem' }, T('🏦 Adicionar do banco', '🏦 Add from bank', '🏦 Agregar del banco')), bank.el);
+      panel.append(list, stmtLangs.el, el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('🏦 Adicionar do banco', '🏦 Add from bank', '🏦 Agregar del banco')), bank.el);
     }
     await Promise.all([loadList(), stmtLangs.load()]);
   }

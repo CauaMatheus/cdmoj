@@ -25,9 +25,9 @@ export function makeBankPanel({ api, onAdd, searchLabel, searchPlaceholder, noQu
   // --- chips genéricos (coleções e tags) ---
   function chipsInput({ dlId, placeholder, options, optionLabel }) {
     const selected = [];
-    const chips = el('div', { class: 'row', style: 'margin:.3rem 0' });
+    const chips = el('div', { class: 'row u-my-.3 u-mx-0' });
     const dl = el('datalist', { id: dlId });
-    const input = el('input', { list: dlId, placeholder, style: 'min-width:220px' });
+    const input = el('input', { class: 'u-minw-220px', list: dlId, placeholder });
     const render = () => {
       chips.innerHTML = '';
       selected.forEach((v, i) => chips.append(el('span', { class: 'tag-chip' }, v,
@@ -50,7 +50,7 @@ export function makeBankPanel({ api, onAdd, searchLabel, searchPlaceholder, noQu
     optionLabel: (o) => o.value + ' (' + o.count + ')',
   });
 
-  const count = el('input', { type: 'number', min: '1', max: '100', value: '6', style: 'width:70px' });
+  const count = el('input', { class: 'u-w-70px', type: 'number', min: '1', max: '100', value: '6' });
   const match = el('select', {}, el('option', { value: 'any' }, T('qualquer tag', 'any tag', 'cualquier etiqueta')), el('option', { value: 'all' }, T('todas as tags', 'all tags', 'todas las etiquetas')));
   const DL = DIFF_LABEL();
   const diff = el('select', {}, ...Object.keys(DL).map((k) => el('option', { value: k }, DL[k])));
@@ -62,7 +62,7 @@ export function makeBankPanel({ api, onAdd, searchLabel, searchPlaceholder, noQu
     el('div', {}, el('div', { class: 't' }, (p.title || p.id), accBadge(p)), el('div', { class: 'i' }, extraInfo || p.id)),
     el('button', { class: 'btn ghost', onclick: () => onAdd(p) }, T('+ adicionar', '+ add', '+ agregar')));
   const accBadge = (it) => it.private
-    ? el('span', { class: 'tag', style: 'margin-left:.4rem;background:#3d3417;color:#ffe08a' }, it.access === 'shared' ? T('compartilhado', 'shared', 'compartido') : T('privado', 'private', 'privado'))
+    ? el('span', { class: 'tag u-ml-.4', style: 'background:var(--js-bank-panel-span-bg);color:var(--js-bank-panel-span-text)' }, it.access === 'shared' ? T('compartilhado', 'shared', 'compartido') : T('privado', 'private', 'privado'))
     : '';
 
   async function doDraw(reshuffle) {
@@ -78,7 +78,7 @@ export function makeBankPanel({ api, onAdd, searchLabel, searchPlaceholder, noQu
         out.append(el('p', { class: 'muted small' }, T('Nenhum problema encontrado (', 'No problem found (', 'Ningún problema encontrado (') + r.candidates + T(' candidatos). Ajuste coleções/tags/dificuldade.', ' candidates). Adjust collections/tags/difficulty.', ' candidatos). Ajusta colecciones/etiquetas/dificultad.')));
         return;
       }
-      out.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' },
+      out.append(el('div', { class: 'small muted u-my-.3 u-mx-0' },
         T('Sorteados ', 'Drawn ', 'Sorteados ') + r.drawn + T(' de ', ' of ', ' de ') + r.candidates + T(' candidatos (seed ', ' candidates (seed ', ' candidatos (semilla ') + r.seed + '). ',
         el('a', { href: '#', onclick: (e) => { e.preventDefault(); doDraw(true); } }, T('↻ sortear de novo', '↻ draw again', '↻ sortear de nuevo')), ' · ',
         el('a', { href: '#', onclick: (e) => { e.preventDefault(); r.problems.forEach((p2) => onAdd(p2)); } }, T('+ adicionar todos', '+ add all', '+ agregar todos'))));
@@ -127,8 +127,8 @@ export function makeBankPanel({ api, onAdd, searchLabel, searchPlaceholder, noQu
   })();
 
   const root = el('div', {},
-    el('div', { class: 'section', style: 'background:#fbfdff' },
-      el('h3', { style: 'margin:.1rem 0 .4rem' }, T('🎲 Sortear por coleção / tag / dificuldade', '🎲 Draw by collection / tag / difficulty', '🎲 Sortear por colección / etiqueta / dificultad')),
+    el('div', { class: 'section', style: 'background:var(--js-bank-panel-div-bg)' },
+      el('h3', { class: 'u-mt-.1 u-mb-.4 u-mx-0' }, T('🎲 Sortear por coleção / tag / dificuldade', '🎲 Draw by collection / tag / difficulty', '🎲 Sortear por colección / etiqueta / dificultad')),
       el('div', { class: 'field' }, el('label', {}, T('Coleções', 'Collections', 'Colecciones')), colC.input, colC.dl, colC.chips),
       el('div', { class: 'field' }, el('label', {}, 'Tags'), tagC.input, tagC.dl, tagC.chips),
       el('div', { class: 'row' }, el('span', { class: 'small' }, T('quantos:', 'how many:', 'cuántos:')), count,

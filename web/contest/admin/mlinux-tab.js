@@ -84,7 +84,7 @@ export function makeMlinuxTab(CONTEST) {
       el('h2', {}, T('⚙️ Integração', '⚙️ Integration', '⚙️ Integración'),
         ' ', RESP && RESP.configured ? el('span', { class: 'pill ok' }, T('configurada', 'configured', 'configurada'))
           : el('span', { class: 'pill' }, T('sem chave', 'no key', 'sin clave'))),
-      el('div', { class: 'row', style: 'gap:.5rem;flex-wrap:wrap;align-items:center' },
+      el('div', { class: 'row u-gap-.5 u-wrap u-items-center' },
         el('label', {}, 'URL ', url), el('label', {}, T('Chave ', 'Key ', 'Clave '), key),
         RESP && RESP.key_kind ? el('span', { class: 'pill ' + (RESP.key_kind === 'service' ? 'ok' : 'warn'),
           title: RESP.key_kind === 'service'
@@ -95,13 +95,13 @@ export function makeMlinuxTab(CONTEST) {
                 'ADMINISTRATION key: can do anything in nutellaboot, on every site. Prefer a service key (nb3s_…) with machines:read, commands:write, bindings:write, roster:read and roster:write on the event images.',
                 'Clave de ADMINISTRACIÓN: puede hacer cualquier cosa en nutellaboot, en todas las sedes. Prefiere una clave de servicio (nb3s_…) con machines:read, commands:write, bindings:write, roster:read y roster:write en las imágenes del evento.') },
           RESP.key_kind === 'service' ? T('chave de serviço', 'service key', 'clave de servicio') : T('chave de administração', 'administration key', 'clave de administración')) : null),
-      el('div', { class: 'row', style: 'gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.4rem' },
+      el('div', { class: 'row u-gap-.5 u-wrap u-items-center u-mt-.4' },
         el('label', {}, T('Site-images do evento ', 'Event site-images ', 'Site-images del evento '), imgs),
         el('button', { class: 'btn', onclick: () => save(false) }, T('Salvar', 'Save', 'Guardar')),
         RESP && RESP.configured
           ? el('button', { class: 'btn ghost', onclick: () => save(true) }, T('remover chave', 'remove key', 'eliminar clave')) : null,
         msg),
-      el('div', { class: 'small muted', style: 'margin-top:.3rem' },
+      el('div', { class: 'small muted u-mt-.3' },
         T('Site-images: opcional — o nutellaboot lista as sedes do glob da chave; preencha só para restringir.',
           'Site-images: optional — nutellaboot lists the sites of the key glob; fill it only to restrict.',
           'Site-images: opcional — nutellaboot lista las sedes del glob de la clave; complétalo solo para restringir.')));
@@ -123,7 +123,7 @@ export function makeMlinuxTab(CONTEST) {
       } }, T('📥 Coletar agora', '📥 Collect now', '📥 Recolectar ahora'));
     return el('div', { class: 'section' },
       el('h2', {}, T('📥 Coleta', '📥 Collection', '📥 Recolección')),
-      el('div', { class: 'row', style: 'gap:.6rem;align-items:center' }, btn,
+      el('div', { class: 'row u-gap-.6 u-items-center' }, btn,
         el('span', { class: 'small muted' }, stTxt), msg));
   }
 
@@ -150,8 +150,8 @@ export function makeMlinuxTab(CONTEST) {
       el('p', { class: 'ml-note' }, T('Quando um time faz login numa máquina do mlinux, o MOJ informa ao nutellaboot qual time está nela. A tela de bloqueio da máquina passa a mostrar o time. Só funciona com o agente novo do mlinux e com o time no roster da imagem.',
         'When a team logs in on an mlinux machine, MOJ tells nutellaboot which team is on it. The machine lock screen then shows the team. It needs the new mlinux agent and the team in the image roster.',
         'Cuando un equipo inicia sesión en una máquina mlinux, MOJ le informa a nutellaboot qué equipo está en ella. La pantalla de bloqueo de la máquina pasa a mostrar el equipo. Solo funciona con el agente nuevo de mlinux y con el equipo en el roster de la imagen.')),
-      el('div', { class: 'small', style: 'margin:.2rem 0 .4rem' }, parts.join(' · ')),
-      el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap' },
+      el('div', { class: 'small u-mt-.2 u-mb-.4 u-mx-0' }, parts.join(' · ')),
+      el('div', { class: 'row u-gap-.5 u-items-center u-wrap' },
         el('button', { class: 'btn ghost', onclick: () => act({ action: 'config', bind: !b.enabled }, () => '') },
           b.enabled ? T('desligar', 'turn off', 'desactivar') : T('ligar', 'turn on', 'activar')),
         el('button', { class: 'btn ghost', title: T('Envia ao nutellaboot os times de cada sede (da última coleta). Não mexe em roster já preenchido.', 'Sends the teams of each site (from the last collection) to nutellaboot. Does not touch a roster that already has entries.', 'Envía a nutellaboot los equipos de cada sede (de la última recolección). No modifica un roster que ya tenga entradas.'),
@@ -184,10 +184,10 @@ export function makeMlinuxTab(CONTEST) {
       el('p', { class: 'ml-note' }, T('O nutellaboot avisa o MOJ quando uma máquina levanta um alerta (pendrive, celular, rede por USB, identidade repetida) e quando reinicia, some ou volta. Tudo aparece em Máquinas › Anomalias; os alertas, durante a prova, chegam ao dono do contest pelo Telegram. A chave gravada acima precisa do escopo webhooks:write.',
         'Nutellaboot tells MOJ when a machine raises an alert (USB storage, phone, USB network, duplicate identity) and when it reboots, disappears or comes back. Everything shows in Machines › Anomalies; alerts reach the contest owner on Telegram during the contest. The key saved above needs the webhooks:write scope.',
         'Nutellaboot le avisa a MOJ cuando una máquina genera una alerta (almacenamiento USB, teléfono, red por USB, identidad duplicada) y cuando se reinicia, desaparece o vuelve. Todo aparece en Máquinas › Anomalías; las alertas llegan al dueño de la competencia por Telegram durante la competencia. La clave guardada arriba necesita el alcance webhooks:write.')),
-      el('div', { class: 'small', style: 'margin:.2rem 0 .4rem' },
+      el('div', { class: 'small u-mt-.2 u-mb-.4 u-mx-0' },
         (w.installed ? T('instalado', 'installed', 'instalado') : T('não instalado', 'not installed', 'no instalado')) + ' · ' + T(`${w.events} alertas recebidos`, `${w.events} alerts received`, `${w.events} alertas recibidas`)
 ),
-      el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap' },
+      el('div', { class: 'row u-gap-.5 u-items-center u-wrap' },
         el('label', { class: 'small' }, T('URL pública do MOJ: ', 'MOJ public URL: ', 'URL pública de MOJ: '), base),
         el('button', { class: 'btn ghost', onclick: () => act({}) }, w.installed ? T('reinstalar', 'reinstall', 'reinstalar') : T('instalar', 'install', 'instalar')),
         w.installed ? el('button', { class: 'btn ghost', onclick: () => act({ remove: true }) }, T('remover', 'remove', 'quitar')) : null,
@@ -261,11 +261,11 @@ export function makeMlinuxTab(CONTEST) {
     } }, T('▶ Enviar comando', '▶ Send command', '▶ Enviar comando'));
     return el('div', { class: 'section' },
       el('h2', {}, T('🕹️ Comandos nas máquinas', '🕹️ Machine commands', '🕹️ Comandos de máquinas')),
-      el('div', { class: 'small muted', style: 'margin:.1rem 0 .4rem' },
+      el('div', { class: 'small muted u-mt-.1 u-mb-.4 u-mx-0' },
         T('O comando entra na fila do nutellaboot e a máquina executa no próximo contato. Tudo é auditado.',
           'The command is queued in nutellaboot and runs on the machine\'s next contact. Everything is audited.',
           'El comando entra en la cola de nutellaboot y se ejecuta en el próximo contacto de la máquina. Todo queda auditado.')),
-      el('div', { class: 'row', style: 'gap:.5rem;flex-wrap:wrap;align-items:center' },
+      el('div', { class: 'row u-gap-.5 u-wrap u-items-center' },
         el('label', {}, T('Sede ', 'Site ', 'Sede '), selSede), el('label', {}, T('Máquina ', 'Machine ', 'Máquina '), selMac),
         el('label', {}, T('Comando ', 'Command ', 'Comando '), selOp), btn),
       msg);
@@ -300,7 +300,7 @@ export function makeMlinuxTab(CONTEST) {
           : d.version >= 2 ? T(' · sem vínculo máquina-time', ' · no machine-team link', ' · sin vínculo máquina-equipo') : '')));
     const box = el('div', {});
     // sede que o serviço NÃO devolveu nesta coleta (rede, escopo da chave): avisa — sumir calada não pode
-    if ((d.skipped || []).length) box.append(el('p', { class: 'ml-note', style: 'color:var(--warn,#b9770e)' },
+    if ((d.skipped || []).length) box.append(el('p', { class: 'ml-note', style: 'color:var(--color-warning)' },
       T(`⚠ Sem dados nesta coleta: ${d.skipped.join(', ')}. Confira o escopo da chave e colete de novo.`,
         `⚠ No data in this collection: ${d.skipped.join(', ')}. Check the key scope and collect again.`,
         `⚠ Sin datos en esta recolección: ${d.skipped.join(', ')}. Revisa el alcance de la clave y recolecta de nuevo.`)));

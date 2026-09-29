@@ -338,7 +338,7 @@ function renderDashboard(stats) {
         return el('div', {},
           el('div', { class: 'row', style: 'justify-content:space-between' },
             el('a', { class: 'collection', href: '/treino/?searchcol=' + encodeURIComponent(name) }, name),
-            done ? el('span', { class: 'small', style: 'color:var(--ok);font-weight:700' }, `${e.mine}/${e.total} ✓`)
+            done ? el('span', { class: 'small', style: 'color:var(--color-success);font-weight:700' }, `${e.mine}/${e.total} ✓`)
               : el('span', { class: 'small muted' }, `${e.mine}/${e.total}`)),
           el('div', { class: 'pbar' + (done ? ' done' : '') },
             el('i', { style: `width:${Math.round(100 * e.mine / e.total)}%` })));

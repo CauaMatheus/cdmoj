@@ -227,6 +227,48 @@
   --treino-sorttabs-a-bg:#f3f7fd; --treino-input-type-checkbox-accentcolo:#4a37c9;
   --treino-kids-border:#e7ecf5; --treino-collection-on-bg:#4a37c9;
 
+  /* ---------- 3c. TELAS EM JS (cor de UM arquivo JS — estilo inline que ficou inline) ---------- */
+  /* contest/admin/machines-tab.js */
+  --js-machines-tab-span-bg:#c0392b;
+  /* contest/admin/modules-tab.js */
+  --js-modules-tab-div-text:#7a5c00;
+  /* contest/admin/rounds-tab.js */
+  --js-rounds-tab-li-text:#0a7;
+  /* contest/admin/settings-tab.js */
+  --js-settings-tab-div-border:#e3e9f2;
+  /* contest/admin/status-tab.js */
+  --js-status-tab-span-text:#c00; --js-status-tab-b-text:#c00; --js-status-tab-div-bg:#fff7ec; --js-status-tab-div-border:#f3c08e;
+  /* contest/admin/tasks.js */
+  --js-tasks-span-text:#a00;
+  /* contest/chief/chief.js */
+  --js-chief-div-border:#c0392b;
+  /* contest/judge/judge.js */
+  --js-judge-div-border:#0a7; --js-judge-div-bg:#f4fff9;
+  /* contest/score/reveal.js */
+  --js-reveal-el-outline:#1e57c4;
+  /* contest/score/score-colors.js */
+  --js-score-colors-el-bg:#e2ffe9; --js-score-colors-el-text:#222;
+  /* contest/score/score-obi.js */
+  --js-score-obi-el-css:#dde9ff; --js-score-obi-el-css-2:#1346aa; --js-score-obi-el-css-3:#fbe7e9; --js-score-obi-el-css-4:#c4314b;
+  /* contest/score/score.js */
+  --js-score-div-border:#e3e9f2; --js-score-div-text:#334155;
+  /* contest/staff/staff.js */
+  --js-staff-div-text:#7a5c00;
+  /* problemas/editar.js */
+  --js-editar-el-text:#7ee2a0; --js-editar-el-text-2:#ffd98a; --js-editar-el-text-3:#1a7f37;
+  /* problemas/problemas.js */
+  --js-problemas-div-border:#b90; --js-problemas-button-text:#e66; --js-problemas-button-border:#a44;
+  /* shared/contest-config/bank-panel.js */
+  --js-bank-panel-span-bg:#3d3417; --js-bank-panel-span-text:#ffe08a; --js-bank-panel-div-bg:#fbfdff;
+  /* shared/contest-config/settings-editor.js */
+  --js-settings-editor-p-text:#b45309;
+  /* shared/contest-config/teams.js */
+  --js-teams-div-border:#e3e9f2; --js-teams-span-text:#b8860b;
+  /* treino/criar/steps/problemas.js */
+  --js-problemas-div-text:#b8860b;
+  /* treino/virtual/virtual.js */
+  --js-virtual-div-text:#c0392b; --js-virtual-el-text:#c0392b;
+
   /* ---------- 4. LEGADO (alias; não crie uso novo) ---------- */
   --blue:var(--color-primary); --blue-dark:var(--color-primary-strong);
   --blue-soft:var(--color-primary-soft); --blue-bg:var(--color-page);

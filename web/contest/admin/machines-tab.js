@@ -20,7 +20,7 @@ export function makeMachinesTab(CONTEST) {
   const G = { contest: CONTEST, auth: true };
   let DATA = null, ROUNDS = [], GATE = null, SLOCK = null, round = '', filter = '', view = 'login';
 
-  const msg = el('div', { class: 'small', style: 'margin:.4rem 0' });
+  const msg = el('div', { class: 'small u-my-.4 u-mx-0' });
   const setMsg = (t, cls) => { msg.className = 'small ' + (cls || ''); msg.textContent = t; };
 
   async function setRegion(logins, region) {
@@ -34,12 +34,12 @@ export function makeMachinesTab(CONTEST) {
   }
   // lista editável (uma linha por item) usada pelos overrides por sede, regras por regex e isentos
   function listEditor(items, render) {
-    const wrap = el('div', { style: 'display:flex;flex-direction:column;gap:.25rem' });
+    const wrap = el('div', { class: 'u-flex-column u-gap-.25', style: 'display:flex' });
     const rows = [];
     const add = (v) => {
       const r = render(v || {});
       rows.push(r);
-      const line = el('div', { class: 'row', style: 'gap:.35rem;align-items:center' }, ...r.els,
+      const line = el('div', { class: 'row u-gap-.35 u-items-center' }, ...r.els,
         el('button', { class: 'btn ghost small danger', title: T('remover', 'remove', 'quitar'), onclick: () => { r.dead = true; line.remove(); } }, '✕'));
       wrap.append(line);
     };
@@ -52,10 +52,10 @@ export function makeMachinesTab(CONTEST) {
   // então UMA regra com captura cobre todas as sedes; o resto é override/isento. É aqui, e não em
   // Configurações, porque é aqui que se vê o esperado × visto de cada time.
   function gateBox() {
-    const box = el('div', { class: 'subcard', style: 'margin:.6rem 0' });
+    const box = el('div', { class: 'subcard u-my-.6 u-mx-0' });
     const g = (GATE && GATE.gate) || {};
     const on = (g.mode || 'off') === 'enforce';
-    box.append(el('h3', { style: 'margin:.1rem 0 .3rem' }, T('🔒 Gate de navegador por sede', '🔒 Per-site browser gate', '🔒 Gate de navegador por sede')),
+    box.append(el('h3', { class: 'u-mt-.1 u-mb-.3 u-mx-0' }, T('🔒 Gate de navegador por sede', '🔒 Per-site browser gate', '🔒 Gate de navegador por sede')),
       el('p', { class: 'small muted' },
         T('A imagem de prova de cada sede manda um User-Agent que carrega um pedaço do login do time (teambrspso001 → brspso). Uma regra com captura cobre todas as sedes de uma vez. Contas de papel (.admin/.judge/.staff/…) nunca são barradas.',
           'Each site image sends a User-Agent carrying a slice of the team login (teambrspso001 → brspso). One capture rule covers every site at once. Role accounts (.admin/.judge/.staff/…) are never blocked.',
@@ -63,7 +63,7 @@ export function makeMachinesTab(CONTEST) {
 
     const mode = el('input', { type: 'checkbox', checked: on });
     box.append(el('div', { class: on ? 'alert' : '' },
-      el('label', { class: 'row', style: 'gap:.5rem;align-items:center' }, mode,
+      el('label', { class: 'row u-gap-.5 u-items-center' }, mode,
         el('b', {}, T('Barrar quem não vem da imagem da sede', 'Block anyone not coming from the site image', 'Bloquear a quien no venga de la imagen de la sede')),
         el('span', { class: 'small muted' }, on
           ? T('(ativo — o login devolve 403 ua_gate)', '(active — login returns 403 ua_gate)', '(activo — el login devuelve 403 ua_gate)')
@@ -71,8 +71,8 @@ export function makeMachinesTab(CONTEST) {
 
     // sessão única por time (lib/session-index.sh): só tem efeito com o gate ligado
     const single = el('input', { type: 'checkbox', checked: g.single_session !== false });
-    box.append(el('div', { style: 'margin:.3rem 0' },
-      el('label', { class: 'row', style: 'gap:.5rem;align-items:center' }, single,
+    box.append(el('div', { class: 'u-my-.3 u-mx-0' },
+      el('label', { class: 'row u-gap-.5 u-items-center' }, single,
         el('b', {}, T('Sessão única por time', 'Single session per team', 'Sesión única por equipo')),
         el('span', { class: 'small muted' },
           T('login em outra máquina derruba a sessão anterior (troca por defeito continua funcionando). As quedas aparecem em Máquinas › Anomalias.',
@@ -93,18 +93,18 @@ export function makeMachinesTab(CONTEST) {
       } catch (e) { slMsg.className = 'small error-box'; slMsg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     });
     box.append(el('div', { class: sl.enabled ? 'alert' : '', style: 'margin:.3rem 0' },
-      el('label', { class: 'row', style: 'gap:.5rem;align-items:center' }, slChk,
+      el('label', { class: 'row u-gap-.5 u-items-center' }, slChk,
         el('b', {}, T('Trava de sede por IP', 'Per-site IP lock', 'Bloqueo de sede por IP')),
         el('span', { class: 'small muted' },
           T('cada login de competidor prende o IP de origem (a saída da sede) a ESTA prova até o fim + folga: daquele IP, treino, índice e outros contests respondem 403 site_locked (curl --resolve não escapa). Contas de papel ficam isentas. Toda reivindicação e todo bloqueio vão ao audit e a Máquinas › Anomalias.',
             'each competitor login pins the source IP (the site egress) to THIS contest until the end + grace: from that IP, training, index and other contests answer 403 site_locked (curl --resolve does not escape). Role accounts are exempt. Every claim and every block goes to the audit and to Machines › Anomalies.',
             'cada login de competidor fija el IP de origen (la salida de la sede) a ESTA competencia hasta el fin + margen: desde ese IP, entrenamiento, índice y otras competencias responden 403 site_locked (curl --resolve no escapa). Las cuentas de papel están exentas. Todo reclamo y todo bloqueo van al audit y a Máquinas › Anomalías.'))),
-      sl.enabled ? el('div', { class: 'small', style: 'margin-top:.2rem' }, T(`${nAct} IP(s) preso(s) agora`, `${nAct} IP(s) pinned now`, `${nAct} IP(s) fijado(s) ahora`), ' · ', el('a', { href: '#maquinas/anomalias' }, T('ver em Sessões & anomalias', 'see in Sessions & anomalies', 'ver en Sesiones y anomalías'))) : null,
+      sl.enabled ? el('div', { class: 'small u-mt-.2' }, T(`${nAct} IP(s) preso(s) agora`, `${nAct} IP(s) pinned now`, `${nAct} IP(s) fijado(s) ahora`), ' · ', el('a', { href: '#maquinas/anomalias' }, T('ver em Sessões & anomalias', 'see in Sessions & anomalies', 'ver en Sesiones y anomalías'))) : null,
       slMsg));
-    const rx = el('input', { value: (g.from_login && g.from_login.regex) || '', placeholder: '^team([a-z]{6})[0-9]{3}$', style: 'width:16rem;font-family:var(--mono)' });
-    const ex = el('input', { value: (g.from_login && g.from_login.expect) || '\\1', placeholder: '\\1', style: 'width:7rem;font-family:var(--mono)' });
+    const rx = el('input', { class: 'u-w-16 u-mono', value: (g.from_login && g.from_login.regex) || '', placeholder: '^team([a-z]{6})[0-9]{3}$' });
+    const ex = el('input', { class: 'u-w-7 u-mono', value: (g.from_login && g.from_login.expect) || '\\1', placeholder: '\\1' });
     const someLogin = ((DATA && DATA.by_login) || []).map((r) => r.login).find((l) => !PRIV_RE.test(l)) || '';
-    const chkIn = el('input', { value: someLogin, placeholder: T('login do time', 'team login', 'login del equipo'), style: 'width:11rem;font-family:var(--mono)' });
+    const chkIn = el('input', { class: 'u-w-11 u-mono', value: someLogin, placeholder: T('login do time', 'team login', 'login del equipo') });
     const chkOut = el('span', { class: 'small' }, '—');
     const doCheck = async () => {
       const l = chkIn.value.trim(); if (!l) return;
@@ -119,35 +119,35 @@ export function makeMachinesTab(CONTEST) {
           : el('span', { class: 'pill' }, T('isento (entra com qualquer navegador)', 'exempt (any browser gets in)', 'exento (entra con cualquier navegador)')));
       } catch (e) { chkOut.textContent = e.message || T('falha', 'failed', 'fallido'); }
     };
-    box.append(el('div', { class: 'row', style: 'gap:.6rem;flex-wrap:wrap;align-items:flex-end;margin-top:.4rem' },
+    box.append(el('div', { class: 'row u-gap-.6 u-wrap u-items-flex-end u-mt-.4' },
       el('div', { class: 'field' }, el('label', { class: 'small' }, T('regex do login (com captura)', 'login regex (with capture)', 'regex del login (con captura)')), rx),
       el('div', { class: 'field' }, el('label', { class: 'small' }, T('UA esperado', 'expected UA', 'UA esperado')), ex),
       el('div', { class: 'field' }, el('label', { class: 'small' }, T('testar com o login', 'test with login', 'probar con el login')),
-        el('div', { class: 'row', style: 'gap:.3rem' }, chkIn,
+        el('div', { class: 'row u-gap-.3' }, chkIn,
           el('button', { class: 'btn ghost', onclick: doCheck }, T('testar', 'test', 'probar')))),
       el('div', { class: 'field' }, el('label', { class: 'small' }, T('resultado', 'result', 'resultado')), chkOut)));
     if (someLogin) doCheck();
 
     const regions = ((GATE && GATE.regions) || []).map((r) => r.name);
     const byRegion = listEditor(Object.entries(g.by_region || {}).map(([k, v]) => ({ k, v })), (v) => {
-      const k = el('input', { value: v.k || '', placeholder: T('sede', 'site', 'sede'), list: 'ua-regions-dl', style: 'width:9rem' });
-      const s = el('input', { value: v.v || '', placeholder: 'brspcp-especial', style: 'width:11rem;font-family:var(--mono)' });
+      const k = el('input', { class: 'u-w-9', value: v.k || '', placeholder: T('sede', 'site', 'sede'), list: 'ua-regions-dl' });
+      const s = el('input', { class: 'u-w-11 u-mono', value: v.v || '', placeholder: 'brspcp-especial' });
       return { els: [k, el('span', { class: 'muted' }, '→'), s], get: () => (k.value.trim() ? { k: k.value.trim(), v: s.value.trim() } : null) };
     });
     const byRegex = listEditor(g.by_regex || [], (v) => {
-      const k = el('input', { value: v.regex || '', placeholder: '^conv', style: 'width:9rem;font-family:var(--mono)' });
-      const s = el('input', { value: v.expect || '', placeholder: 'convidado', style: 'width:11rem;font-family:var(--mono)' });
+      const k = el('input', { class: 'u-w-9 u-mono', value: v.regex || '', placeholder: '^conv' });
+      const s = el('input', { class: 'u-w-11 u-mono', value: v.expect || '', placeholder: 'convidado' });
       return { els: [k, el('span', { class: 'muted' }, '→'), s], get: () => (k.value.trim() ? { regex: k.value.trim(), expect: s.value.trim() } : null) };
     });
     const exempt = listEditor((g.exempt || []).map((s) => ({ s })), (v) => {
-      const k = el('input', { value: v.s || '', placeholder: '^ccl', style: 'width:14rem;font-family:var(--mono)' });
+      const k = el('input', { class: 'u-w-14 u-mono', value: v.s || '', placeholder: '^ccl' });
       return { els: [k], get: () => (k.value.trim() || null) };
     });
-    const fb = el('input', { value: g.fallback || '', placeholder: T('(nenhum — sem regra, o time entra)', '(none — with no rule the team gets in)', '(ninguna — sin regla, el equipo entra)'), style: 'width:14rem;font-family:var(--mono)' });
+    const fb = el('input', { class: 'u-w-14 u-mono', value: g.fallback || '', placeholder: T('(nenhum — sem regra, o time entra)', '(none — with no rule the team gets in)', '(ninguna — sin regla, el equipo entra)') });
     const grp = (label, hint, ed, btnLabel) => el('details', { class: 'fgroup' },
       el('summary', {}, label),
-      el('div', { class: 'small muted', style: 'margin:.2rem 0 .4rem' }, hint),
-      ed.wrap, el('button', { class: 'btn ghost small', style: 'margin-top:.3rem', onclick: () => ed.add({}) }, btnLabel));
+      el('div', { class: 'small muted u-mt-.2 u-mb-.4 u-mx-0' }, hint),
+      ed.wrap, el('button', { class: 'btn ghost small u-mt-.3', onclick: () => ed.add({}) }, btnLabel));
     box.append(
       grp(T('Overrides por sede', 'Per-site overrides', 'Overrides por sede'),
         T('a sede tem imagem própria e o UA não segue a captura — vence a regra geral.',
@@ -169,8 +169,8 @@ export function makeMachinesTab(CONTEST) {
     // atalho: os UA realmente vistos nesta rodada viram fallback com um clique (era o gate antigo)
     const uas = (DATA && DATA.uas) || [];
     if (uas.length) {
-      const ul = el('ul', { style: 'margin:.3rem 0 0 1.1rem' });
-      uas.forEach((u) => ul.append(el('li', { class: 'small', style: 'overflow-wrap:anywhere;margin:.2rem 0' },
+      const ul = el('ul', { class: 'u-mt-.3 u-mb-0 u-ml-1.1 u-mr-0' });
+      uas.forEach((u) => ul.append(el('li', { class: 'small u-my-.2 u-mx-0 u-wrap-anywhere' },
         el('code', {}, u), ' ',
         el('button', { class: 'btn ghost small', onclick: () => { fb.value = u; } }, T('usar como fallback', 'use as fallback', 'usar como fallback')))));
       box.append(el('details', { class: 'fgroup' },
@@ -196,7 +196,7 @@ export function makeMachinesTab(CONTEST) {
         await load();
       } catch (e) { setMsg(e.message || T('falha', 'failed', 'fallido'), 'error-box'); }
     };
-    box.append(el('div', { class: 'row', style: 'gap:.5rem;margin-top:.5rem' },
+    box.append(el('div', { class: 'row u-gap-.5 u-mt-.5' },
       el('button', { class: 'btn', onclick: save }, T('Salvar gate', 'Save gate', 'Guardar gate')),
       el('button', { class: 'btn ghost', onclick: load }, T('descartar', 'discard', 'descartar'))));
     return box;
@@ -216,18 +216,18 @@ export function makeMachinesTab(CONTEST) {
         el('td', {}, el('b', {}, r.name || r.login), el('br'), el('span', { class: 'small muted' }, r.login)),
         el('td', {}, r.region || el('span', { class: 'muted' }, '—')),
         el('td', { class: r.multi_ip ? 'flag-anom' : '' }, ips || '—'),
-        el('td', { class: 'small', style: 'max-width:22rem;overflow-wrap:anywhere' }, ua
+        el('td', { class: 'small u-maxw-22 u-wrap-anywhere' }, ua
           + ((r.uas || []).length > 1 ? T(` (+${r.uas.length - 1})`, ` (+${r.uas.length - 1})`, ` (+${r.uas.length - 1})`) : '')),
         // GATE POR SEDE: o que a imagem da sede deste time deveria mandar × o que veio
         el('td', { class: 'small' + (r.ua_match === false ? ' flag-anom' : '') },
           r.ua_expected
             ? [el('code', {}, r.ua_expected), ' ',
                r.ua_match === false
-                 ? el('span', { class: 'pill', style: 'background:#c0392b;color:#fff' }, T('fora do padrão', 'off-image', 'fuera de la imagen'))
+                 ? el('span', { class: 'pill', style: 'background:var(--js-machines-tab-span-bg);color:var(--color-text-inverse)' }, T('fora do padrão', 'off-image', 'fuera de la imagen'))
                  : el('span', { class: 'pill ok' }, '✓')]
             : el('span', { class: 'muted' }, T('sem gate', 'no gate', 'sin gate'))),
         el('td', { class: 'small' }, fmt(r.first) + (r.logins > 1 ? T(` · ${r.logins} logins`, ` · ${r.logins} logins`, ` · ${r.logins} logins`) : '')),
-        el('td', {}, r.changed ? el('span', { class: 'pill', style: 'background:#c0392b;color:#fff' },
+        el('td', {}, r.changed ? el('span', { class: 'pill', style: 'background:var(--js-machines-tab-span-bg);color:var(--color-text-inverse)' },
           T('trocou de máquina', 'machine changed', 'cambió de máquina')) : (r.multi_ip ? el('span', { class: 'pill' }, T('vários IPs', 'several IPs', 'varios IPs')) : ''))));
     });
     return el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
@@ -240,12 +240,12 @@ export function makeMachinesTab(CONTEST) {
   function byIpTable() {
     const tb = el('tbody');
     (DATA.by_ip || []).filter((r) => !filter || r.ip.includes(filter)).forEach((r) => {
-      const sedeInp = el('input', { placeholder: T('sede…', 'site…', 'sede…'), style: 'width:9rem' });
+      const sedeInp = el('input', { class: 'u-w-9', placeholder: T('sede…', 'site…', 'sede…') });
       tb.append(el('tr', {},
         el('td', {}, el('code', {}, r.ip)),
         el('td', { class: r.shared ? 'flag-anom' : '' }, (r.logins || []).join(', ')),
         el('td', {}, r.shared ? el('span', { class: 'pill' }, T('IP compartilhado', 'shared IP', 'IP compartido')) : ''),
-        el('td', {}, el('div', { class: 'row', style: 'gap:.3rem' }, sedeInp,
+        el('td', {}, el('div', { class: 'row u-gap-.3' }, sedeInp,
           el('button', { class: 'btn ghost', onclick: () => {
             const v = sedeInp.value.trim();
             if (!v) { setMsg(T('digite o nome da sede', 'type the site name', 'escribe el nombre de la sede'), 'error-box'); return; }
@@ -264,7 +264,7 @@ export function makeMachinesTab(CONTEST) {
     const sl = SLOCK; if (!sl) return null;
     const claims = sl.claims || [], blocks = sl.blocks || [];
     if (!sl.enabled && !claims.length && !blocks.length) return null;
-    const box = el('div', { class: 'subcard', style: 'margin:.6rem 0' }, el('h3', { style: 'margin:.1rem 0 .3rem' }, T('🔒 Trava de sede por IP — reivindicações e bloqueios', '🔒 Per-site IP lock — claims and blocks', '🔒 Bloqueo de sede por IP — reclamos y bloqueos')));
+    const box = el('div', { class: 'subcard u-my-.6 u-mx-0' }, el('h3', { class: 'u-mt-.1 u-mb-.3 u-mx-0' }, T('🔒 Trava de sede por IP — reivindicações e bloqueios', '🔒 Per-site IP lock — claims and blocks', '🔒 Bloqueo de sede por IP — reclamos y bloqueos')));
     box.append(el('p', { class: 'small muted' },
       sl.enabled
         ? T(`Ligada: cada login de competidor prende o IP de origem a este contest até o fim + ${sl.grace}s. Daquele IP, treino, índice e outros contests respondem 403 site_locked. Toda reivindicação e todo bloqueio ficam no audit.`,
@@ -272,7 +272,7 @@ export function makeMachinesTab(CONTEST) {
           `Activa: cada login de competidor fija el IP de origen a esta competencia hasta el fin + ${sl.grace}s. Desde ese IP, entrenamiento, índice y otras competencias responden 403 site_locked. Todo reclamo y todo bloqueo están en el log de auditoría.`)
         : T('Desligada (ligue no gate acima). IPs presos anteriormente continuam até vencer.', 'Off (turn on in the gate above). Previously pinned IPs stay until they expire.', 'Apagada (actívala en el gate de arriba). Los IP fijados anteriormente se quedan hasta que venzan.')));
     const msg = el('span', { class: 'small' });
-    const actions = el('div', { class: 'row', style: 'gap:.5rem;align-items:center;margin:.3rem 0' },
+    const actions = el('div', { class: 'row u-my-.3 u-mx-0 u-gap-.5 u-items-center' },
       sl.enabled ? el('button', { class: 'btn ghost', title: T('prende desde já os IPs de competidores vistos na janela da rodada (aquecimento incluso)', 'pins right away the competitor IPs seen in the round window (warm-up included)', 'fija de inmediato los IP de competidores vistos en la ventana de la ronda (calentamiento incluido)'),
         onclick: async () => {
           if (!confirm(T('Prender agora todos os IPs de competidores vistos nesta rodada?', 'Pin now every competitor IP seen in this round?', '¿Fijar ahora todos los IP de competidores vistos en esta ronda?'))) return;
@@ -321,11 +321,11 @@ export function makeMachinesTab(CONTEST) {
     const sel = el('select', { onchange: (e) => { round = e.target.value; load(); } },
       ...ROUNDS.map((r) => el('option', { value: r.slug, selected: r.slug === DATA.round },
         (r.name || r.slug) + (r.state === 'active' ? T(' (no ar)', ' (live)', ' (activa)') : ''))));
-    const f = el('input', { placeholder: T('filtrar time, login, IP ou navegador…', 'filter team, login, IP or browser…', 'filtrar equipo, login, IP o navegador…'),
-      value: filter, style: 'min-width:16rem' });
+    const f = el('input', { class: 'u-minw-16', placeholder: T('filtrar time, login, IP ou navegador…', 'filter team, login, IP or browser…', 'filtrar equipo, login, IP o navegador…'),
+      value: filter });
     f.addEventListener('input', () => { filter = f.value; renderBody(); });
     const t = DATA.totals || {};
-    panel.append(el('div', { class: 'row', style: 'gap:.6rem;align-items:center;flex-wrap:wrap;margin:.3rem 0' },
+    panel.append(el('div', { class: 'row u-my-.3 u-mx-0 u-gap-.6 u-items-center u-wrap' },
       el('span', { class: 'small' }, T('rodada:', 'round:', 'ronda:')), sel, f,
       el('button', { class: 'btn ghost', onclick: () => { view = (view === 'login' ? 'ip' : 'login'); renderBody(); } },
         T('↔ ver por IP / por time', '↔ view by IP / by team', '↔ ver por IP / por equipo')),

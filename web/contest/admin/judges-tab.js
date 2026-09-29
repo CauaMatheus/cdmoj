@@ -25,7 +25,7 @@ export function makeJudgesTab(CONTEST) {
         T('. Papéis, quórum e quantas pessoas você precisa: ', '. Roles, quorum and how many people you need: ', '. Roles, quórum y cuántas personas necesitas: '),
         el('a', { href: docHref('MANUAL-ADMIN'), target: '_blank' }, T('manual do organizador', "organizer's manual", "manual del organizador")), '.'),
       board.el,
-      el('h3', { style: 'margin:1.2rem 0 .3rem' }, T('⚙️ Configuração do veredicto manual', '⚙️ Manual verdict configuration', '⚙️ Configuración del veredicto manual')),
+      el('h3', { class: 'u-mt-1.2 u-mb-.3 u-mx-0' }, T('⚙️ Configuração do veredicto manual', '⚙️ Manual verdict configuration', '⚙️ Configuración del veredicto manual')),
       makeVerdictOptionsEditor(CONTEST), makeAutoVerdictEditor(CONTEST));
     await board.load();
     clearInterval(timer); timer = setInterval(() => { if (!panel.hidden && panel.isConnected) board.load(); }, 12000);

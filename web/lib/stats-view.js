@@ -48,7 +48,7 @@ function highlights(s, shortOf) {
     ' (' + ls[0].submissions + T(' submissões', ' submissions', ' envíos') + ')');
   if ((s.totals || {}).submissions) items.push(T('✅ Aceitação global: ', '✅ Global acceptance: ', '✅ Aceptación global: ') +
     pct((s.totals.accepted || 0) / s.totals.submissions) + T(' das submissões', ' of all submissions', ' de todos los envíos'));
-  return items.length ? el('div', { class: 'section' }, el('h2', {}, T('Destaques', 'Highlights', 'Destacados')), el('ul', { style: 'margin:.2rem 0 0 1.1rem' }, ...items.map((x) => el('li', {}, x)))) : el('div', {});
+  return items.length ? el('div', { class: 'section' }, el('h2', {}, T('Destaques', 'Highlights', 'Destacados')), el('ul', { class: 'u-mt-.2 u-mb-0 u-ml-1.1 u-mr-0' }, ...items.map((x) => el('li', {}, x)))) : el('div', {});
 }
 
 function totalsCards(t) {
@@ -122,7 +122,7 @@ function balloonsSection(ps, shortOf) {
   const solved = (ps || []).filter((p) => p.first_solver).slice()
     .sort((a, b) => (a.first_seconds >= 0 && b.first_seconds >= 0 ? a.first_seconds - b.first_seconds : a.first_minute - b.first_minute));
   if (!solved.length) return el('div', {});
-  const ol = el('ol', { style: 'margin:.2rem 0 0 1.2rem' });
+  const ol = el('ol', { class: 'u-mt-.2 u-mb-0 u-ml-1.2 u-mr-0' });
   solved.forEach((p) => ol.append(el('li', {}, el('b', {}, shortOf(p.problem_id)), ' · ', who(p.first_solver, p.first_solver_name),
     el('span', { class: 'small muted' }, T(' aos ', ' at ', ' a los ') + p.first_minute + ' min' + (p.first_seconds >= 0 ? ' (' + p.first_seconds + 's)' : '')))));
   return el('div', { class: 'section' }, el('h2', {}, T('🎈 Primeiras resoluções (balões)', '🎈 First solves (balloons)', '🎈 Primeras resoluciones (globos)')), ol);
@@ -182,11 +182,11 @@ function teamCompare(s, an) {
   const box = el('div', { class: 'section' });
   const chartBox = el('div', {});
   const chosen = [];
-  const chips = el('div', { style: 'display:flex;flex-wrap:wrap;gap:.3rem;margin:.3rem 0' });
+  const chips = el('div', { class: 'u-my-.3 u-mx-0 u-wrap u-gap-.3', style: 'display:flex' });
   const dlid = 'cmp-teams-' + Math.floor(Math.random() * 1e6);
   const dl = el('datalist', { id: dlid });
   Object.keys(byTeam).forEach((lg) => dl.append(el('option', { value: who(lg, idxName(idx, lg)) })));
-  const inp = el('input', { list: dlid, placeholder: T('adicione um time (nome ou login)', 'add a team (name or login)', 'agregar un equipo (nombre o usuario)'), style: 'min-width:240px' });
+  const inp = el('input', { class: 'u-minw-240px', list: dlid, placeholder: T('adicione um time (nome ou login)', 'add a team (name or login)', 'agregar un equipo (nombre o usuario)') });
   function loginOf(text) {
     const t = String(text || '').trim();
     if (byTeam[t]) return t;
@@ -197,7 +197,7 @@ function teamCompare(s, an) {
   const tops = rankTeams(an).slice(0, 15);
   function render() {
     chips.innerHTML = ''; chartBox.innerHTML = '';
-    chosen.forEach((lg, i) => chips.append(el('span', { class: 'small', style: 'padding:.15em .5em;border:1px solid var(--line,#c9d2e0);border-radius:1em;cursor:pointer', title: T('remover', 'remove', 'quitar'),
+    chosen.forEach((lg, i) => chips.append(el('span', { class: 'small u-py-.15em u-px-.5em u-pointer', style: 'border:1px solid var(--color-border);border-radius:1em', title: T('remover', 'remove', 'quitar'),
       onclick: () => { chosen.splice(i, 1); render(); } }, who(lg, idxName(idx, lg)) + ' ✕')));
     if (!chosen.length) { chartBox.append(el('p', { class: 'muted small' }, T('Escolha times acima ou use um preset.', 'Choose teams above or use a preset.', 'Elige equipos arriba o usa un preajuste.'))); return; }
     const series = chosen.map((lg) => {
@@ -265,7 +265,7 @@ function performanceSection(s, an) {
     el('td', {}, who(t.login, idxName(an.idx, t.login))),
     el('td', { class: 'n' }, String(t.solved)),
     el('td', { class: 'n' }, String(t.penalty)))));
-  sec.append(el('div', { class: 'chart-title', style: 'margin-top:.5rem' }, T('Top 15 da seleção', 'Top 15 of the selection', 'Top 15 del recorte')),
+  sec.append(el('div', { class: 'chart-title u-mt-.5' }, T('Top 15 da seleção', 'Top 15 of the selection', 'Top 15 del recorte')),
     el('div', { class: 'chart-wrap' }, el('table', { class: 'moj narrow' },
       el('thead', {}, el('tr', {}, el('th', { class: 'n' }, '#'), el('th', {}, T('Time', 'Team', 'Equipo')),
         el('th', { class: 'n' }, T('Resolvidos', 'Solved', 'Resueltos')), el('th', { class: 'n' }, T('Penalidade', 'Penalty', 'Penalidad')))), tb)),
@@ -278,9 +278,9 @@ function performanceSection(s, an) {
 // legenda da tabela por problema (o que cada coluna significa)
 function problemsLegend() {
   const li = (k, txt) => el('li', {}, el('b', {}, k + ': '), txt);
-  return el('details', { class: 'small', style: 'margin:.3rem 0 .6rem' },
+  return el('details', { class: 'small u-mt-.3 u-mb-.6 u-mx-0' },
     el('summary', {}, T('Como ler a tabela', 'How to read the table', 'Cómo leer la tabla')),
-    el('ul', { style: 'margin:.2rem 0 0 1.1rem' },
+    el('ul', { class: 'u-mt-.2 u-mb-0 u-ml-1.1 u-mr-0' },
       li(T('Taxa', 'Rate', 'Tasa'), T('times que resolveram dividido por times que tentaram.', 'teams that solved divided by teams that tried.', 'equipos que resolvieron dividido por equipos que lo intentaron.')),
       li(T('Dificuldade', 'Difficulty', 'Dificultad'), T('rótulo pela Taxa: ≥90% muito fácil, ≥70% fácil, ≥50% médio, <50% difícil. É a mesma escala do Treino Livre.', 'label by the Rate: ≥90% very easy, ≥70% easy, ≥50% medium, <50% hard. It is the same scale as the practice area.', 'etiqueta por la Tasa: ≥90% muy fácil, ≥70% fácil, ≥50% medio, <50% difícil. Es la misma escala que el área de práctica.')),
       li(T('Subs/pessoa', 'Subs/person', 'Envíos/persona'), T('submissões por time que tentou.', 'submissions per team that tried.', 'envíos por equipo que lo intentó.')),
@@ -305,7 +305,7 @@ export function statsSections(s, opts = {}) {
   // de propósito; quem soma fatia a fatia contaria times em dobro. O aviso viaja com o
   // módulo (página de estatísticas E relatório offline).
   if (s.view) {
-    out.push(el('div', { class: 'section', style: 'background:var(--card-bg,#f5f7fb);border-left:4px solid var(--warn,#a66a00);padding:.5rem .8rem' },
+    out.push(el('div', { class: 'section u-py-.5 u-px-.8', style: 'background:var(--color-surface-muted);border-left:4px solid var(--color-warning)' },
       el('b', {}, T('◈ Recorte sobreposto', '◈ Overlapping view', '◈ Recorte superpuesto')),
       el('span', { class: 'small' },
         T(': esta fatia agrega times que também aparecem nas sedes. Não some fatias com sedes. Os times contariam duas vezes.',
@@ -318,7 +318,7 @@ export function statsSections(s, opts = {}) {
   out.push(el('div', { class: 'section' }, el('h2', {}, T('Por problema', 'By problem', 'Por problema')),
     problemsTable(s.problems || [], shortOf),
     problemsLegend(),
-    el('div', { class: 'two-col', style: 'margin-top:1rem' },
+    el('div', { class: 'two-col u-mt-1' },
       el('div', {}, el('div', { class: 'chart-title' }, T('Submissões por problema', 'Submissions by problem', 'Envíos por problema')),
         barChart((s.problems || []).map((p) => ({ label: shortOf(p.problem_id), value: p.submissions })), { rotateLabels: true })),
       el('div', {}, el('div', { class: 'chart-title' }, T('Resolvedores por problema', 'Solvers by problem', 'Resolvedores por problema')),
@@ -333,19 +333,19 @@ export function statsSections(s, opts = {}) {
     el('div', { class: 'two-col' },
       el('div', {}, el('div', { class: 'chart-title' }, T('Distribuição de veredictos', 'Verdict distribution', 'Distribución de veredictos')),
         hBarChart((s.verdicts || []).map((v) => ({ label: v.verdict, value: v.count })), { hideZero: true, total: totSubs }),
-        el('div', { class: 'small muted', style: 'text-align:center; margin-top:.35rem' }, T('cada barra = % das ', 'each bar = % of the ', 'cada barra = % de los ') + totSubs + T(' submissões', ' submissions', ' envíos'))),
+        el('div', { class: 'small muted u-text-center u-mt-.35' }, T('cada barra = % das ', 'each bar = % of the ', 'cada barra = % de los ') + totSubs + T(' submissões', ' submissions', ' envíos'))),
       el('div', {}, el('div', { class: 'chart-title' }, T('Linguagens mais usadas', 'Most used languages', 'Lenguajes más usados')),
         hBarChart((s.languages || []).map((l) => ({ label: l.lang, value: l.submissions })), { hideZero: true, total: totSubs }),
         langTable(s.languages || []))),
-    el('h3', { style: 'margin:1.2rem 0 .3rem' }, T('Veredictos por problema', 'Verdicts by problem', 'Veredictos por problema')), verdictMatrix(s, shortOf)));
+    el('h3', { class: 'u-mt-1.2 u-mb-.3 u-mx-0' }, T('Veredictos por problema', 'Verdicts by problem', 'Veredictos por problema')), verdictMatrix(s, shortOf)));
 
   if ((s.timeline || []).length) {
     out.push(el('div', { class: 'section' }, el('h2', {}, T('Linha do tempo', 'Timeline', 'Línea de tiempo')),
       el('div', { class: 'chart-title' }, T('Submissões ao longo do tempo (por 10 min)', 'Submissions over time (per 10 min)', 'Envíos a lo largo del tiempo (cada 10 min)')),
       barChart(s.timeline.map((t) => ({ label: t.minute + 'm', value: t.submissions })), { rotateLabels: true }),
-      el('div', { class: 'chart-title', style: 'margin-top:.6rem' }, T('Aceitas ao longo do tempo', 'Accepted over time', 'Aceptados a lo largo del tiempo')),
+      el('div', { class: 'chart-title u-mt-.6' }, T('Aceitas ao longo do tempo', 'Accepted over time', 'Aceptados a lo largo del tiempo')),
       barChart(s.timeline.map((t) => ({ label: t.minute + 'm', value: t.accepted })), { rotateLabels: true }),
-      el('div', { class: 'chart-title', style: 'margin-top:.6rem' }, T('Aceitas acumuladas', 'Cumulative accepted', 'Aceptadas acumuladas')),
+      el('div', { class: 'chart-title u-mt-.6' }, T('Aceitas acumuladas', 'Cumulative accepted', 'Aceptadas acumuladas')),
       lineChart((() => { let c = 0; return s.timeline.map((t) => ({ label: t.minute + 'm', y: (c += t.accepted) })); })())));
   }
 
@@ -359,7 +359,7 @@ export function statsSections(s, opts = {}) {
         el('div', { class: 'stat-card' }, el('div', { class: 'big-num' }, '≥' + q.bottom25), el('div', { class: 'big-sub' }, T('75% resolveu ao menos', '75% solved at least', '75% resolvió al menos'))),
         el('div', { class: 'stat-card' }, el('div', { class: 'big-num' }, q.max + ' / ' + q.min), el('div', { class: 'big-sub' }, T('máx / mín resolvidos', 'max / min solved', 'máx. / mín. resueltos')))));
   }
-  distSec.append(el('div', { class: 'two-col', style: 'margin-top:.6rem' },
+  distSec.append(el('div', { class: 'two-col u-mt-.6' },
     el('div', {}, el('div', { class: 'chart-title' }, T('Participantes por nº de problemas resolvidos', 'Participants by number of problems solved', 'Participantes por cantidad de problemas resueltos')),
       barChart((s.problems_solved_dist || []).map((d) => ({ label: String(d.solved), value: d.users })))),
     el('div', {}, el('div', { class: 'chart-title' }, T('Tentativas até resolver', 'Attempts until solved', 'Intentos hasta resolver')),

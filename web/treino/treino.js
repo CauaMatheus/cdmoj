@@ -255,11 +255,11 @@ function renderTags() {
   selFirst.forEach((e) => box.append(pill(e)));
   rest.forEach((e) => box.append(pill(e)));
   if (hasMore) box.append(el('a', {
-    class: 'tag', style: 'background:#fff;border:1px dashed var(--line);color:var(--muted)',
+    class: 'tag', style: 'background:var(--color-surface);border:1px dashed var(--color-border);color:var(--color-text-muted)',
     onclick: () => { tagShowAll = true; renderTags(); },
   }, T(`mostrar todas (${entries.length}) ▾`, `show all (${entries.length}) ▾`, `mostrar todas (${entries.length}) ▾`)));
   else if (tagShowAll && entries.length > TOPTAGS) box.append(el('a', {
-    class: 'tag', style: 'background:#fff;border:1px dashed var(--line);color:var(--muted)',
+    class: 'tag', style: 'background:var(--color-surface);border:1px dashed var(--color-border);color:var(--color-text-muted)',
     onclick: () => { tagShowAll = false; renderTags(); },
   }, T('mostrar menos ▴', 'show fewer ▴', 'mostrar menos ▴')));
   if (!entries.length) box.append(el('span', { class: 'muted small' }, T('nenhuma tag casa com o filtro.', 'no tag matches the filter.', 'ninguna etiqueta coincide con el filtro.')));
@@ -456,7 +456,7 @@ function renderHub() {
     if (!sug) sug = cands(ALL, T('um clássico para destravar', 'a classic to get you going', 'un clásico para arrancar'));
     if (sug && (!contRow || sug.p.id !== contRow.probid)) {
       const d = difficulty(sug.p);
-      strip.append(el('a', { class: 'cont-card', href: probURL(sug.p.id), style: 'border-left-color:var(--ok)' },
+      strip.append(el('a', { class: 'cont-card', href: probURL(sug.p.id), style: 'border-left-color:var(--color-success)' },
         el('span', { class: 'k' }, T('🎯 Sugestão para você', '🎯 Suggested for you', '🎯 Sugerencia para ti')),
         el('span', { class: 't' }, sug.p.title || sug.p.id),
         el('span', { class: 'small muted' },
@@ -505,7 +505,7 @@ function renderHub() {
         ...(LOGGED ? [
           el('div', { class: 'pbar' + (done ? ' done' : '') },
             el('i', { style: `width:${n.count ? Math.round(100 * mine / n.count) : 0}%` })),
-          done ? el('span', { class: 'foot', style: 'color:var(--ok);font-weight:700' }, T('✓ concluído', '✓ completed', '✓ completado'))
+          done ? el('span', { class: 'foot', style: 'color:var(--color-success);font-weight:700' }, T('✓ concluído', '✓ completed', '✓ completado'))
             : el('span', { class: 'foot' }, mine ? `${mine}/${n.count} ${T('resolvidos', 'solved', 'resueltos')}` : T('começar →', 'start →', 'empezar →')),
         ] : [el('span', { class: 'foot' }, T('explorar →', 'explore →', 'explorar →'))])));
     car.append(card);
@@ -565,7 +565,7 @@ function renderSuggest() {
         el('span', { class: 'mut' }, el('span', { class: 'diff ' + d.cls }, d.label), st)),
         () => { location.href = probURL(p.id); });
     });
-    add(el('div', { class: 'it', style: 'color:var(--blue-dark);font-weight:700' },
+    add(el('div', { class: 'it', style: 'color:var(--color-primary-strong);font-weight:700' },
       T(`ver os ${probs.length} resultados na busca avançada →`, `see all ${probs.length} results in the advanced search →`, `ver los ${probs.length} resultados en la búsqueda avanzada →`)),
       () => submitHeroQuery());
   }

@@ -75,7 +75,7 @@ function mount() {
   const selLang = el('select', { class: 'jp-sel' });
   const thrRange = el('input', { type: 'range', min: '0', max: '100', step: '1', value: String(F.thr), class: 'jp-range' });
   const thrNum = el('input', { type: 'number', min: '0', max: '100', step: '1', value: String(F.thr), class: 'jp-num' });
-  const count = el('span', { class: 'small', style: 'font-weight:700' });
+  const count = el('span', { class: 'small u-fw-700' });
   const list = el('div');
   selProb.addEventListener('change', () => { F.prob = selProb.value; if (!langsFor(F.prob).includes(F.lang)) F.lang = ''; saveFilter(); renderFilters(true); renderList(); });
   selLang.addEventListener('change', () => { F.lang = selLang.value; saveFilter(); renderFilters(true); renderList(); });
@@ -85,8 +85,8 @@ function mount() {
   const fld = (l, ...i) => el('label', { class: 'jp-fld' }, el('span', { class: 'small muted' }, l), ...i);
   app.innerHTML = '';
   app.append(
-    el('div', { class: 'row', style: 'gap:.5rem;align-items:center;margin-bottom:.4rem;flex-wrap:wrap' }, runBtn, refreshBtn, statusTxt),
-    el('p', { class: 'muted small', style: 'margin:.2rem 0 .6rem' },
+    el('div', { class: 'row u-gap-.5 u-items-center u-wrap u-mb-.4' }, runBtn, refreshBtn, statusTxt),
+    el('p', { class: 'muted small u-mt-.2 u-mb-.6 u-mx-0' },
       T('Compara a última solução aceita de cada usuário, por problema e linguagem. Vermelho = similaridade alta. Escolha o problema, a linguagem e o limiar: a lista mostra só os pares acima do limiar.',
         'Compares the latest accepted solution of each user, by problem and language. Red = high similarity. Pick the problem, the language and the threshold: the list shows only the pairs above the threshold.',
         'Compara la última solución aceptada de cada usuario, por problema y lenguaje. Rojo = similitud alta. Elige el problema, el lenguaje y el umbral: la lista muestra solo los pares por encima del umbral.')),
@@ -154,7 +154,7 @@ function listBuild(st, results, pairs) {
     .reduce((n, r) => n + (r.pairs || []).length, 0);
   ui.count.textContent = T(`${pairs.length} par(es) ≥ ${F.thr}% (de ${total})`, `${pairs.length} pair(s) ≥ ${F.thr}% (of ${total})`, `${pairs.length} par(es) ≥ ${F.thr}% (de ${total})`);
   if (!pairs.length) {
-    wrap.append(el('div', { class: 'muted small', style: 'margin:.5rem 0' },
+    wrap.append(el('div', { class: 'muted small u-my-.5 u-mx-0' },
       T('Nenhum par acima do limiar. Baixe o limiar para ver mais.', 'No pair above the threshold. Lower the threshold to see more.', 'Ningún par por encima del umbral. Baja el umbral para ver más.')));
     return wrap;
   }
@@ -173,7 +173,7 @@ function listBuild(st, results, pairs) {
       showLang ? el('th', {}, T('Ling.', 'Lang.', 'Leng.')) : null,
       el('th', {}, T('Solução A', 'Solution A', 'Solución A')), el('th', {}, T('Solução B', 'Solution B', 'Solución B')),
       el('th', { class: 'n' }, T('Similaridade', 'Similarity', 'Similitud')), el('th', {}, ''))), tb)));
-  if (pairs.length > MAX_ROWS) wrap.append(el('div', { class: 'small muted', style: 'margin:.4rem 0' },
+  if (pairs.length > MAX_ROWS) wrap.append(el('div', { class: 'small muted u-my-.4 u-mx-0' },
     T(`mostrando ${MAX_ROWS} de ${pairs.length} — suba o limiar ou escolha um problema para ver o resto`,
       `showing ${MAX_ROWS} of ${pairs.length} — raise the threshold or pick a problem to see the rest`,
       `mostrando ${MAX_ROWS} de ${pairs.length} — sube el umbral o elige un problema para ver el resto`)));

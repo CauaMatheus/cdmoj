@@ -49,7 +49,7 @@ let afterLoad = () => {}; // repopula selects (definido em render())
 const statusBar = el('span', { class: 'small muted' });
 // aviso de contest com contas COMPARTILHADAS: a etiqueta não traz senha porque a credencial é
 // pessoal (do treino) e não é do contest — dizer isso evita o "cadê a senha?" na hora de imprimir
-const sharedNote = el('div', { class: 'small muted no-print', style: 'margin-top:.5rem' });
+const sharedNote = el('div', { class: 'small muted no-print u-mt-.5' });
 function renderSharedNote() {
   sharedNote.innerHTML = '';
   if (!DATA || !DATA.shared) return;
@@ -126,7 +126,7 @@ function renderSheets() {
     ' · ' + Math.ceil((users.length + skip) / perPage) + T(' folha(s) de ', ' sheet(s) of ', ' hoja(s) de ') + perPage +
     (S.showPass ? T(' · COM senha', ' · WITH password', ' · CON contraseña') : T(' · sem senha', ' · without password', ' · sin contraseña'));
   if (!users.length) {
-    sheets.append(el('p', { class: 'muted small no-print', style: 'text-align:center' }, T('Nenhum usuário para etiquetar.', 'No users to print badges for.', 'No hay usuarios para imprimir credenciales.')));
+    sheets.append(el('p', { class: 'muted small no-print u-text-center' }, T('Nenhum usuário para etiquetar.', 'No users to print badges for.', 'No hay usuarios para imprimir credenciales.')));
     return;
   }
   const fits = [];
@@ -225,9 +225,9 @@ function render() {
       el('label', {}, T('Variante ', 'Variant ', 'Variante '), passSel),
       mkChk(T('contest + data', 'contest + date', 'competencia + fecha'), 'fEvent'), mkChk(T('sede/região', 'site/region', 'sede/región'), 'fRegion'), mkChk(T('instituição', 'institution', 'institución'), 'fUniv'),
       mkChk(T('contorno (calibrar)', 'outline (calibrate)', 'contorno (calibrar)'), 'outline')),
-    el('div', { class: 'row', style: 'margin-top:.5rem' },
+    el('div', { class: 'row u-mt-.5' },
       el('label', {}, T('Etiqueta ', 'Label ', 'Etiqueta '), presetSel), dimBox),
-    el('div', { class: 'row', style: 'margin-top:.5rem' },
+    el('div', { class: 'row u-mt-.5' },
       IS_ADMIN ? el('label', {}, T('Arquivo ', 'File ', 'Archivo '), staffSel) : '',
       el('label', {}, T('Região ', 'Region ', 'Región '), regionSel),
       IS_ADMIN ? mkChk(T('incluir desabilitados', 'include disabled', 'incluir deshabilitados'), 'incDisabled', true) : '',

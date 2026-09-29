@@ -26,7 +26,7 @@ export function makeStepProblemas(ctx) {
       name.addEventListener('input', () => { p.name = name.value; });
       const idtxt = p.bank_id ? (T('banco: ', 'bank: ', 'banco: ') + p.bank_id) : ((p.source || 'cdmoj') + ' / ' + p.problem_id);
       const genWarn = (p._private && !p._hasStmt)
-        ? el('div', { class: 'small', style: 'color:#b8860b;margin-top:.2rem' }, T('⏳ enunciado em geração (aguardando juiz)', '⏳ statement being generated (waiting for judge)', '⏳ enunciado en generación (esperando al juez)'))
+        ? el('div', { class: 'small', style: 'color:var(--js-problemas-div-text);margin-top:.2rem' }, T('⏳ enunciado em geração (aguardando juiz)', '⏳ statement being generated (waiting for judge)', '⏳ enunciado en generación (esperando al juez)'))
         : '';
       const extras = el('div', { class: 'small muted' },
         (p.languages || []).length ? '💻 ' + p.languages.join(' ') + ' · ' : '',

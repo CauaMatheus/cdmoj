@@ -47,28 +47,28 @@ export function makeSessionsTab(CONTEST, opts = {}) {
         `¿Desconectar a ${label} ahora${closeChk.checked ? ' y CERRAR login' : ''}? Vuelven solo cuando el login esté abierto.`)) }, label);
     const s = st.sessions || {};
     box.append(
-      el('p', { class: 'small muted', style: 'margin:.1rem 0 .4rem' },
+      el('p', { class: 'small muted u-mt-.1 u-mb-.4 u-mx-0' },
         T('Feche o login, derrube todo mundo e reabra quando os times puderem entrar. ', 'Close login, log everyone out and reopen once teams may enter. ', 'Cierra el login, desconecta a todos y reabre cuando los equipos puedan entrar. ')
         + (has('rodadas') ? T('É a troca de rodada: entre os dois passos, promova a rodada em Evento › Rodadas. ', 'That is the round switch: between the two steps, promote the round in Event › Rounds. ', 'Ese es el cambio de ronda: entre los dos pasos, promueve la ronda en Evento › Rondas. ') : '')
         + T('Nunca derruba admin, juízes, chefe, monitor nem telão.', 'Never logs out admin, judges, chief, monitor or the big screen.', 'Nunca desconecta a admin, jueces, jefe, monitor ni pantalla.')),
-      el('div', { class: 'row', style: 'gap:.6rem;align-items:center;flex-wrap:wrap' },
+      el('div', { class: 'row u-gap-.6 u-items-center u-wrap' },
         el('span', { class: 'pill ' + (open ? 'ok' : 'bad') }, open ? T('login ABERTO', 'login OPEN', 'login ABIERTO') : T('login FECHADO', 'login CLOSED', 'login CERRADO')),
         el('span', { class: 'small muted' }, T(`sessões: ${s.competitors || 0} competidores · ${s.staff || 0} staff/cstaff · ${s.privileged || 0} organização`,
           `sessions: ${s.competitors || 0} competitors · ${s.staff || 0} staff/cstaff · ${s.privileged || 0} organization`,
           `sesiones: ${s.competitors || 0} competidores · ${s.staff || 0} staff/cstaff · ${s.privileged || 0} organización`)),
         open ? el('button', { class: 'btn ghost', onclick: () => run({ close_login: true }, T('Fechar o login (sem derrubar ninguém)?', 'Close login (without logging anyone out)?', '¿Cerrar login (sin desconectar a nadie)?')) }, T('🔒 Fechar login', '🔒 Close login', '🔒 Cerrar login'))
           : el('button', { class: 'btn', onclick: () => run({ open_login: true }, T('Reabrir o login para os times?', 'Reopen login for the teams?', '¿Reabrir login para los equipos?')) }, T('🔓 Reabrir login', '🔓 Reopen login', '🔓 Reabrir login'))),
-      el('div', { class: 'row', style: 'gap:.6rem;align-items:center;flex-wrap:wrap;margin-top:.4rem' },
+      el('div', { class: 'row u-gap-.6 u-items-center u-wrap u-mt-.4' },
         scopeBtn('competitors', T('competidores', 'competitors', 'competidores'), T('toda conta que não é de papel', 'every non-role account', 'toda cuenta que no es de rol')),
         scopeBtn('staff', T('staff e chefes de sede', 'staff and site chiefs', 'staff y jefes de sede'), '.staff + .cstaff'),
         scopeBtn('all', T('competidores + staff', 'competitors + staff', 'competidores + staff'), ''),
-        el('label', { class: 'small', style: 'display:inline-flex;gap:.3rem;align-items:center' }, closeChk, T('e fechar o login junto', 'and close login as well', 'y cerrar login también')),
+        el('label', { class: 'small u-gap-.3 u-items-center', style: 'display:inline-flex' }, closeChk, T('e fechar o login junto', 'and close login as well', 'y cerrar login también')),
         msg));
     return box;
   }
 
   // --- 2. sessões ativas (lista) ---------------------------------------------------------------
-  const uaFilter = el('input', { type: 'search', placeholder: T('filtrar por UA / login / IP…', 'filter by UA / login / IP…', 'filtrar por UA / login / IP…'), style: 'min-width:220px' });
+  const uaFilter = el('input', { class: 'u-minw-220px', type: 'search', placeholder: T('filtrar por UA / login / IP…', 'filter by UA / login / IP…', 'filtrar por UA / login / IP…') });
   const listBox = el('div', {});
   function sessionsTable() {
     const box = el('div', {});
@@ -85,7 +85,7 @@ export function makeSessionsTab(CONTEST, opts = {}) {
         el('td', { class: 'small' }, fmtDate(s.login_at)),
         el('td', {}, el('button', { class: 'btn ghost small', onclick: () => logoutUser(s.login) }, T('deslogar', 'log out', 'cerrar sesión')))));
     });
-    box.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' }, items.length + T(' de ', ' of ', ' de ') + SESS.length + T(' sessão(ões).', ' session(s).', ' sesión(es).')),
+    box.append(el('div', { class: 'small muted u-my-.3 u-mx-0' }, items.length + T(' de ', ' of ', ' de ') + SESS.length + T(' sessão(ões).', ' session(s).', ' sesión(es).')),
       el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' }, el('thead', {}, el('tr', {}, el('th', {}, 'Login'), el('th', {}, 'IP'), el('th', {}, T('Máquina', 'Machine', 'Máquina')), el('th', {}, T('Navegador', 'Browser', 'Navegador')), el('th', {}, T('Login em', 'Logged in at', 'Conectado en')), el('th', {}, ''))), tb)));
     return box;
   }
@@ -113,14 +113,14 @@ export function makeSessionsTab(CONTEST, opts = {}) {
       try { r = await apiGet('/contest/admin/access-log?contest=' + enc(CONTEST) + '&day=' + enc(dateInp.value), G); }
       catch { body.append(el('div', { class: 'error-box' }, T('Falha.', 'Failed.', 'Falló.'))); return; }
       const e2 = r.entries || []; ACC = e2;
-      body.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' }, e2.length + T(' acesso(s).', ' access(es).', ' acceso(s).')));
+      body.append(el('div', { class: 'small muted u-my-.3 u-mx-0' }, e2.length + T(' acesso(s).', ' access(es).', ' acceso(s).')));
       if (!e2.length) { body.append(el('div', { class: 'muted' }, T('Sem acessos.', 'No accesses.', 'Sin accesos.'))); return; }
       const tb = el('tbody');
       e2.forEach((x) => tb.append(el('tr', {}, el('td', { class: 'small' }, fmtDate(x.time)), el('td', {}, x.login || ''), el('td', { class: 'ip' }, x.ip || ''), el('td', { class: 'ua' }, x.user_agent || ''))));
       body.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' }, el('thead', {}, el('tr', {}, el('th', {}, T('Data/Hora', 'Date/Time', 'Fecha/Hora')), el('th', {}, 'Login'), el('th', {}, 'IP'), el('th', {}, T('Navegador', 'Browser', 'Navegador')))), tb)));
     }
     dateInp.addEventListener('change', loadAccess);
-    box.append(el('div', { class: 'row', style: 'margin-bottom:.4rem' }, el('span', { class: 'small muted' }, T('Dia:', 'Day:', 'Día:')), dateInp, el('button', { class: 'btn ghost', onclick: () => loadAccess() }, '↻'), dl), body);
+    box.append(el('div', { class: 'row u-mb-.4' }, el('span', { class: 'small muted' }, T('Dia:', 'Day:', 'Día:')), dateInp, el('button', { class: 'btn ghost', onclick: () => loadAccess() }, '↻'), dl), body);
     box.addEventListener('toggle', () => { if (box.open && !ACC.length) loadAccess(); });
     return box;
   }
@@ -132,9 +132,9 @@ export function makeSessionsTab(CONTEST, opts = {}) {
     panel.innerHTML = '';
     panel.append(
       el('div', { class: 'section' }, el('h2', {}, T('🖥️ Sessões', '🖥️ Sessions', '🖥️ Sesiones')), SK.err,
-        el('h3', { style: 'margin:.4rem 0 .3rem' }, T('🚪 Sair em massa e trava de login', '🚪 Mass logout and login lock', '🚪 Salir en masa y bloqueo de login')), SK.mass),
+        el('h3', { class: 'u-mt-.4 u-mb-.3 u-mx-0' }, T('🚪 Sair em massa e trava de login', '🚪 Mass logout and login lock', '🚪 Salir en masa y bloqueo de login')), SK.mass),
       el('div', { class: 'section' }, el('h2', {}, T('🖥️ Sessões ativas', '🖥️ Active sessions', '🖥️ Sesiones activas')),
-        el('div', { class: 'row', style: 'margin:.3rem 0' }, uaFilter, el('button', { class: 'btn ghost', onclick: () => load() }, '↻'), dlSess),
+        el('div', { class: 'row u-my-.3 u-mx-0' }, uaFilter, el('button', { class: 'btn ghost', onclick: () => load() }, '↻'), dlSess),
         listBox),
       accessSection());
   }

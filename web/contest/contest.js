@@ -344,7 +344,7 @@ function renderUser() {
       T('📖 Como funciona a prova', '📖 How the contest works', '📖 Cómo funciona la competencia')));
   }
   box.append(
-    el('div', { style: 'font-size:1.2rem; font-weight:800; color:var(--blue-dark)' },
+    el('div', { style: 'font-size:1.2rem;font-weight:800;color:var(--color-primary-strong)' },
       userinfo.name || userinfo.login),
     el('div', { class: 'small muted' }, 'Login: ', el('b', {}, userinfo.login),
       userinfo.is_admin ? '  · admin' : (userinfo.is_judge ? '  · judge'
@@ -366,7 +366,7 @@ function renderNews(items) {
   const ul = document.getElementById('newsList'); ul.innerHTML = '';
   items.forEach(n => {
     const li = el('li', { style: 'margin:.4rem 0' },
-      el('b', { style: 'color:var(--blue-dark)' }, n.title || ''),
+      el('b', { style: 'color:var(--color-primary-strong)' }, n.title || ''),
       n.date ? el('span', { class: 'small muted' }, '  (' + fmtDate(n.date) + ')') : null,
       el('div', { class: 'small' }, n.text || n.summary || ''));
     if (n.file && n.file.name) {

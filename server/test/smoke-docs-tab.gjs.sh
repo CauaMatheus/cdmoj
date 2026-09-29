@@ -60,7 +60,7 @@ const btn=(root,txt)=>root.all().filter(n=>n.tagName==='button' && n.textContent
   ck('documento com .odt ganha o botão "✎ .odt" (só ele: a folha de TL não tem)', odt.length===1, String(odt.length));
   await odt[0].click(); await flush();
   ck('o botão baixa com fmt=odt', FETCHES.some(u=>u.includes('type=contest') && u.includes('lang=pt') && u.includes('fmt=odt')), JSON.stringify(FETCHES));
-  const boxes=P.all().filter(n=>n.className==='subcard' && n.textContent.includes('Capa do caderno'));
+  const boxes=P.all().filter(n=>String(n.className).split(' ').includes('subcard') && n.textContent.includes('Capa do caderno'));
   const cover=boxes[boxes.length-1];
   const chips=cover.all().filter(n=>n.tagName==='button' && n.className.startsWith('stmt-chip'));
   ck('capa: uma aba por idioma (PT, EN, ES), PT ativa', chips.map(c=>c.textContent).join(',')==='PT,EN,ES' && chips[0].className.includes('active'), chips.map(c=>c.textContent+':'+c.className).join(' '));
@@ -80,10 +80,10 @@ const btn=(root,txt)=>root.all().filter(n=>n.tagName==='button' && n.textContent
   const b=POSTS[POSTS.length-1];
   ck('Salvar manda só os idiomas alterados (PT e EN, não ES)', b.action==='config' && b.cover_pt==='# PT capa editada' && b.cover_en==='# EN nova' && !('cover_es' in b), JSON.stringify(b));
   // depois do save a tela recarrega (load) — o reset vale p/ a aba ativa, que volta a ser PT
-  const cover2=P.all().filter(n=>n.className==='subcard' && n.textContent.includes('Capa do caderno')).pop();
+  const cover2=P.all().filter(n=>String(n.className).split(' ').includes('subcard') && n.textContent.includes('Capa do caderno')).pop();
   await btn(cover2,'voltar ao padrão')[0].click(); await flush();
   ck('"voltar ao padrão" manda o idioma da aba vazio', JSON.stringify(POSTS[POSTS.length-1])===JSON.stringify({action:'config', cover_pt:''}), JSON.stringify(POSTS[POSTS.length-1]));
-  const info=P.all().filter(n=>n.className==='subcard' && n.textContent.includes('Texto do info sheet')).pop();
+  const info=P.all().filter(n=>String(n.className).split(' ').includes('subcard') && n.textContent.includes('Texto do info sheet')).pop();
   ck('info sheet: mesmas abas e editor do MOJ', info.all().filter(n=>n.tagName==='button' && n.className.startsWith('stmt-chip')).length===3 && EDS.some(e=>e.init==='info pt' && e.cm==='markdown'));
   // exemplos em tabela: opt-in (padrão desmarcado); marcar grava samples_table:true na hora
   const cbs=P.all().filter(n=>n.tagName==='input' && n.attrs.type==='checkbox' && n.parentNode && n.parentNode.textContent.includes('exemplos do caderno em tabela'));

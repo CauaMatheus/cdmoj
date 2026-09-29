@@ -17,8 +17,8 @@ export function makeAuditTab(CONTEST) {
 
   function auditSection() {
     const box = el('div', { class: 'section' }, el('h2', {}, T('🧾 Auditoria do contest', '🧾 Contest audit', '🧾 Auditoría de la competencia')));
-    const fUser = el('input', { type: 'search', placeholder: T('usuário…', 'user…', 'usuario…'), style: 'width:140px' });
-    const fAction = el('input', { type: 'search', placeholder: T('ação/veredicto…', 'action/verdict…', 'acción/veredicto…'), style: 'width:170px' });
+    const fUser = el('input', { class: 'u-w-140px', type: 'search', placeholder: T('usuário…', 'user…', 'usuario…') });
+    const fAction = el('input', { class: 'u-w-170px', type: 'search', placeholder: T('ação/veredicto…', 'action/verdict…', 'acción/veredicto…') });
     const fSince = el('input', { type: 'date' });
     const body = el('div', {});
     let lastEvents = [];
@@ -38,7 +38,7 @@ export function makeAuditTab(CONTEST) {
       catch (e) { body.append(el('div', { class: 'error-box' }, T('Falha: ', 'Failed: ', 'Error: ') + (e.message || T('erro', 'error', 'error')))); return; }
       const ev = r.events || []; lastEvents = ev;
       const kind = KIND();
-      body.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' }, ev.length + T(' evento(s).', ' event(s).', ' evento(s).')));
+      body.append(el('div', { class: 'small muted u-my-.3 u-mx-0' }, ev.length + T(' evento(s).', ' event(s).', ' evento(s).')));
       if (!ev.length) { body.append(el('div', { class: 'muted' }, T('Nada encontrado.', 'Nothing found.', 'No se encontró nada.'))); return; }
       const tb = el('tbody');
       ev.forEach((x) => tb.append(el('tr', { class: 'audit-' + x.kind },
@@ -46,12 +46,12 @@ export function makeAuditTab(CONTEST) {
         el('td', { class: 'small' }, kind[x.kind] || x.kind),
         el('td', {}, x.who || ''),
         el('td', {}, x.action || ''),
-        el('td', { class: 'small', style: 'font-family:var(--mono)' }, x.details || ''))));
+        el('td', { class: 'small u-mono' }, x.details || ''))));
       body.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
         el('thead', {}, el('tr', {}, el('th', {}, T('Quando', 'When', 'Cuándo')), el('th', {}, T('Tipo', 'Type', 'Tipo')), el('th', {}, T('Quem', 'Who', 'Quién')), el('th', {}, T('Ação', 'Action', 'Acción')), el('th', {}, T('Detalhes', 'Details', 'Detalles')))), tb)));
     }
     [fUser, fAction, fSince].forEach((i) => i.addEventListener('change', run));
-    box.append(el('div', { class: 'row', style: 'margin-bottom:.4rem' },
+    box.append(el('div', { class: 'row u-mb-.4' },
       el('span', { class: 'small muted' }, T('Filtros:', 'Filters:', 'Filtros:')), fUser, fAction, el('span', { class: 'small muted' }, T('desde', 'since', 'desde')), fSince,
       el('button', { class: 'btn ghost', onclick: run }, '↻'), dl), body);
     return { box, run };
@@ -59,8 +59,8 @@ export function makeAuditTab(CONTEST) {
 
   function backupsSection() {
     const box = el('div', { class: 'section' }, el('h2', {}, T('💾 Backups dos usuários', '💾 User backups', '💾 Respaldos de usuarios')));
-    const fUser = el('input', { type: 'search', placeholder: T('usuário…', 'user…', 'usuario…'), style: 'width:140px' });
-    const fQ = el('input', { type: 'search', placeholder: T('nome do arquivo…', 'file name…', 'nombre de archivo…'), style: 'width:160px' });
+    const fUser = el('input', { class: 'u-w-140px', type: 'search', placeholder: T('usuário…', 'user…', 'usuario…') });
+    const fQ = el('input', { class: 'u-w-160px', type: 'search', placeholder: T('nome do arquivo…', 'file name…', 'nombre de archivo…') });
     const body = el('div', {});
     async function run() {
       body.innerHTML = '';
@@ -72,15 +72,15 @@ export function makeAuditTab(CONTEST) {
       catch (e) { body.append(el('div', { class: 'error-box' }, T('Falha: ', 'Failed: ', 'Error: ') + (e.message || T('erro', 'error', 'error')))); return; }
       const users = r.users || [];
       if (users.length) {
-        const ub = el('div', { class: 'row', style: 'flex-wrap:wrap; gap:.5rem; margin:.3rem 0 .6rem' });
-        users.forEach((u) => ub.append(el('span', { class: 'dash-card', style: 'min-width:0; padding:.35rem .6rem' },
+        const ub = el('div', { class: 'row u-mt-.3 u-mb-.6 u-mx-0 u-wrap u-gap-.5' });
+        users.forEach((u) => ub.append(el('span', { class: 'dash-card u-py-.35 u-px-.6 u-minw-0' },
           el('b', {}, u.login), ' ', el('span', { class: 'small muted' }, u.count + T(' arq · ', ' files · ', ' archivos · ') + Math.max(1, Math.round((u.bytes || 0) / 1024)) + ' KB'), ' ',
           el('a', { href: '#', class: 'small', title: T('Baixar zip com todos os arquivos deste usuário', 'Download a zip with all files of this user', 'Descargar un zip con todos los archivos de este usuario'),
             onclick: (e) => { e.preventDefault(); downloadAuthed(CONTEST, '/contest/admin/backup-zip?contest=' + enc(CONTEST) + '&login=' + enc(u.login), 'backups-' + u.login + '.zip'); } }, '⬇ ZIP'))));
-        body.append(el('div', { style: 'margin-bottom:.3rem' }, el('b', {}, T('Por usuário: ', 'Per user: ', 'Por usuario: ')), ub));
+        body.append(el('div', { class: 'u-mb-.3' }, el('b', {}, T('Por usuário: ', 'Per user: ', 'Por usuario: ')), ub));
       }
       const items = r.backups || [];
-      body.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' }, items.length + T(' arquivo(s).', ' file(s).', ' archivo(s).')));
+      body.append(el('div', { class: 'small muted u-my-.3 u-mx-0' }, items.length + T(' arquivo(s).', ' file(s).', ' archivo(s).')));
       if (!items.length) { body.append(el('div', { class: 'muted' }, T('Nada encontrado.', 'Nothing found.', 'No se encontró nada.'))); return; }
       const tb = el('tbody');
       items.forEach((b) => tb.append(el('tr', {},
@@ -92,7 +92,7 @@ export function makeAuditTab(CONTEST) {
         el('thead', {}, el('tr', {}, el('th', {}, T('Usuário', 'User', 'Usuario')), el('th', {}, T('Arquivo', 'File', 'Archivo')), el('th', {}, T('Tam.', 'Size', 'Tam.')), el('th', {}, T('Enviado', 'Uploaded', 'Subido')), el('th', {}, ''))), tb)));
     }
     [fUser, fQ].forEach((i) => i.addEventListener('change', run));
-    box.append(el('div', { class: 'row', style: 'margin-bottom:.4rem' }, el('span', { class: 'small muted' }, T('Filtros:', 'Filters:', 'Filtros:')), fUser, fQ,
+    box.append(el('div', { class: 'row u-mb-.4' }, el('span', { class: 'small muted' }, T('Filtros:', 'Filters:', 'Filtros:')), fUser, fQ,
       el('button', { class: 'btn ghost', onclick: run }, '↻')), body);
     return { box, run };
   }

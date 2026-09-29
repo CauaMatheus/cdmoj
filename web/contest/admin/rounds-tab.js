@@ -27,7 +27,7 @@ export function makeRoundsTab(CONTEST, opts = {}) {
   let DATA = null, PUB = null, editing = '';   // PUB = GET admin/report-publish (relatórios PÚBLICOS das rodadas)
   const PUBURL = '/contest/admin/report-publish?contest=' + enc(CONTEST);
 
-  const msg = el('div', { class: 'small', style: 'margin:.4rem 0' });
+  const msg = el('div', { class: 'small u-my-.4 u-mx-0' });
   const setMsg = (t, cls) => { msg.className = 'small ' + (cls || ''); msg.textContent = t; };
   const api = (body) => (body
     ? apiPost('/contest/admin/rounds?contest=' + enc(CONTEST), body, G)
@@ -42,9 +42,9 @@ export function makeRoundsTab(CONTEST, opts = {}) {
   function promoteBox() {
     const pr = DATA.promote_ready || { ok: false, blockers: [] };
     const next = DATA.next || '';
-    const box = el('div', { class: 'subcard', style: 'margin:.6rem 0' },
-      el('h3', { style: 'margin:.1rem 0 .4rem' }, T('🚀 Promover para a próxima rodada', '🚀 Promote to the next round', '🚀 Promover a la siguiente ronda')),
-      el('p', { class: 'small muted', style: 'margin:0 0 .4rem' },
+    const box = el('div', { class: 'subcard u-my-.6 u-mx-0' },
+      el('h3', { class: 'u-mt-.1 u-mb-.4 u-mx-0' }, T('🚀 Promover para a próxima rodada', '🚀 Promote to the next round', '🚀 Promover a la siguiente ronda')),
+      el('p', { class: 'small muted u-mt-0 u-mb-.4 u-mx-0' },
         T('Antes: feche o login e derrube competidores e staff em ', 'Before: close login and log out competitors and staff in ', 'Antes: cierra el login y desconecta a competidores y staff en '),
         el('a', { href: '#pessoas/sessoes' }, T('Pessoas › Sessões › 🚪 Sair em massa', 'People › Sessions › 🚪 Mass logout', 'Personas › Sesiones › 🚪 Salir en masa')),
         T('; depois de promover, reabra o login lá.', '; after promoting, reopen login there.', '; después de promover, reabre el login ahí.')));
@@ -53,13 +53,13 @@ export function makeRoundsTab(CONTEST, opts = {}) {
         T('Crie a próxima rodada (abaixo) para poder promover.', 'Create the next round (below) to be able to promote.', 'Crea la siguiente ronda (abajo) para poder promover.')));
       return box;
     }
-    box.append(el('p', { class: 'small muted', style: 'margin:.1rem 0 .5rem' },
+    box.append(el('p', { class: 'small muted u-mt-.1 u-mb-.5 u-mx-0' },
       T(`A rodada no ar será ARQUIVADA (submissões, veredictos, placar e logs ficam guardados para auditoria) e “${next}” entra no ar com a janela e os problemas dela. Contas, senhas, sedes e time limits não mudam. As cores de balão só mudam se “${next}” tiver cores próprias.`,
         `The live round will be ARCHIVED (submissions, verdicts, scoreboard and logs are kept for audit) and “${next}” goes live with its own window and problems. Accounts, passwords, sites and time limits are untouched. Balloon colours only change if “${next}” has its own colours.`,
         `La ronda activa será ARCHIVADA (envíos, veredictos, marcador y logs se conservan para auditoría) y “${next}” entra en vigor con su propia ventana y problemas. Cuentas, contraseñas, sedes y time limits no cambian. Los colores de los globos solo cambian si “${next}” tiene colores propios.`)));
-    const ul = el('ul', { style: 'margin:.2rem 0 .5rem 1.1rem' });
+    const ul = el('ul', { class: 'u-mt-.2 u-mb-.5 u-ml-1.1 u-mr-0' });
     if (pr.ok) {
-      ul.append(el('li', { class: 'small', style: 'color:#0a7' },
+      ul.append(el('li', { class: 'small', style: 'color:var(--js-rounds-tab-li-text)' },
         T('✓ tudo pronto: rodada encerrada, fila do juiz vazia, nenhum veredicto pendente.',
           '✓ all clear: round ended, judge queue empty, no pending verdict.',
           '✓ todo listo: ronda terminada, cola del juez vacía, ningún veredicto pendiente.')));
@@ -88,23 +88,23 @@ export function makeRoundsTab(CONTEST, opts = {}) {
         await load();
       }
     } }, T('🚀 Promover agora', '🚀 Promote now', '🚀 Promover ahora'));
-    box.append(el('div', { class: 'row', style: 'gap:.6rem;align-items:center' }, go,
-      el('label', { class: 'small row', style: 'gap:.25rem' }, force,
+    box.append(el('div', { class: 'row u-gap-.6 u-items-center' }, go,
+      el('label', { class: 'small row u-gap-.25' }, force,
         T('ignorar os bloqueadores (só em emergência; não passa por cima do placar congelado)', 'ignore blockers (emergency only; does not override the frozen scoreboard)', 'ignorar los bloqueadores (solo en emergencia; no pasa por encima del marcador congelado)'))));
     return box;
   }
 
   // ---- editor de uma rodada planejada (janela + problemas) ----
   function editor(r) {
-    const box = el('div', { class: 'subcard', style: 'margin:.4rem 0' });
+    const box = el('div', { class: 'subcard u-my-.4 u-mx-0' });
     const st = el('input', { type: 'datetime-local', value: toLocalDT(r.start) });
     const en = el('input', { type: 'datetime-local', value: toLocalDT(r.end) });
     const fz = el('input', { type: 'datetime-local', value: toLocalDT(r.freeze) });
-    const nm = el('input', { value: r.name || r.slug, style: 'min-width:14rem' });
+    const nm = el('input', { class: 'u-minw-14', value: r.name || r.slug });
     const kd = el('select', {}, ...['warmup', 'official', 'extra'].map(k =>
       el('option', { value: k, selected: (r.kind || 'official') === k }, KIND(k))));
     const fld = (l, i) => el('div', { class: 'field' }, el('label', {}, l), i);
-    box.append(el('div', { class: 'row', style: 'gap:.6rem;flex-wrap:wrap' },
+    box.append(el('div', { class: 'row u-gap-.6 u-wrap' },
       fld(T('nome', 'name', 'nombre'), nm), fld(T('tipo', 'kind', 'tipo'), kd),
       fld(T('início', 'start', 'inicio'), st), fld(T('fim', 'end', 'fin'), en), fld(T('freeze (opcional)', 'freeze (optional)', 'congelamiento (opcional)'), fz)));
     box.append(el('button', { class: 'btn', onclick: () => act({
@@ -114,19 +114,18 @@ export function makeRoundsTab(CONTEST, opts = {}) {
 
     // problemas da rodada: lista editável + busca/sorteio no banco (o MESMO painel da aba Problemas)
     const probs = (r.problems || []).slice();
-    const plist = el('div', { style: 'margin:.5rem 0' });
+    const plist = el('div', { class: 'u-my-.5 u-mx-0' });
     const renderP = () => {
       plist.innerHTML = '';
       if (!probs.length) plist.append(el('div', { class: 'small muted' },
         T('nenhum problema nesta rodada ainda', 'no problems in this round yet', 'ningún problema en esta ronda todavía')));
       probs.forEach((p, i) => {
         // identificador editável (W1, Q… — não precisa ser A,B,C); salvo junto com a lista
-        const letInp = el('input', { value: p.letter || String.fromCharCode(65 + i), maxlength: '3',
-          style: 'width:3.6rem; font-family:var(--mono)' });
+        const letInp = el('input', { class: 'u-w-3.6 u-mono', value: p.letter || String.fromCharCode(65 + i), maxlength: '3' });
         letInp.addEventListener('input', () => { p.letter = letInp.value.trim(); });
-        plist.append(el('div', { class: 'row', style: 'gap:.5rem;align-items:center;padding:.15rem 0' },
+        plist.append(el('div', { class: 'row u-py-.15 u-px-0 u-gap-.5 u-items-center' },
           letInp,
-          el('span', { style: 'min-width:16rem' }, p.name || p.problem_id || p.bank_id),
+          el('span', { class: 'u-minw-16' }, p.name || p.problem_id || p.bank_id),
           el('code', { class: 'small muted' }, p.bank_id || p.problem_id || ''),
           el('button', { class: 'btn ghost', onclick: () => { probs.splice(i, 1); renderP(); } }, '✕')));
       });
@@ -149,8 +148,8 @@ export function makeRoundsTab(CONTEST, opts = {}) {
       noQueryFilter: (items) => items.filter((x) => x.private),
       emptyHint: T('digite para buscar no banco', 'type to search the bank', 'escribe para buscar en el banco'),
     });
-    box.append(el('h4', { style: 'margin:.6rem 0 .2rem' }, T('Problemas da rodada', 'Round problems', 'Problemas de la ronda')),
-      el('p', { class: 'small muted', style: 'margin:.1rem 0 .3rem' },
+    box.append(el('h4', { class: 'u-mt-.6 u-mb-.2 u-mx-0' }, T('Problemas da rodada', 'Round problems', 'Problemas de la ronda')),
+      el('p', { class: 'small muted u-mt-.1 u-mb-.3 u-mx-0' },
         T('A lista entra no ar quando esta rodada for promovida (na rodada no ar, salvar aplica na hora). Você pode usar qualquer problema que o dono do contest pode ver: público, seu, de colaborador ou da sua org.',
           'The list goes live when this round is promoted (on the live round, saving applies right away). You can use any problem the contest owner can see: public, own, as collaborator or from the org.',
           'La lista entra en vigor cuando esta ronda es promovida (en la ronda activa, guardar aplica de inmediato). Puedes usar cualquier problema que el dueño de la competencia pueda ver: público, propio, como colaborador o de su org.')),
@@ -174,8 +173,8 @@ export function makeRoundsTab(CONTEST, opts = {}) {
                      'Esta ronda pasará a heredar los colores vigentes cuando sea promovida. ¿Continuar?'))) return;
       act({ action: 'set', slug: r.slug, colors: null }, T('✓ a rodada herda as cores em vigor', '✓ the round inherits the colours in force', '✓ la ronda hereda los colores vigentes'));
     } }, T('herdar as cores em vigor', 'inherit the colours in force', 'heredar los colores vigentes'));
-    box.append(el('h4', { style: 'margin:.8rem 0 .2rem' }, T('🎈 Cores dos balões desta rodada', '🎈 Balloon colours for this round', '🎈 Colores de los globos de esta ronda')),
-      el('p', { class: 'small muted', style: 'margin:.1rem 0 .3rem' },
+    box.append(el('h4', { class: 'u-mt-.8 u-mb-.2 u-mx-0' }, T('🎈 Cores dos balões desta rodada', '🎈 Balloon colours for this round', '🎈 Colores de los globos de esta ronda')),
+      el('p', { class: 'small muted u-mt-.1 u-mb-.3 u-mx-0' },
         r.state === 'active'
           ? T('Estas são as cores em vigor (as mesmas de Evento › Balões). Salvar aplica na hora.',
               'These are the colours in force (the same as Event › Balloons). Saving applies right away.',
@@ -187,14 +186,14 @@ export function makeRoundsTab(CONTEST, opts = {}) {
             : T('Esta rodada não tem cores próprias: ao ser promovida, herda as cores em vigor. Salve para dar cores próprias a ela.',
                 'This round has no colours of its own: when promoted, it inherits the colours in force. Save to give it its own colours.',
                 'Esta ronda no tiene colores propios: al ser promovida, hereda los colores vigentes. Guarda para darle colores propios.'))),
-      ced.el, el('div', { class: 'row', style: 'gap:.6rem;align-items:center;margin-top:.4rem' }, saveC, inherit, cmsg));
+      ced.el, el('div', { class: 'row u-gap-.6 u-items-center u-mt-.4' }, saveC, inherit, cmsg));
     return box;
   }
 
   function roundRow(r) {
     const s = STATE(r.state) || { t: r.state, c: '' };
-    const row = el('div', { class: 'subcard', style: 'margin:.4rem 0' });
-    const head = el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap' },
+    const row = el('div', { class: 'subcard u-my-.4 u-mx-0' });
+    const head = el('div', { class: 'row u-gap-.5 u-items-center u-wrap' },
       el('b', {}, r.name || r.slug),
       el('span', { class: 'pill ' + s.c }, s.t),
       el('span', { class: 'small muted' }, KIND(r.kind) || r.kind || ''),
@@ -207,7 +206,7 @@ export function makeRoundsTab(CONTEST, opts = {}) {
       T(`· ${r.stats.submissions} submissões de ${r.stats.users} contas`, `· ${r.stats.submissions} submissions from ${r.stats.users} accounts`, `· ${r.stats.submissions} envíos de ${r.stats.users} cuentas`)));
     row.append(head);
 
-    const acts = el('div', { class: 'row', style: 'gap:.5rem;margin-top:.35rem;flex-wrap:wrap' });
+    const acts = el('div', { class: 'row u-gap-.5 u-wrap u-mt-.35' });
     if (r.state === 'archived') {
       // o relatório é um SITE (páginas que se linkam), e a rota é autenticada por Bearer: quem
       // navega nele é o visualizador em /contest/rounds/, que busca cada página com o token e
@@ -247,18 +246,18 @@ export function makeRoundsTab(CONTEST, opts = {}) {
   }
 
   function addBox() {
-    const slug = el('input', { placeholder: 'oficial', style: 'width:9rem' });
-    const nm = el('input', { placeholder: T('Prova oficial', 'Official contest', 'Competencia oficial'), style: 'min-width:12rem' });
+    const slug = el('input', { class: 'u-w-9', placeholder: 'oficial' });
+    const nm = el('input', { class: 'u-minw-12', placeholder: T('Prova oficial', 'Official contest', 'Competencia oficial') });
     const kd = el('select', {}, ...['official', 'warmup', 'extra'].map(k => el('option', { value: k }, KIND(k))));
     const st = el('input', { type: 'datetime-local' });
     const en = el('input', { type: 'datetime-local' });
     const fld = (l, i) => el('div', { class: 'field' }, el('label', {}, l), i);
-    return el('div', { class: 'subcard', style: 'margin:.6rem 0' },
-      el('h3', { style: 'margin:.1rem 0 .4rem' }, T('➕ Nova rodada', '➕ New round', '➕ Nueva ronda')),
-      el('div', { class: 'row', style: 'gap:.6rem;flex-wrap:wrap' },
+    return el('div', { class: 'subcard u-my-.6 u-mx-0' },
+      el('h3', { class: 'u-mt-.1 u-mb-.4 u-mx-0' }, T('➕ Nova rodada', '➕ New round', '➕ Nueva ronda')),
+      el('div', { class: 'row u-gap-.6 u-wrap' },
         fld(T('id (a-z, 0-9, -)', 'id (a-z, 0-9, -)', 'id (a-z, 0-9, -)'), slug), fld(T('nome', 'name', 'nombre'), nm),
         fld(T('tipo', 'kind', 'tipo'), kd), fld(T('início', 'start', 'inicio'), st), fld(T('fim', 'end', 'fin'), en)),
-      el('button', { class: 'btn', style: 'margin-top:.3rem', onclick: () => act({
+      el('button', { class: 'btn u-mt-.3', onclick: () => act({
         action: 'add', slug: slug.value.trim().toLowerCase(), name: nm.value.trim(), kind: kd.value,
         start: dtToEpoch(st.value), end: dtToEpoch(en.value),
       }, T('✓ rodada criada', '✓ round created', '✓ ronda creada')) }, T('criar rodada', 'create round', 'crear ronda')));
@@ -278,10 +277,10 @@ export function makeRoundsTab(CONTEST, opts = {}) {
     const act = (DATA.rounds || []).find((r) => r.state === 'active');
     const early = (DATA.rounds || []).find((r) => r.state === 'pending' && act && r.start && act.start && r.start < act.start);
     if (early) {
-      panel.append(el('div', { class: 'notice', style: 'margin:.4rem 0' },
+      panel.append(el('div', { class: 'notice u-my-.4 u-mx-0' },
         el('b', {}, T('⚠ A rodada planejada "', '⚠ The planned round "', '⚠ La ronda planificada "') + (early.name || early.slug)
           + T('" começa ANTES da rodada no ar.', '" starts BEFORE the live round.', '" empieza ANTES de la ronda activa.')),
-        el('div', { class: 'small', style: 'margin-top:.25rem' },
+        el('div', { class: 'small u-mt-.25' },
           T('A rodada no ar é a que vive nas Configurações — NÃO promova (promover arquiva a rodada no ar, e arquivo não volta). Para a planejada rodar primeiro, INVERTA editando as duas aqui mesmo: troque janela, tipo e problemas entre elas (a edição da rodada no ar aplica na hora).',
             'The live round is the one in Settings — do NOT promote (promotion archives the live round, and archives are final). For the planned one to run first, SWAP by editing both rounds right here: exchange window, kind and problems (edits to the live round apply immediately).',
             'La ronda activa es la que vive en Configuración — NO promuevas (promover archiva la ronda activa, y los archivos son definitivos). Para que la planificada corra primero, INVIÉRTELAS editando las dos aquí mismo: intercambia ventana, tipo y problemas entre ellas (la edición de la ronda activa aplica de inmediato).'))));

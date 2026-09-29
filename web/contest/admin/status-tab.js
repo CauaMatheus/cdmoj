@@ -29,7 +29,7 @@ export function makeStatusTab(CONTEST, opts = {}) {
     SK.h2 = el('h2', {}, T('📊 Situação da prova', '📊 Contest status', '📊 Situación de la competencia'));
     SK.err = el('div', {});
     for (const k of ['cards', 'routing', 'review', 'actions', 'judges', 'pending', 'perProblem', 'recent', 'timeline']) SK[k] = el('div', {});
-    SK.foot = el('div', { class: 'small muted', style: 'margin-top:.6rem' });
+    SK.foot = el('div', { class: 'small muted u-mt-.6' });
     panel.innerHTML = '';
     panel.append(SK.h2, SK.err, SK.cards, SK.routing, SK.review, SK.actions, SK.judges, SK.pending, SK.perProblem, SK.recent, SK.timeline, SK.foot);
   }
@@ -82,14 +82,14 @@ export function makeStatusTab(CONTEST, opts = {}) {
         T(' · volta ', ' · back ', ' · vuelta ') + (w.in_results || 0) +
         ((w.in_other || 0) ? T(' · outros ', ' · other ', ' · otros ') + w.in_other : ''));
     };
-    return el('div', { style: 'margin-top:.5rem' },
+    return el('div', { class: 'u-mt-.5' },
       el('span', { class: 'small muted' },
         T('✍ Escritor: ', '✍ Writer: ', '✍ Escritor: ') +
         (rt.shards > 1 ? rt.shards + T(' shards por hash(login)', ' shards by hash(login)', ' shards por hash(login)') : T('único', 'single', 'único')) +
         T(' · entregues (5 min): ', ' · delivered (5 min): ', ' · entregados (5 min): ') + (rt.delivered_5m || 0) + '  '),
       ...rt.workers.map(chip),
       (rt.orphans || 0) > 0
-        ? el('span', { class: 'small', style: 'color:#c00;font-weight:600' },
+        ? el('span', { class: 'small u-fw-600', style: 'color:var(--js-status-tab-span-text)' },
             ' ⚠ ' + rt.orphans + T(' em shard órfão (conferir JUDGED_SHARDS nos 2 containers)', ' in orphan shard (check JUDGED_SHARDS on both containers)', ' en shard huérfano (revisa JUDGED_SHARDS en los 2 contenedores)'))
         : '');
   }
@@ -102,9 +102,9 @@ export function makeStatusTab(CONTEST, opts = {}) {
     ev.forEach((e) => rtb.append(el('tr', {},
       el('td', {}, (e.problem_id || '').split('#').pop()),
       el('td', { class: 'small' }, e.computed_verdict || ''),
-      el('td', {}, e.conflict ? el('b', { style: 'color:#c00' }, T('conflito', 'conflict', 'conflicto')) : (e.status || '')),
+      el('td', {}, e.conflict ? el('b', { style: 'color:var(--js-status-tab-b-text)' }, T('conflito', 'conflict', 'conflicto')) : (e.status || '')),
       el('td', { class: 'small' }, (e.claimants || []).map((c) => c.judge + ' (' + fmtS(c.elapsed_s) + ')').join(', ') || '—'))));
-    return el('div', { style: 'margin-top:.7rem' }, el('h3', {}, T('⚖️ Avaliação manual', '⚖️ Manual evaluation', '⚖️ Evaluación manual')),
+    return el('div', { class: 'u-mt-.7' }, el('h3', {}, T('⚖️ Avaliação manual', '⚖️ Manual evaluation', '⚖️ Evaluación manual')),
       el('div', { class: 'dash-cards' },
         card(T('Não avaliadas', 'Not evaluated', 'No evaluadas'), rv.not_evaluated || 0, (rv.not_evaluated || 0) > 0),
         card(T('Sendo avaliadas', 'Being evaluated', 'Siendo evaluadas'), rv.being_evaluated || 0),
@@ -141,13 +141,13 @@ export function makeStatusTab(CONTEST, opts = {}) {
     alerts.forEach((a) => actions.push(a.login + T(' logado de ', ' logged in from ', ' conectado desde ') + [a.multi_ip && 'IPs', a.multi_ua && T('máquinas/navegadores', 'machines/browsers', 'máquinas/navegadores')].filter(Boolean).join(T(' e ', ' and ', ' y ')) + T(' diferentes — conta compartilhada?', ' — shared account?', ' — ¿cuenta compartida?')));
     return actions;
   }
-  const buildActions = (actions) => actions.length ? el('div', { class: 'section', style: 'background:#fff7ec;border:1px solid #f3c08e' },
-    el('b', {}, T('⚠ Atenção', '⚠ Attention', '⚠ Atención')), el('ul', { style: 'margin:.3rem 0 0; padding-left:1.2rem' }, ...actions.map((a) => el('li', {}, a)))) : null;
+  const buildActions = (actions) => actions.length ? el('div', { class: 'section', style: 'background:var(--js-status-tab-div-bg);border:1px solid var(--js-status-tab-div-border)' },
+    el('b', {}, T('⚠ Atenção', '⚠ Attention', '⚠ Atención')), el('ul', { class: 'u-mt-.3 u-mb-0 u-mx-0 u-pl-1.2' }, ...actions.map((a) => el('li', {}, a)))) : null;
 
   // saúde dos juízes (por host); ⭐ = host do pool do contest
   function buildJudges(j) {
     const judges = j.list || [], pool = Array.isArray(j.pool) ? j.pool : [];
-    const box = el('div', {}, el('h3', { style: 'margin:1rem 0 .3rem' }, T('🖥️ Juízes (', '🖥️ Judges (', '🖥️ Jueces (') + judges.length + ')' +
+    const box = el('div', {}, el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('🖥️ Juízes (', '🖥️ Judges (', '🖥️ Jueces (') + judges.length + ')' +
       (pool.length ? ' — pool: ' + pool.join(', ') : '')));
     if (!judges.length) { box.append(el('div', { class: 'flag-anom' }, T('Nenhum juiz registrado.', 'No judge registered.', 'Ningún juez registrado.'))); return box; }
     const tb = el('tbody');
@@ -165,7 +165,7 @@ export function makeStatusTab(CONTEST, opts = {}) {
 
   // pendentes (ação: quem está esperando, há quanto tempo)
   function buildPending(pend) {
-    const box = el('div', {}, el('h3', { style: 'margin:1rem 0 .3rem' }, T('⏳ Pendentes (', '⏳ Pending (', '⏳ Pendientes (') + pend.length + ')'));
+    const box = el('div', {}, el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('⏳ Pendentes (', '⏳ Pending (', '⏳ Pendientes (') + pend.length + ')'));
     if (!pend.length) { box.append(el('div', { class: 'muted' }, T('Nenhuma submissão aguardando o juiz.', 'No submission waiting for the judge.', 'Ningún envío esperando al juez.'))); return box; }
     const tb = el('tbody');
     pend.forEach((p) => tb.append(el('tr', {}, el('td', {}, p.login), el('td', {}, p.problem),
@@ -184,7 +184,7 @@ export function makeStatusTab(CONTEST, opts = {}) {
       el('td', { class: 'n' }, String(x.submits)),
       el('td', { class: 'n' + (x.pending ? ' flag-anom' : '') }, String(x.pending)),
       el('td', { class: 'n' }, String(x.accepted)))));
-    return el('div', {}, el('h3', { style: 'margin:1rem 0 .3rem' }, T('📚 Por problema', '📚 By problem', '📚 Por problema')),
+    return el('div', {}, el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('📚 Por problema', '📚 By problem', '📚 Por problema')),
       el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
         el('thead', {}, el('tr', {}, el('th', {}, 'Prob'), el('th', { class: 'n' }, 'Subs'), el('th', { class: 'n' }, 'Pend'), el('th', { class: 'n' }, 'AC'))), tb)));
   }
@@ -197,7 +197,7 @@ export function makeStatusTab(CONTEST, opts = {}) {
       el('td', {}, x.login), el('td', {}, x.problem),
       el('td', {}, el('span', { class: vClass(x.verdict) }, x.verdict || '—')),
       el('td', { class: 'small' }, x.response_s != null ? fmtS(x.response_s) : (x.pending ? '⏳' : '—')))));
-    return el('div', {}, el('h3', { style: 'margin:1rem 0 .3rem' }, T('🧾 Submissões recentes', '🧾 Recent submissions', '🧾 Envíos recientes')),
+    return el('div', {}, el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('🧾 Submissões recentes', '🧾 Recent submissions', '🧾 Envíos recientes')),
       el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
         el('thead', {}, el('tr', {}, el('th', {}, T('Hora', 'Time', 'Hora')), el('th', {}, 'Login'), el('th', {}, 'Prob'), el('th', {}, T('Veredicto', 'Verdict', 'Veredicto')), el('th', {}, T('Resposta', 'Response', 'Respuesta')))), tb)));
   }
@@ -214,9 +214,9 @@ export function makeStatusTab(CONTEST, opts = {}) {
         el('span', { class: 'spark-bar', style: 'width:' + Math.round(100 * (b.submits || 0) / maxS) + '%' }),
         el('span', { class: 'small muted' }, (b.submits || 0) + T(' sub · espera ~', ' sub · wait ~', ' env · espera ~') + fmtS(b.avg_wait_s) + (peak ? T(' ⬅ pico', ' ⬅ peak', ' ⬅ pico') : '')));
     });
-    return el('div', {}, el('h3', { style: 'margin:1rem 0 .3rem' }, T('📈 Atividade (submissões/min e espera média)', '📈 Activity (submissions/min and average wait)', '📈 Actividad (envíos/min y espera media)')),
+    return el('div', {}, el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('📈 Atividade (submissões/min e espera média)', '📈 Activity (submissions/min and average wait)', '📈 Actividad (envíos/min y espera media)')),
       el('div', { class: 'spark' }, ...rows),
-      el('div', { class: 'small muted', style: 'margin-top:.2rem' }, T('Barra ∝ submissões no minuto (máx visível = ', 'Bar ∝ submissions per minute (max visible = ', 'Barra ∝ envíos por minuto (máx visible = ') + maxS + ')'));
+      el('div', { class: 'small muted u-mt-.2' }, T('Barra ∝ submissões no minuto (máx visível = ', 'Bar ∝ submissions per minute (max visible = ', 'Barra ∝ envíos por minuto (máx visible = ') + maxS + ')'));
   }
 
   // --- o tick: busca e troca SÓ o que mudou ---------------------------------------------------

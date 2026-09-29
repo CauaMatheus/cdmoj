@@ -281,12 +281,12 @@ function renderAnon(p) {
   const at = (q) => (n ? sorted[Math.min(n - 1, Math.floor(q * n))] : 0);
   const dist = {}; solves.forEach((k) => { dist[k] = (dist[k] || 0) + 1; });
   const probCounts = p.probShorts.map((sn) => ({ sn, c: teams.filter((t) => isSolved(t.probs[sn])).length }));
-  const card = (big, sub) => el('div', { style: 'flex:1;min-width:110px;background:#fff;border:1px solid #e3e9f2;border-radius:10px;padding:.7rem .9rem' },
-    el('div', { style: 'font-size:1.7rem;font-weight:800;line-height:1' }, String(big)), el('div', { style: 'color:#64748b;font-size:.82rem' }, sub));
+  const card = (big, sub) => el('div', { class: 'u-py-.7 u-px-.9 u-grow u-minw-110px', style: 'background:var(--color-surface);border:1px solid var(--js-score-div-border);border-radius:10px' },
+    el('div', { class: 'u-fs-1.7 u-fw-800 u-lh-1' }, String(big)), el('div', { class: 'u-fs-.82', style: 'color:var(--color-text-muted)' }, sub));
   const bar = (pc) => el('span', { style: 'display:inline-block;height:.7em;background:#1e57c4;border-radius:3px;min-width:2px;vertical-align:middle;width:' + pc + '%' });
-  box.append(el('div', { style: 'background:#eef3fb;border-radius:8px;padding:.5rem .7rem;margin-bottom:.6rem;color:#334155' },
+  box.append(el('div', { class: 'u-py-.5 u-px-.7 u-mb-.6', style: 'background:var(--color-primary-faint);border-radius:8px;color:var(--js-score-div-text)' },
     '🔒 ' + T('Placar anônimo — desempenho individual oculto.', 'Anonymous scoreboard — individual performance hidden.', 'Marcador anónimo — desempeño individual oculto.')));
-  box.append(el('div', { style: 'display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:.4rem' },
+  box.append(el('div', { class: 'u-gap-.8 u-wrap u-mb-.4', style: 'display:flex' },
     card(n, T('participantes', 'participants', 'participantes')), card('≥' + at(0.25), T('top 25% resolveu', 'top 25% solved', 'top 25% resolvió')),
     card(at(0.5), T('mediana', 'median', 'mediana')), card('≥' + at(0.75), T('75% resolveu ≥', '75% solved ≥', '75% resolvió ≥')), card(sorted[0] || 0, T('máximo', 'max', 'máximo'))));
   const dtb = el('tbody');
@@ -294,11 +294,11 @@ function renderAnon(p) {
     const pc = n ? Math.round(dist[k] / n * 100) : 0;
     dtb.append(el('tr', {}, el('td', {}, k + ' ' + T('problema(s)', 'problem(s)', 'problema(s)')), el('td', {}, String(dist[k])), el('td', {}, bar(pc), ' ' + pc + '%')));
   });
-  box.append(el('h3', { style: 'margin:1rem 0 .3rem' }, T('Distribuição (quantos resolveram quantos)', 'Distribution', 'Distribución')),
+  box.append(el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('Distribuição (quantos resolveram quantos)', 'Distribution', 'Distribución')),
     el('table', { class: 'score' }, el('thead', {}, el('tr', {}, el('th', {}, T('Resolvidos', 'Solved', 'Resueltos')), el('th', {}, T('Participantes', 'Participants', 'Participantes')), el('th', {}, '%'))), dtb));
   const ptb = el('tbody');
   probCounts.forEach((x) => { const pc = n ? Math.round(x.c / n * 100) : 0; ptb.append(el('tr', {}, el('td', {}, el('b', {}, x.sn)), el('td', {}, String(x.c)), el('td', {}, bar(pc), ' ' + pc + '%'))); });
-  box.append(el('h3', { style: 'margin:1rem 0 .3rem' }, T('Resolvedores por problema', 'Solvers per problem', 'Solucionadores por problema')),
+  box.append(el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('Resolvedores por problema', 'Solvers per problem', 'Solucionadores por problema')),
     el('table', { class: 'score' }, el('thead', {}, el('tr', {}, el('th', {}, T('Problema', 'Problem', 'Problema')), el('th', {}, T('Resolveram', 'Solved', 'Resolvieron')), el('th', {}, '%'))), ptb));
 }
 
@@ -499,7 +499,7 @@ async function boot() {
     const cb = el('input', { type: 'checkbox' }); cb.checked = anonMode;
     cb.addEventListener('change', () => { anonMode = cb.checked; localStorage.setItem('moj_score_anon_' + CONTEST, cb.checked ? '1' : '0'); reRender(); });
     document.getElementById('noAnim').parentNode.parentNode.append(
-      el('label', { class: 'small', style: 'margin-left:.6rem' }, cb, ' ' + T('Anônimo', 'Anonymous', 'Anónimo')));
+      el('label', { class: 'small u-ml-.6' }, cb, ' ' + T('Anônimo', 'Anonymous', 'Anónimo')));
   }
 
   // COORTES: o AVISO p/ quem é convidado (o seletor de placar mora na barra de filtros, junto
@@ -507,7 +507,7 @@ async function boot() {
   const coh = basic && basic.cohort;
   if (coh && (coh.unranked || !coh.public)) {
     const main = document.querySelector('main.container') || document.body;
-    main.prepend(el('div', { class: 'alert', style: 'font-weight:600' },
+    main.prepend(el('div', { class: 'alert u-fw-600' },
       T(`🏅 Você está na categoria “${coh.name}” (convidado): aparece neste placar, mas fora da classificação oficial.`,
         `🏅 You are in the “${coh.name}” category (guest): you show up on this scoreboard, but outside the official ranking.`,
         `🏅 Estás en la categoría “${coh.name}” (invitado): apareces en este marcador, pero fuera de la clasificación oficial.`)));

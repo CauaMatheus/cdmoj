@@ -48,11 +48,11 @@ function conflitosTab() {
       btn.addEventListener('click', async () => { if (!sel.value) return; btn.disabled = true; msg.textContent = T('Enviando…', 'Sending…', 'Enviando…');
         try { await apiPost('/contest/review/resolve?contest=' + enc(CONTEST), { id: cf.id, verdict: sel.value }, G); loadConflicts(); pokeChiefAlert(); }
         catch (e) { btn.disabled = false; msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); } });
-      const votes = el('ul', { style: 'margin:.2rem 0 .3rem 1rem' }, ...(cf.votes || []).map(v => el('li', { class: 'small' }, el('b', {}, v.by), ' → ', v.label, ' (', v.verdict, ')')));
-      panel.append(el('div', { class: 'field', style: 'border:1px solid #c0392b; border-radius:.5rem; padding:.5rem .7rem; margin:.4rem 0' },
+      const votes = el('ul', { class: 'u-mt-.2 u-mb-.3 u-ml-1 u-mr-0' }, ...(cf.votes || []).map(v => el('li', { class: 'small' }, el('b', {}, v.by), ' → ', v.label, ' (', v.verdict, ')')));
+      panel.append(el('div', { class: 'field u-my-.4 u-mx-0 u-py-.5 u-px-.7', style: 'border:1px solid var(--js-chief-div-border);border-radius:.5rem' },
         el('div', {}, el('b', {}, (cf.problem_id || '').split('#').pop()), ' · ', el('span', { class: 'small muted' }, cf.login || ''),
           T(' · computado: ', ' · computed: ', ' · calculado: '), el('span', { class: 'small muted' }, cf.computed_verdict || '')),
-        el('div', { class: 'row small', style: 'gap:.7rem; margin:.2rem 0' }, logLink(CONTEST, cf), srcLink(CONTEST, cf)),
+        el('div', { class: 'row small u-my-.2 u-mx-0 u-gap-.7' }, logLink(CONTEST, cf), srcLink(CONTEST, cf)),
         votes, el('div', { class: 'row' }, sel, btn, msg)));
     });
   }
@@ -98,7 +98,7 @@ async function boot() {
     history.replaceState(null, '', location.pathname + '?c=' + enc(CONTEST) + '#' + id);
   }
   TABS().forEach(t => { btn[t.id] = el('button', { onclick: () => show(t.id) }, t.label); tabbar.append(btn[t.id]); });
-  tabbar.append(el('a', { class: 'btn ghost', style: 'margin-left:auto', target: '_blank', href: MANUAL_LINK().href }, MANUAL_LINK().label));
+  tabbar.append(el('a', { class: 'btn ghost u-ml-auto', target: '_blank', href: MANUAL_LINK().href }, MANUAL_LINK().label));
   // o banner global (shared/chief-alert.js) pede esta aba ao ser clicado, mesmo já estando aqui
   window.addEventListener('moj:show-conflicts', () => show('conf'));
   const want = (location.hash || '').replace('#', '');

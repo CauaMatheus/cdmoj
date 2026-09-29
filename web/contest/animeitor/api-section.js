@@ -19,9 +19,9 @@ const enc = encodeURIComponent;
 export function makeApiSection(CONTEST, G) {
   const A = '/contest/animeitor/api?contest=' + enc(CONTEST);
   const root = el('div', { class: 'section', id: 'anApi' });
-  const statusBox = el('div', { class: 'small', style: 'margin:.5rem 0' });
+  const statusBox = el('div', { class: 'small u-my-.5 u-mx-0' });
   const linksBox = el('div', {});
-  const msgBox = el('div', { class: 'small', style: 'margin:.4rem 0' });
+  const msgBox = el('div', { class: 'small u-my-.4 u-mx-0' });
   let S = null;          // estado do GET
   let EDIT = null;       // cópia de trabalho dos placares
   let DIRTY = false;
@@ -86,25 +86,25 @@ export function makeApiSection(CONTEST, G) {
         const keep = msgBox.textContent; await load(); say(keep);
       } catch (e) { say(e.message || T('falha', 'failed', 'fallido'), 'error-box'); }
     };
-    const row = (lbl, inp, hint) => el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap;margin:.25rem 0' },
-      el('label', { class: 'small', style: 'min-width:11rem' }, lbl), inp, hint ? el('span', { class: 'small muted' }, hint) : '');
+    const row = (lbl, inp, hint) => el('div', { class: 'row u-my-.25 u-mx-0 u-gap-.5 u-items-center u-wrap' },
+      el('label', { class: 'small u-minw-11' }, lbl), inp, hint ? el('span', { class: 'small muted' }, hint) : '');
     // a CHAVE: a do MOJ vale por padrão (e nunca aparece); a própria vence e pode ser apagada (volta p/ a do MOJ)
     const backToMoj = async () => {
       if (!confirm(T('Apagar a chave própria deste contest e voltar a usar a chave do MOJ?', 'Delete this contest\'s own key and go back to the MOJ key?', '¿Eliminar la clave propia de esta competencia y volver a usar la clave del MOJ?'))) return;
       say('…'); try { await post({ action: 'config', user: '', token: '' }); await load(); say(T('Usando a chave do MOJ.', 'Using the MOJ key.', 'Usando la clave del MOJ.')); } catch (e) { say(e.message || T('falha', 'failed', 'fallido'), 'error-box'); }
     };
-    const credFields = el('span', { class: 'row', style: 'gap:.4rem' }, user, tok);
+    const credFields = el('span', { class: 'row u-gap-.4' }, user, tok);
     let keyRow;
     if (S.cred_source === 'moj') {
-      keyRow = el('div', { style: 'margin:.25rem 0' },
+      keyRow = el('div', { class: 'u-my-.25 u-mx-0' },
         el('div', { class: 'small' }, '🔑 ', el('b', {}, T('Chave do MOJ', 'MOJ key', 'Clave del MOJ')), ' — ',
           T('o MOJ já tem uma chave neste servidor do Animeitor; não há nada a configurar.', 'MOJ already has a key on this Animeitor server; there is nothing to configure.', 'el MOJ ya tiene una clave en este servidor del Animeitor; no hay nada que configurar.')),
-        el('details', { style: 'margin-top:.2rem' }, el('summary', { class: 'small' }, T('usar uma chave própria', 'use your own key', 'usar una clave propia')),
+        el('details', { class: 'u-mt-.2' }, el('summary', { class: 'small' }, T('usar uma chave própria', 'use your own key', 'usar una clave propia')),
           row(T('Usuário e token:', 'User and token:', 'Usuario y token:'), credFields, T('vence a do MOJ; o token nunca volta para a tela', 'overrides the MOJ key; the token is never sent back to the page', 'prevalece sobre la del MOJ; el token nunca vuelve a la pantalla'))));
     } else if (own) {
       keyRow = el('div', {},
         row(T('Chave própria:', 'Own key:', 'Clave propia:'), credFields, T('o token nunca volta para a tela', 'the token is never sent back to the page', 'el token nunca vuelve a la pantalla')),
-        S.moj_cred ? el('div', { class: 'small', style: 'margin:.1rem 0 .3rem' }, el('button', { class: 'btn ghost', onclick: backToMoj }, T('apagar e usar a chave do MOJ', 'delete it and use the MOJ key', 'eliminarla y usar la clave del MOJ'))) : '');
+        S.moj_cred ? el('div', { class: 'small u-mt-.1 u-mb-.3 u-mx-0' }, el('button', { class: 'btn ghost', onclick: backToMoj }, T('apagar e usar a chave do MOJ', 'delete it and use the MOJ key', 'eliminarla y usar la clave del MOJ'))) : '');
     } else {
       keyRow = el('div', {},
         S.moj_cred && S.url !== S.default_url ? el('p', { class: 'note' }, T(`A chave do MOJ só vale no servidor padrão (${S.default_url}). Para este servidor, grave uma chave própria — ou volte ao servidor padrão.`,
@@ -118,17 +118,17 @@ export function makeApiSection(CONTEST, G) {
       keyRow,
       row(T('Nome do evento lá:', 'Event name there:', 'Nombre del evento allá:'), ev, S.secret_contest ? T('⚠ contest secreto: este NOME fica público na página inicial do Animeitor', '⚠ secret contest: this NAME is public on the Animeitor landing page', '⚠ competencia secreta: este NOMBRE queda público en la página inicial del Animeitor') : ''),
       row(T('URL pública do MOJ:', 'MOJ public URL:', 'URL pública del MOJ:'), base, T('de onde o telão busca a foto e a música de cada time', 'where the big screen fetches each team photo and music', 'de donde la pantalla obtiene la foto y la música de cada equipo')),
-      el('div', { class: 'row', style: 'gap:.5rem;margin:.4rem 0' },
+      el('div', { class: 'row u-my-.4 u-mx-0 u-gap-.5' },
         el('button', { class: 'btn', onclick: () => save(true) }, T('gravar e testar', 'save and test', 'guardar y probar')),
         el('button', { class: 'btn ghost', onclick: () => save(false) }, T('só gravar', 'save only', 'solo guardar'))));
   }
 
   // ---- placares e sedes ---------------------------------------------------------------------
   const touch = () => { DIRTY = true; dirtyNote.textContent = T('alterações não salvas', 'unsaved changes', 'cambios sin guardar'); };
-  const dirtyNote = el('span', { class: 'small', style: 'color:var(--warn,#b9770e)' });
+  const dirtyNote = el('span', { class: 'small', style: 'color:var(--color-warning)' });
   const codesCell = (obj, isSite, parentSrc) => {
     const auto = el('input', { type: 'checkbox', checked: obj.codes == null, disabled: (obj.source || {}).kind === 'manual' });
-    const ta = el('textarea', { rows: 1, cols: 28, style: 'font-family:monospace;font-size:.8rem', placeholder: T('um regex de login por linha', 'one login regex per line', 'un regex de usuario por línea') },
+    const ta = el('textarea', { class: 'u-fs-.8', rows: 1, cols: 28, style: 'font-family:monospace', placeholder: T('um regex de login por linha', 'one login regex per line', 'un regex de usuario por línea') },
       (obj.codes || []).join('\n'));
     ta.style.display = obj.codes == null ? 'none' : '';
     auto.addEventListener('change', () => {
@@ -142,17 +142,17 @@ export function makeApiSection(CONTEST, G) {
     ta.addEventListener('input', () => { obj.codes = ta.value.split('\n').map((x) => x.trim()).filter(Boolean); touch(); });
     return el('div', {}, el('label', { class: 'small' }, auto, ' ' + T('automático', 'automatic', 'automático')), ta);
   };
-  const num = (obj, k) => { const i = el('input', { type: 'number', min: 0, value: obj[k], style: 'width:4rem' }); i.addEventListener('input', () => { obj[k] = Math.max(0, parseInt(i.value, 10) || 0); touch(); }); return i; };
+  const num = (obj, k) => { const i = el('input', { class: 'u-w-4', type: 'number', min: 0, value: obj[k] }); i.addEventListener('input', () => { obj[k] = Math.max(0, parseInt(i.value, 10) || 0); touch(); }); return i; };
   const nameInp = (obj) => { const i = el('input', { type: 'text', value: obj.name, size: 18 }); i.addEventListener('input', () => { obj.name = i.value; touch(); }); return i; };
 
   function boardsCard() {
     const tb = el('tbody');
     EDIT.forEach((c, ci) => {
       const p = propOf(c.source);
-      const sitesBox = el('div', { style: 'margin-top:.3rem' });
+      const sitesBox = el('div', { class: 'u-mt-.3' });
       const drawSites = () => {
         sitesBox.innerHTML = '';
-        c.sites.forEach((s, si) => sitesBox.append(el('div', { class: 'row', style: 'gap:.4rem;align-items:flex-start;margin:.15rem 0' },
+        c.sites.forEach((s, si) => sitesBox.append(el('div', { class: 'row u-my-.15 u-mx-0 u-gap-.4 u-items-flex-start' },
           nameInp(s), codesCell(s, true, c.source),
           el('button', { class: 'btn ghost', title: T('remover sede', 'remove site', 'quitar sede'), onclick: () => { c.sites.splice(si, 1); touch(); drawSites(); } }, '×'))));
         sitesBox.append(el('button', { class: 'btn ghost', onclick: () => { c.sites.push({ name: '', source: { kind: 'manual', id: '' }, codes: [] }); touch(); drawSites(); } }, T('+ sede', '+ site', '+ sede')));
@@ -180,7 +180,7 @@ export function makeApiSection(CONTEST, G) {
         el('thead', {}, el('tr', {}, el('th', {}, T('Placar', 'Scoreboard', 'Marcador')), el('th', {}, T('Times (regex de login)', 'Teams (login regex)', 'Equipos (regex de usuario)')),
           el('th', { class: 'n' }, T('Ouro', 'Gold', 'Oro')), el('th', { class: 'n' }, T('Prata', 'Silver', 'Plata')), el('th', { class: 'n' }, T('Bronze', 'Bronze', 'Bronce')),
           el('th', {}, T('Sedes', 'Sites', 'Sedes')), el('th', {}, ''))), tb)),
-      el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap;margin:.4rem 0' },
+      el('div', { class: 'row u-my-.4 u-mx-0 u-gap-.5 u-items-center u-wrap' },
         el('button', { class: 'btn ghost', onclick: () => { EDIT.push({ name: '', source: { kind: 'manual', id: '' }, codes: [], ouro: 1, prata: 2, bronze: 3, style: null, sites: [] }); touch(); redrawBoards(); } }, T('+ placar manual', '+ manual scoreboard', '+ marcador manual')),
         el('button', { class: 'btn ghost', onclick: () => { if (!confirm(T('Descartar a revisão e voltar à proposta do MOJ?', 'Discard the review and go back to the MOJ proposal?', '¿Descartar la revisión y volver a la propuesta del MOJ?'))) return; EDIT = fromProposal(S.proposal); touch(); redrawBoards(); } }, T('voltar à proposta', 'back to the proposal', 'volver a la propuesta')),
         el('button', { class: 'btn', onclick: saveBoards }, T('salvar placares', 'save scoreboards', 'guardar marcadores')), dirtyNote));
@@ -207,7 +207,7 @@ export function makeApiSection(CONTEST, G) {
     });
     return el('div', {},
       el('h3', {}, T('Operação', 'Operation', 'Operación')),
-      el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap' },
+      el('div', { class: 'row u-gap-.5 u-items-center u-wrap' },
         el('button', { class: 'btn', disabled: !S.configured, onclick: () => publish(false) }, T('📡 publicar no telão', '📡 publish to the big screen', '📡 publicar en la pantalla')),
         el('button', { class: 'btn ghost', disabled: !S.configured, onclick: () => busy(async () => { const r = await post({ action: 'push-runs' }); say(T(`Submissões: ${r.runs.sent} enviadas (${r.runs.added} novas, ${r.runs.updated} corrigidas).`, `Submissions: ${r.runs.sent} sent (${r.runs.added} new, ${r.runs.updated} corrected).`, `Envíos: ${r.runs.sent} enviados (${r.runs.added} nuevos, ${r.runs.updated} corregidos).`) + (r.runs.error ? ' ' + r.runs.error : ''), r.runs.error ? 'error-box' : ''); await refresh(); }) }, T('mandar submissões agora', 'send submissions now', 'enviar soluciones ahora')),
         el('button', { class: 'btn ghost', disabled: !S.configured, onclick: () => busy(async () => {
@@ -241,11 +241,11 @@ export function makeApiSection(CONTEST, G) {
       const [vt, vc] = verifyText(S.verify);
       statusBox.append(el('div', { class: vc === 'error-box' ? 'error-box' : (vc === 'muted' ? 'muted' : ''), style: 'margin-top:.3rem', id: 'anVerify' }, T('Conferência: ', 'Check: ', 'Verificación: ') + vt));
     }
-    if (dead) statusBox.append(el('div', { class: 'error-box', style: 'margin-top:.3rem' },
+    if (dead) statusBox.append(el('div', { class: 'error-box u-mt-.3' },
       T('O processo alimentador não está rodando no servidor do MOJ: o relógio do telão está PARADO. Avise o administrador do servidor (serviço animeitor-feed).',
         'The feeder process is not running on the MOJ server: the big-screen clock is STOPPED. Tell the server administrator (animeitor-feed service).',
         'El proceso alimentador no está corriendo en el servidor del MOJ: el reloj de la pantalla está DETENIDO. Avisa al administrador del servidor (servicio animeitor-feed).')));
-    if (st.last_error) statusBox.append(el('div', { class: 'error-box', style: 'margin-top:.3rem' },
+    if (st.last_error) statusBox.append(el('div', { class: 'error-box u-mt-.3' },
       T('Último erro', 'Last error', 'Último error') + ' (' + st.last_error.where + (st.last_error.http ? ', HTTP ' + st.last_error.http : '') + ', ' + new Date(st.last_error.at * 1000).toLocaleTimeString(uiLocale()) + '): ' + (st.last_error.message || '')));
   }
   async function refresh(withLinks) {
@@ -279,7 +279,7 @@ export function makeApiSection(CONTEST, G) {
   // o interruptor ÚNICO: liberar/recolher os links do reveleitor p/ as sedes (.cstaff/.staff veem só os da sede deles)
   function revealSwitch() {
     const rv = S.reveal || {}, on = !!rv.released;
-    return el('div', { class: 'row', style: 'gap:.6rem;align-items:center;flex-wrap:wrap;margin:.4rem 0' },
+    return el('div', { class: 'row u-my-.4 u-mx-0 u-gap-.6 u-items-center u-wrap' },
       el('button', { class: on ? 'btn ghost danger' : 'btn', id: 'anRevealBtn', onclick: async () => {
         // antes de liberar, CONFERE: o reveleitor revela o que o Animeitor tem — e o operador precisa saber se é tudo
         let vt = '';

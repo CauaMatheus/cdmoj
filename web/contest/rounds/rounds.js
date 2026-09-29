@@ -100,19 +100,19 @@ function render() {
   const arch = ROUNDS.filter((r) => r.state === 'archived');
   const live = ROUNDS.find((r) => r.state === 'active');
   const box = el('div', { class: 'section' });
-  if (live) box.append(el('div', { class: 'subcard', style: 'margin:.3rem 0' },
-    el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap' },
+  if (live) box.append(el('div', { class: 'subcard u-my-.3 u-mx-0' },
+    el('div', { class: 'row u-gap-.5 u-items-center u-wrap' },
       el('b', {}, live.name || live.slug), el('span', { class: 'pill ok' }, T('no ar', 'live', 'en vivo')),
       el('span', { class: 'small muted' }, KIND(live.kind)),
       el('span', { class: 'small muted' }, fmt(live.start) + ' → ' + fmt(live.end)))));
   if (!arch.length) {
-    box.append(el('p', { class: 'small muted', style: 'margin-top:.6rem' },
+    box.append(el('p', { class: 'small muted u-mt-.6' },
       T('Nenhuma rodada encerrada ainda.', 'No finished round yet.', 'Aún no hay ninguna ronda finalizada.')));
   } else {
-    box.append(el('h3', { style: 'margin:.8rem 0 .3rem' }, T('Rodadas encerradas', 'Finished rounds', 'Rondas finalizadas')));
+    box.append(el('h3', { class: 'u-mt-.8 u-mb-.3 u-mx-0' }, T('Rodadas encerradas', 'Finished rounds', 'Rondas finalizadas')));
     arch.forEach((r) => {
-      const row = el('div', { class: 'subcard', style: 'margin:.3rem 0' },
-        el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap' },
+      const row = el('div', { class: 'subcard u-my-.3 u-mx-0' },
+        el('div', { class: 'row u-gap-.5 u-items-center u-wrap' },
           el('b', {}, r.name || r.slug),
           el('span', { class: 'small muted' }, KIND(r.kind)),
           el('span', { class: 'small muted' }, fmt(r.start) + ' → ' + fmt(r.end)),
@@ -122,7 +122,7 @@ function render() {
               `${r.stats.submissions} envíos · ${r.stats.users} cuentas`)) : null,
           r.published ? el('span', { class: 'pill ok' }, T('pública', 'public', 'pública')) : null));
       if (r.has_report) {
-        row.append(el('div', { class: 'row', style: 'gap:.5rem;margin-top:.3rem' },
+        row.append(el('div', { class: 'row u-gap-.5 u-mt-.3' },
           el('button', { class: 'btn', onclick: () => openViewer(r.slug, 'index.html') }, T('📊 abrir placar', '📊 open scoreboard', '📊 abrir marcador')),
           el('button', { class: 'btn ghost', onclick: () => openViewer(r.slug, 'runs.html') }, T('submissões', 'submissions', 'envíos'))));
       } else {

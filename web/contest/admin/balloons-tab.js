@@ -45,7 +45,7 @@ export function makeBalloonsTab(CONTEST) {
       try { await apiPost('/contest/admin/config?contest=' + enc(CONTEST), { colors: null }, G); await load(); }
       catch (e) { msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     } }, T('↺ Cores padrão', '↺ Default colours', '↺ Colores predeterminados'));
-    panel.append(ed.el, el('div', { class: 'row', style: 'margin-top:.7rem;gap:.6rem' }, save, reset, msg));
+    panel.append(ed.el, el('div', { class: 'row u-gap-.6 u-mt-.7' }, save, reset, msg));
   }
   return { panel, load };
 }

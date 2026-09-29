@@ -212,8 +212,8 @@ export function renderICPC(parsed, opts) {
     // O `safeLogo` valida a URL porque o `rule.logo` do teams-meta é escolha do admin.
     // ⚠ o `lazy` não é enfeite: sem ele o 1º render de uma prova grande pediria uma imagem — um
     // fork de bash sob fcgiwrap — por LINHA do placar.
-    const logoImg = safeLogo ? el('img', { alt: '', loading: 'lazy',
-      style: 'height:16px;vertical-align:middle;margin-right:4px;border-radius:2px',
+    const logoImg = safeLogo ? el('img', { class: 'u-h-16px u-valign-middle u-mr-4px', alt: '', loading: 'lazy',
+      style: 'border-radius:2px',
       onerror: (e) => e.target.remove() }) : null;
     const label = (t.univShort ? `[${escapeHtml(t.univShort)}] ` : '') + escapeHtml(t.teamName || t.username);
     const teamTd = el('td', { class: 'team',
@@ -244,7 +244,7 @@ export function renderICPC(parsed, opts) {
         { title: T('Ver a foto do time', 'View team photo', 'Ver la foto del equipo'), style: 'text-decoration:none' }, '📷'));
     }
     // 🤖 = o time DECLAROU na inscrição que usa IA (transparência, não julgamento)
-    if (t.aiDeclared) teamTd.append(' ', el('span', { title: T('Este time declarou que usa IA', 'This team declared AI use', 'Este equipo declaró que usa IA'), style: 'cursor:default' }, '🤖'));
+    if (t.aiDeclared) teamTd.append(' ', el('span', { class: 'u-cursor-default', title: T('Este time declarou que usa IA', 'This team declared AI use', 'Este equipo declaró que usa IA') }, '🤖'));
     if (t.virtual) teamTd.append(' ', el('span', { class: 'pill virtual',
       title: T('Participação virtual: refez a prova depois de encerrada, no próprio tempo.', 'Virtual participation: redid the contest after it ended, in their own time.', 'Participación virtual: rehízo la competencia después de terminada, en su propio tiempo.') },
       t.you ? T('virtual · você', 'virtual · you', 'virtual · tú') : 'virtual'));

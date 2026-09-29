@@ -46,7 +46,7 @@ async function pdfBlobUrl(id) {
 // visibility:hidden (o Firefox não imprime iframe escondido). Resolve no onafterprint/timeout.
 function printBlobIframe(url) {
   return new Promise((res) => {
-    const ifr = el('iframe', { style: 'position:fixed;left:-10000px;top:0;width:800px;height:1100px;border:0' });
+    const ifr = el('iframe', { class: 'u-pos-fixed u-w-800px u-h-1100px', style: 'left:-10000px;top:0;border:0' });
     let done = false;
     const fin = () => { if (done) return; done = true; setTimeout(() => ifr.remove(), 2000); res(); };
     ifr.onload = () => { setTimeout(() => { try { const w = ifr.contentWindow; w.focus(); w.onafterprint = fin; w.print(); setTimeout(fin, 8000); } catch (_) { fin(); } }, 600); };
@@ -128,7 +128,7 @@ function renderRows() {
           // antiga da sede, no mesmo problema, por julgar) — ver pr_reconcile_balloons. A folha
           // impressa leva a mesma faixa, então o que o staff anuncia bate com o que ele carrega.
           t.first_site
-            ? el('div', { class: 'small', style: 'color:#7A5C00;font-weight:700;margin-top:.15rem' },
+            ? el('div', { class: 'small u-fw-700 u-mt-.15', style: 'color:var(--js-staff-div-text)' },
                 '★ ' + T('primeiro da sede', 'first to solve at this site', 'primero en resolver en esta sede'))
             : null)
       : el('td', {}, t.filename, el('div', { class: 'small muted' }, (t.mime || '') + (t.size ? ' · ' + Math.max(1, Math.round(t.size / 1024)) + ' KB' : '')));
@@ -142,7 +142,7 @@ function renderRows() {
       // Antes disso a coluna mostrava um '—' mudo e a sala só descobria no papel impresso.
       el('td', { class: 'small' },
         (t.build_ok === false
-          ? el('span', { style: 'color:var(--warn,#b45309); font-weight:600' },
+          ? el('span', { class: 'u-fw-600', style: 'color:var(--color-warning)' },
               T('⚠ não converteu', '⚠ not converted', '⚠ no convertido'))
           : (t.pages > 0 ? t.pages + T(' pág.', ' pg', ' pág.') : '—')),
         el('div', { class: 'small muted' },
@@ -196,7 +196,7 @@ function render() {
     tbody);
   app.append(
     el('div', { class: 'section' }, RO ? '' : autoBox,
-      el('div', { class: 'row', style: 'margin:.2rem 0' }, statusBar, el('div', { class: 'spacer' }),
+      el('div', { class: 'row u-my-.2 u-mx-0' }, statusBar, el('div', { class: 'spacer' }),
         CAN_BADGES ? el('a', { class: 'btn ghost', href: '/contest/badges/?c=' + enc(CONTEST) }, T('🏷️ Etiquetas', '🏷️ Badges', '🏷️ Etiquetas')) : '',
         MLINUX_LINK, // preenchido quando a integração nutellaboot está configurada
         el('button', { class: 'btn ghost', onclick: loadQueue }, T('↻ atualizar', '↻ refresh', '↻ actualizar'))),

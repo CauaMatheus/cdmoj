@@ -215,7 +215,7 @@ function makeAccessLogTab() {
     entries.forEach(e2 => {
       tb.append(el('tr', {},
         el('td', { class: 'small' }, fmtDate(e2.time)),
-        el('td', { class: 'lg', style: 'font-family:var(--mono);font-size:.85rem' }, '~' + (e2.login || '?')),
+        el('td', { class: 'lg', style: 'font-family:var(--font-mono);font-size:.85rem' }, '~' + (e2.login || '?')),
         el('td', { class: 'ip' }, e2.ip || '—'),
         el('td', { class: 'ua', title: e2.user_agent || '' }, e2.user_agent || '—')));
     });
@@ -247,7 +247,7 @@ function dayBarBox(title, arr, color) {
 // seção com âncora + link no índice (TOC). Devolve {node, link}.
 function tocSection(id, title, toc, body) {
   const node = el('div', { id, style: 'scroll-margin-top:.5rem;margin-top:1.1rem' },
-    el('h3', { style: 'margin:.2rem 0 .6rem;border-bottom:1px solid var(--line,#e3e8f2);padding-bottom:.2rem' }, title));
+    el('h3', { style: 'margin:.2rem 0 .6rem;border-bottom:1px solid var(--color-border);padding-bottom:.2rem' }, title));
   toc.append(el('a', { href: '#' + id, style: 'font-size:.9rem;text-decoration:none',
     onclick: (e) => { e.preventDefault(); document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }); } }, title));
   body.append(node);
@@ -259,7 +259,7 @@ function makeStatsTab() {
   const head = el('h2', {}, T('📊 Estatísticas', '📊 Statistics', '📊 Estadísticas'));
   const tools = el('div', { class: 'toolbar' },
     el('button', { class: 'btn ghost', onclick: () => load() }, T('↻ Atualizar', '↻ Refresh', '↻ Actualizar')));
-  const toc = el('div', { style: 'display:flex;gap:1rem;flex-wrap:wrap;margin:.2rem 0 .4rem;padding:.4rem .7rem;background:var(--card-bg,#f5f7fb);border-radius:.5rem' });
+  const toc = el('div', { style: 'display:flex;gap:1rem;flex-wrap:wrap;margin:.2rem 0 .4rem;padding:.4rem .7rem;background:var(--color-surface-muted);border-radius:.5rem' });
   const body = el('div', {}, loading());
   panel.append(head, tools, toc, body);
 
@@ -392,7 +392,7 @@ function makeQueueTab() {
   const head = el('h2', {}, T('⏳ Fila & tempo de resposta', '⏳ Queue & response time', '⏳ Cola y tiempo de respuesta'));
   const tools = el('div', { class: 'toolbar' },
     el('button', { class: 'btn ghost', onclick: () => load() }, T('↻ Atualizar', '↻ Refresh', '↻ Actualizar')));
-  const toc = el('div', { style: 'display:flex;gap:1rem;flex-wrap:wrap;margin:.2rem 0 .4rem;padding:.4rem .7rem;background:var(--card-bg,#f5f7fb);border-radius:.5rem' });
+  const toc = el('div', { style: 'display:flex;gap:1rem;flex-wrap:wrap;margin:.2rem 0 .4rem;padding:.4rem .7rem;background:var(--color-surface-muted);border-radius:.5rem' });
   const body = el('div', {}, loading());
   panel.append(head, tools, toc, body);
 
@@ -426,10 +426,10 @@ function makeQueueTab() {
       rt.workers.forEach(w => {
         const age = Number(w.alive_age_s);
         let alive;
-        if (age < 0) alive = el('span', { style: 'color:var(--err,#c00);font-weight:600' }, T('⚠ morto (nunca bateu)', '⚠ dead (never beat)', '⚠ muerto (nunca latió)'));
-        else if (age > 120) alive = el('span', { style: 'color:var(--err,#c00);font-weight:600' }, T('⚠ parado há ' + age + 's', '⚠ stalled for ' + age + 's', '⚠ detenido hace ' + age + 's'));
-        else alive = el('span', { style: 'color:var(--ok,#1a7f37)' }, T('🟢 vivo (há ' + age + 's)', '🟢 alive (' + age + 's ago)', '🟢 vivo (hace ' + age + 's)'));
-        const warn = (n) => n > 0 ? el('b', { style: 'color:var(--warn,#a66a00)' }, String(n)) : el('span', { class: 'muted' }, '0');
+        if (age < 0) alive = el('span', { style: 'color:var(--color-danger);font-weight:600' }, T('⚠ morto (nunca bateu)', '⚠ dead (never beat)', '⚠ muerto (nunca latió)'));
+        else if (age > 120) alive = el('span', { style: 'color:var(--color-danger);font-weight:600' }, T('⚠ parado há ' + age + 's', '⚠ stalled for ' + age + 's', '⚠ detenido hace ' + age + 's'));
+        else alive = el('span', { style: 'color:var(--color-success)' }, T('🟢 vivo (há ' + age + 's)', '🟢 alive (' + age + 's ago)', '🟢 vivo (hace ' + age + 's)'));
+        const warn = (n) => n > 0 ? el('b', { style: 'color:var(--color-warning)' }, String(n)) : el('span', { class: 'muted' }, '0');
         wtb.append(el('tr', {},
           el('td', {}, el('code', {}, 's' + w.shard)),
           el('td', {}, alive),
@@ -504,8 +504,8 @@ function makeQueueTab() {
       const tb = el('tbody');
       lists.forEach(l => tb.append(el('tr', {},
         el('td', {}, l.name || l.contest || '—'),
-        el('td', { class: 'small', style: 'font-family:var(--mono)' }, l.contest || '—'),
-        el('td', {}, el('b', { style: 'color:var(--warn)' }, String(num(l.pending)))))));
+        el('td', { class: 'small', style: 'font-family:var(--font-mono)' }, l.contest || '—'),
+        el('td', {}, el('b', { style: 'color:var(--color-warning)' }, String(num(l.pending)))))));
       s1.append(el('div', { class: 'chart-title', style: 'margin-top:.6rem' }, T('Pendentes por lista', 'Pending per list', 'Pendientes por lista')));
       s1.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
         el('thead', {}, el('tr', {}, el('th', {}, T('Lista', 'List', 'Lista')), el('th', {}, T('Contest', 'Contest', 'Competencia')), el('th', {}, T('Pendentes', 'Pending', 'Pendientes')))), tb)));
@@ -530,7 +530,7 @@ function makeQueueTab() {
         const msg = el('div', { class: 'small muted' });
         const logBox = el('tr', { style: 'display:none' }, el('td', { colspan: '7' }));
         const row = el('tr', {},
-          el('td', { class: 'small', style: 'font-family:var(--mono)' }, pd.contest),
+          el('td', { class: 'small', style: 'font-family:var(--font-mono)' }, pd.contest),
           el('td', {}, pd.login),
           el('td', { class: 'small' }, pd.problem + ' · ' + (pd.lang || '?')),
           el('td', { class: 'small' }, fmtDate(pd.since), ' (', ageEl, ')'),
@@ -543,7 +543,7 @@ function makeQueueTab() {
                   const d = await apiGet('/treino/admin/queue?sub=' + encodeURIComponent(pd.contest + ':' + pd.login + ':' + pd.id), G());
                   const cell = logBox.firstChild; cell.innerHTML = '';
                   cell.append(
-                    el('div', { class: 'small', style: 'font-family:var(--mono)' }, d.history_line || ''),
+                    el('div', { class: 'small', style: 'font-family:var(--font-mono)' }, d.history_line || ''),
                     el('div', { class: 'small muted' },
                       T('estado: ', 'state: ', 'estado: ') + stLabel(d.state)
                       + T(' · fonte: ', ' · source: ', ' · fuente: ') + (d.has_source ? d.source_bytes + ' B' : T('AUSENTE', 'MISSING', 'AUSENTE'))
@@ -551,7 +551,7 @@ function makeQueueTab() {
                     // prévia embutida (sandbox: sem JS). ⚠ as âncoras dos casos de teste NÃO
                     // rolam aqui — num srcdoc o `#alvo` resolve contra a URL do pai; para isso
                     // existe o "abrir em aba", que usa blob (shared/submission-links.js).
-                    d.mojlog ? el('iframe', { style: 'width:100%;height:16rem;border:1px solid var(--line);border-radius:8px;background:#fff',
+                    d.mojlog ? el('iframe', { style: 'width:100%;height:16rem;border:1px solid var(--color-border);border-radius:8px;background:var(--color-surface)',
                       sandbox: '', srcdoc: d.mojlog }) : '',
                     d.mojlog ? el('div', { class: 'small', style: 'margin-top:.25rem' },
                       el('a', { href: '#', onclick: (ev) => { ev.preventDefault(); openHtmlReport(d.mojlog); } },
@@ -687,7 +687,7 @@ function makeJudgesTab() {
         if (byNode || sl.smt) wrap.append(el('div', { class: 'muted', style: 'font-size:.82em' },
           byNode + (sl.smt ? (byNode ? ' · ' : '') + 'SMT' : '')
           + (sl.max_free_group != null && byNode ? T(' · maior grupo livre ', ' · largest free group ', ' · mayor grupo libre ') + sl.max_free_group : '')));
-        if (mc.hold && mc.hold.job) wrap.append(el('div', { class: 'small', style: 'color:#9a6700', title: T('juiz SEGURADO: não recebe trabalho novo até ter os slots livres p/ este job largo (CPUNEEDED)', 'judge HELD: gets no new work until it has the free slots for this wide job (CPUNEEDED)', 'juez RETENIDO: no recibe trabajo nuevo hasta tener los slots libres para este job ancho (CPUNEEDED)') },
+        if (mc.hold && mc.hold.job) wrap.append(el('div', { class: 'small', style: 'color:var(--color-warning)', title: T('juiz SEGURADO: não recebe trabalho novo até ter os slots livres p/ este job largo (CPUNEEDED)', 'judge HELD: gets no new work until it has the free slots for this wide job (CPUNEEDED)', 'juez RETENIDO: no recibe trabajo nuevo hasta tener los slots libres para este job ancho (CPUNEEDED)') },
           '⏳ ' + T('segurado p/ ', 'held for ', 'retenido para ') + mc.hold.job + ' (' + mc.hold.k_slots + ' slots' + (mc.hold.numa ? ', NUMA' : '') + ')'));
         const sel = el('select', { class: 'small', style: 'max-width:8rem' });
         ['off', 'numa', 'cpus:1', 'cpus:2', 'cpus:4', 'cpus:8', 'cpus:16'].forEach(v => sel.append(el('option', { value: v }, v)));
@@ -815,10 +815,10 @@ function makeNewsTab() {
 
     // editor de markdown + preview ao vivo (mesmo renderizador do detalhe público)
     const bodyt = el('textarea', { rows: '16', placeholder: T('Texto completo em Markdown…', 'Full text in Markdown…', 'Texto completo en Markdown…'),
-      style: 'width:100%; font-family:var(--mono,monospace); font-size:.9rem; line-height:1.5' });
+      style: 'width:100%;font-family:var(--mono,monospace);font-size:.9rem;line-height:1.5' });
     bodyt.value = editing ? (news.body || '') : '';
     const preview = el('article', { class: 'news-body',
-      style: 'border:1px solid var(--line); border-radius:10px; padding:.7rem 1rem; background:#fff; min-height:8rem; overflow:auto' });
+      style: 'border:1px solid var(--color-border);border-radius:10px;padding:.7rem 1rem;background:var(--color-surface);min-height:8rem;overflow:auto' });
     let pvTimer;
     const schedulePreview = () => { clearTimeout(pvTimer); pvTimer = setTimeout(refreshPreview, 400); };
     async function refreshPreview() {
@@ -857,7 +857,7 @@ function makeNewsTab() {
     });
 
     formBox.innerHTML = '';
-    formBox.append(el('div', { class: 'section', style: 'background:#fafcff' },
+    formBox.append(el('div', { class: 'section', style: 'background:var(--color-surface-alt)' },
       el('h3', { style: 'margin:.1rem 0 .6rem' }, editing ? T('Editar notícia', 'Edit article', 'Editar noticia') : T('Nova notícia', 'New article', 'Nueva noticia')),
       el('div', { style: 'display:grid; grid-template-columns:2fr 1fr; gap:.8rem' },
         el('div', { class: 'field' }, el('label', {}, T('Título', 'Title', 'Título')), title),
@@ -963,9 +963,9 @@ function makeActivityTab() {
       ev.forEach((x) => tb.append(el('tr', {},
         el('td', { class: 'small' }, fmtDate(x.time)),
         el('td', { class: 'small' }, KIND[x.kind] || x.kind),
-        el('td', { style: 'font-family:var(--mono);font-size:.85rem' }, x.who || ''),
+        el('td', { style: 'font-family:var(--font-mono);font-size:.85rem' }, x.who || ''),
         el('td', {}, RACT[x.action] || x.action || ''),
-        el('td', { class: 'small', style: 'font-family:var(--mono);word-break:break-all' },
+        el('td', { class: 'small', style: 'font-family:var(--font-mono);word-break:break-all' },
           (x.details || '') + (x.ip ? ' · ' + x.ip : '')))));
       body.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
         el('thead', {}, el('tr', {},
@@ -1012,9 +1012,9 @@ function makeAuditTab() {
     entries.forEach((e2) => {
       tb.append(el('tr', {},
         el('td', { class: 'small' }, fmtDate(e2.time)),
-        el('td', { class: 'lg', style: 'font-family:var(--mono);font-size:.85rem' }, '~' + (e2.admin || '?')),
+        el('td', { class: 'lg', style: 'font-family:var(--font-mono);font-size:.85rem' }, '~' + (e2.admin || '?')),
         el('td', {}, ACT[e2.action] || e2.action),
-        el('td', { class: 'small', style: 'font-family:var(--mono);word-break:break-all' }, e2.details || '')));
+        el('td', { class: 'small', style: 'font-family:var(--font-mono);word-break:break-all' }, e2.details || '')));
     });
     body.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
       el('thead', {}, el('tr', {}, el('th', {}, T('Data/Hora', 'Date/Time', 'Fecha/Hora')), el('th', {}, 'Admin'), el('th', {}, T('Ação', 'Action', 'Acción')), el('th', {}, T('Detalhes', 'Details', 'Detalles')))), tb)));
@@ -1031,7 +1031,7 @@ function personCell(login, name, hasPhoto, extra) {
   const box = el('div', { class: 'row', style: 'gap:.45rem;align-items:center;flex-wrap:nowrap' },
     avatarEl(login, name || login, 24, !!hasPhoto),
     el('div', {}, el('div', {}, statLink(login, name), extra || ''),
-      el('div', { class: 'small muted', style: 'font-family:var(--mono)' }, login,
+      el('div', { class: 'small muted', style: 'font-family:var(--font-mono)' }, login,
         name ? '' : el('span', { class: 'muted' }, ' · ' + T('conta não existe', 'account does not exist', 'la cuenta no existe')))));
   return box;
 }
@@ -1054,7 +1054,7 @@ function makeContestsTab() {
   thrSave.addEventListener('click', () => permPost({ action: 'threshold', threshold: num(thr.value) }));
   function permTable(kind, info) {
     const allow = kind === 'allow';
-    const login = el('input', { placeholder: 'login', style: 'width:12rem;font-family:var(--mono)' });
+    const login = el('input', { placeholder: 'login', style: 'width:12rem;font-family:var(--font-mono)' });
     const note = el('input', { placeholder: T('nota (opcional)', 'note (optional)', 'nota (opcional)'), style: 'flex:1;min-width:10rem' });
     const add = el('button', { class: 'btn' + (allow ? '' : ' danger'), onclick: () => {
       const l = login.value.trim(); if (!l) { login.focus(); return; }
@@ -1088,7 +1088,7 @@ function makeContestsTab() {
     if (document.activeElement !== thr) thr.value = p.threshold || 0;
     listsBox.innerHTML = ''; listsBox.append(permTable('allow', r.allow_info), permTable('deny', r.deny_info));
   }
-  const permBox = el('div', { class: 'section', style: 'background:#fafcff' },
+  const permBox = el('div', { class: 'section', style: 'background:var(--color-surface-alt)' },
     el('h3', { style: 'margin:.1rem 0 .5rem' }, T('Quem pode criar contests e problemas', 'Who can create contests and problems', 'Quién puede crear competencias y problemas')),
     el('p', { class: 'muted small' }, T('Esta mesma permissão controla a criação de contests E a criação de problemas/coleções na Gestão de Problemas. Usuários .admin sempre podem. Além deles: a lista “liberados” OU quem atingir o limite de problemas resolvidos. A lista “bloqueados” impede até quem atingiria o limite. Cada linha registra quem liberou e quando.', 'This same permission controls creating contests AND creating problems/collections in Problem Management. .admin users always can. Beyond them: the “allowed” list OR whoever reaches the solved-problems threshold. The “blocked” list stops even those who would reach the threshold. Each row records who granted it and when.', 'Este mismo permiso controla la creación de competencias Y la creación de problemas/colecciones en la Gestión de Problemas. Los usuarios .admin siempre pueden. Además de ellos: la lista de “permitidos” O quien alcance el umbral de problemas resueltos. La lista de “bloqueados” impide incluso a quien alcanzaría el umbral. Cada fila registra quién lo otorgó y cuándo.')),
     el('div', { class: 'field' }, el('label', {}, T('Liberar automaticamente quem resolveu ≥', 'Auto-allow whoever solved ≥', 'Permitir automáticamente a quien resolvió ≥')),
@@ -1140,7 +1140,7 @@ function makeContestsTab() {
       } }, T('Remover', 'Remove', 'Eliminar'));
       const sk = statusOf(c);
       tb.append(el('tr', {},
-        el('td', {}, el('b', {}, c.name || c.id), el('div', { class: 'small muted', style: 'font-family:var(--mono)' }, c.id)),
+        el('td', {}, el('b', {}, c.name || c.id), el('div', { class: 'small muted', style: 'font-family:var(--font-mono)' }, c.id)),
         el('td', { class: 'small' }, c.mode || '—'),
         el('td', {}, personCell(c.owner, c.owner_name, c.owner_has_photo, c.owner_is_admin ? el('span', { class: 'pill', style: 'margin-left:.35rem' }, 'admin') : '')),
         el('td', { class: 'small', style: 'white-space:nowrap' }, dt(c.start), ' → ', dt(c.end), el('div', {}, el('span', { class: 'verdict ' + ST[sk][1], style: 'font-size:.72rem;padding:.1rem .45rem' }, ST[sk][0]))),
@@ -1236,9 +1236,9 @@ function makeAchievementsTab() {
       en.checked = a.enabled !== false;
       tb.append(el('tr', {},
         el('td', { style: 'font-size:1.2rem' }, a.icon || ''),
-        el('td', { class: 'small', style: 'font-family:var(--mono)' }, a.id),
+        el('td', { class: 'small', style: 'font-family:var(--font-mono)' }, a.id),
         el('td', {}, a.pt, el('div', { class: 'small muted' }, a.en), a.es ? el('div', { class: 'small muted' }, a.es) : null),
-        el('td', { class: 'small' }, kindLabel(a.kind), el('div', { class: 'muted', style: 'font-family:var(--mono)' }, paramsText(a))),
+        el('td', { class: 'small' }, kindLabel(a.kind), el('div', { class: 'muted', style: 'font-family:var(--font-mono)' }, paramsText(a))),
         el('td', {}, en),
         el('td', { class: 'small', style: 'white-space:nowrap' },
           el('a', { style: 'cursor:pointer', onclick: () => openForm(a, i) }, '✎'), ' ',
@@ -1253,7 +1253,7 @@ function makeAchievementsTab() {
   function openForm(a, idx) {
     const editing = a != null;
     const icon = el('input', { value: editing ? (a.icon || '') : '', placeholder: '🏅', style: 'width:4.5rem' });
-    const id = el('input', { value: editing ? a.id : '', placeholder: 'minha-conquista', style: 'width:14rem;font-family:var(--mono)' });
+    const id = el('input', { value: editing ? a.id : '', placeholder: 'minha-conquista', style: 'width:14rem;font-family:var(--font-mono)' });
     if (editing) id.disabled = true;
     const pt = el('input', { value: editing ? (a.pt || '') : '', placeholder: T('Nome em português', 'Name in Portuguese', 'Nombre en portugués'), style: 'width:100%' });
     const enI = el('input', { value: editing ? (a.en || '') : '', placeholder: T('Nome em inglês', 'Name in English', 'Nombre en inglés'), style: 'width:100%' });
@@ -1371,15 +1371,15 @@ function makeManagedTab() {
   function showCreds(list, skipped) {
     credsBox.innerHTML = '';
     if (!list.length && !(skipped || []).length) return;
-    const box = el('div', { class: 'subcard', style: 'margin:.5rem 0;border-left:4px solid var(--warn)' });
+    const box = el('div', { class: 'subcard', style: 'margin:.5rem 0;border-left:4px solid var(--color-warning)' });
     if (list.length) {
       box.append(el('b', {}, T('⚠️ Credenciais geradas — aparecem SÓ AGORA. Copie/anote antes de sair.',
         '⚠️ Generated credentials — shown ONLY NOW. Copy them before leaving.',
         '⚠️ Credenciales generadas — se muestran SOLO AHORA. Cópialas/anótalas antes de salir.')));
       const tb = el('tbody');
       list.forEach(u => tb.append(el('tr', {},
-        el('td', { style: 'font-family:var(--mono)' }, u.login),
-        el('td', { style: 'font-family:var(--mono);font-weight:700' }, u.password),
+        el('td', { style: 'font-family:var(--font-mono)' }, u.login),
+        el('td', { style: 'font-family:var(--font-mono);font-weight:700' }, u.password),
         el('td', { class: 'small' }, u.fullname || ''))));
       box.append(el('table', { class: 'moj', style: 'margin:.5rem 0' },
         el('thead', {}, el('tr', {}, el('th', {}, 'login'), el('th', {}, T('senha', 'password', 'contraseña')), el('th', {}, T('nome', 'name', 'nombre')))), tb));
@@ -1407,7 +1407,7 @@ function makeManagedTab() {
       const minor = u.minor;
       const expired = u.expires_at && u.expires_at < Date.now() / 1000;
       tb.append(el('tr', {},
-        el('td', {}, el('a', { href: '/treino/stat/?user=' + encodeURIComponent(u.login), style: 'font-family:var(--mono)' }, u.login)),
+        el('td', {}, el('a', { href: '/treino/stat/?user=' + encodeURIComponent(u.login), style: 'font-family:var(--font-mono)' }, u.login)),
         el('td', {}, u.fullname),
         el('td', { class: 'small', style: 'white-space:nowrap' }, `${u.birthdate} `,
           el('span', { class: 'verdict ' + (minor ? 'v-warn' : 'v-ok'), style: 'font-size:.72rem;padding:.1rem .45rem' },
@@ -1424,7 +1424,7 @@ function makeManagedTab() {
           el('a', { style: 'cursor:pointer', title: T('editar', 'edit', 'editar'), onclick: () => openForm(u) }, '✎'), ' ',
           el('a', { style: 'cursor:pointer', title: u.disabled ? T('reabilitar', 'enable', 'habilitar') : T('desabilitar', 'disable', 'deshabilitar'),
             onclick: () => toggleDisabled(u) }, u.disabled ? '▶' : '⏻'), ' ',
-          el('a', { style: 'cursor:pointer;color:var(--err)', title: T('remover', 'remove', 'quitar'), onclick: () => removeU(u) }, '✕'))));
+          el('a', { style: 'cursor:pointer;color:var(--color-danger)', title: T('remover', 'remove', 'quitar'), onclick: () => removeU(u) }, '✕'))));
     });
     body.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
       el('thead', {}, el('tr', {}, el('th', {}, 'login'), el('th', {}, T('nome', 'name', 'nombre')),
@@ -1479,7 +1479,7 @@ function makeManagedTab() {
     const nameI = el('input', { value: editing ? u.fullname : '', placeholder: T('Nome completo', 'Full name', 'Nombre completo'), style: 'width:100%' });
     if (editing) nameI.disabled = true;
     const bdI = el('input', { type: 'date', value: editing ? u.birthdate : '' });
-    const loginI = el('input', { value: '', placeholder: T('login (vazio = gerado do nome)', 'login (empty = generated)', 'usuario (vacío = generado del nombre)'), style: 'width:16rem;font-family:var(--mono)' });
+    const loginI = el('input', { value: '', placeholder: T('login (vazio = gerado do nome)', 'login (empty = generated)', 'usuario (vacío = generado del nombre)'), style: 'width:16rem;font-family:var(--font-mono)' });
     if (editing) { loginI.value = u.login; loginI.disabled = true; }
     const noteI = el('input', { value: editing ? (u.note || '') : '', placeholder: T('nota (turma, escola, responsável…)', 'note (class, school, guardian…)', 'nota (clase, escuela, responsable…)'), style: 'width:100%' });
     const expI = el('input', { type: 'date', value: editing ? epochToDate(u.expires_at) : '' });
@@ -1515,7 +1515,7 @@ function makeManagedTab() {
 
   function openBatch() {
     const ta = el('textarea', { rows: '8', placeholder: T('Um por linha:  Nome Completo;AAAA-MM-DD', 'One per line:  Full Name;YYYY-MM-DD', 'Uno por línea:  Nombre Completo;AAAA-MM-DD'),
-      style: 'width:100%;font-family:var(--mono);font-size:.88rem' });
+      style: 'width:100%;font-family:var(--font-mono);font-size:.88rem' });
     const noteI = el('input', { placeholder: T('nota comum (turma, escola…)', 'shared note (class, school…)', 'nota común (clase, escuela…)'), style: 'width:100%' });
     const expI = el('input', { type: 'date' });
     const ferr = el('span', { class: 'small error-box hidden' });

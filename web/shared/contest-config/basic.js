@@ -17,7 +17,7 @@ export function makeBasicEditor(opts = {}) {
       el('div', { class: 'field' }, el('label', {}, T('Abertura do login (tela de espera)', 'Login opening (waiting screen)', 'Apertura del login (pantalla de espera)')), loginStart)),
     el('div', { class: 'grid2' },
       el('div', { class: 'field' }, el('label', {}, T('Freeze do placar (congela no fim)', 'Scoreboard freeze (freezes at the end)', 'Congelamiento del marcador (se congela al final)')), freeze),
-      el('div', { class: 'field' }, el('label', { style: 'font-weight:400' }, loginEnabled, T(' Login habilitado', ' Login enabled', ' Login habilitado')))));
+      el('div', { class: 'field' }, el('label', { class: 'u-fw-400' }, loginEnabled, T(' Login habilitado', ' Login enabled', ' Login habilitado')))));
   return {
     el: panel,
     getValue() {

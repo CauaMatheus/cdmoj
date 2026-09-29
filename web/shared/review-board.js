@@ -29,7 +29,7 @@ export function makeReviewBoard({ contest }) {
   const fStatus = el('select', {}, el('option', { value: '' }, T('todas', 'all', 'todas')),
     el('option', { value: 'open' }, T('não avaliadas', 'not evaluated', 'no evaluados')), el('option', { value: 'claimed' }, T('em avaliação', 'under evaluation', 'en evaluación')),
     el('option', { value: 'voting' }, T('aguardando 2º voto', 'awaiting 2nd vote', 'esperando 2º voto')), el('option', { value: 'conflict' }, T('conflitos', 'conflicts', 'conflictos')));
-  const fQ = el('input', { type: 'search', placeholder: T('aluno / problema / juiz…', 'student / problem / judge…', 'estudiante / problema / juez…'), style: 'min-width:170px' });
+  const fQ = el('input', { class: 'u-minw-170px', type: 'search', placeholder: T('aluno / problema / juiz…', 'student / problem / judge…', 'estudiante / problema / juez…') });
   fStatus.addEventListener('change', render);
   fQ.addEventListener('input', render);
   // o alerta global de conflito pode pedir p/ abrir já filtrado em conflitos
@@ -41,7 +41,7 @@ export function makeReviewBoard({ contest }) {
 
   function renderSummary(counts) {
     sumBox.innerHTML = '';
-    if (!MANUAL) sumBox.append(el('div', { class: 'warn-box', style: 'margin:.3rem 0' },
+    if (!MANUAL) sumBox.append(el('div', { class: 'warn-box u-my-.3 u-mx-0' },
       T('⚠ O veredicto manual está DESLIGADO (ligue em Central › Regras). ', '⚠ Manual verdict is OFF (turn it on in Home › Rules). ', '⚠ El veredicto manual está DESACTIVADO (actívalo en Central › Reglas). ') + (ITEMS.length ? T('Ainda há sobras na fila abaixo.', 'There are still leftovers in the queue below.', 'Todavía quedan pendientes en la cola de abajo.') : T('Nada é segurado p/ revisão.', 'Nothing is held for review.', 'Nada se retiene para revisión.'))));
     const c = counts || {};
     const oldest = ITEMS.length ? Math.max(...ITEMS.map((t) => nowE() - (t.created_at || nowE()))) : 0;
@@ -68,7 +68,7 @@ export function makeReviewBoard({ contest }) {
       try { await apiPost('/contest/review/resolve?contest=' + enc(contest), { id: t.id, verdict: sel.value }, { contest, auth: true }); pokeChiefAlert(); await load(); }
       catch (e) { btn.disabled = false; msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     });
-    return el('div', { class: 'row', style: 'gap:.25rem; flex-wrap:wrap' }, sel, btn, msg);
+    return el('div', { class: 'row u-gap-.25 u-wrap' }, sel, btn, msg);
   }
 
   function itemRow(t) {
@@ -84,7 +84,7 @@ export function makeReviewBoard({ contest }) {
       el('td', { class: 'small' }, fmtS(nowE() - (t.created_at || nowE()))),
       el('td', { class: 'small' }, who || '—'),
       el('td', {}, votes),
-      el('td', { class: 'small' }, el('div', { class: 'row', style: 'gap:.5rem' }, logLink(contest, t), srcLink(contest, t))),
+      el('td', { class: 'small' }, el('div', { class: 'row u-gap-.5' }, logLink(contest, t), srcLink(contest, t))),
       el('td', {}, decideRow(t)));
   }
 
@@ -95,7 +95,7 @@ export function makeReviewBoard({ contest }) {
       (!fStatus.value || t.status === fStatus.value)
       && (!q || [t.login, t.problem_id, ...(t.claimants || []).map((c) => c.by), ...((t.votes || []).map((v) => v.by))]
         .some((x) => (x || '').toLowerCase().includes(q))));
-    listBox.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' }, items.length + T(' de ', ' of ', ' de ') + ITEMS.length + T(' na fila.', ' in the queue.', ' en la cola.')));
+    listBox.append(el('div', { class: 'small muted u-my-.3 u-mx-0' }, items.length + T(' de ', ' of ', ' de ') + ITEMS.length + T(' na fila.', ' in the queue.', ' en la cola.')));
     if (!items.length) {
       listBox.append(el('div', { class: 'muted' }, ITEMS.length ? T('Nada com esses filtros.', 'Nothing with these filters.', 'Nada con estos filtros.') : T('Fila vazia — nenhuma submissão aguardando revisão. 🎉', 'Empty queue — no submission awaiting review. 🎉', 'Cola vacía — ningún envío esperando revisión. 🎉')));
     } else {
@@ -105,7 +105,7 @@ export function makeReviewBoard({ contest }) {
           el('th', {}, T('Status', 'Status', 'Estado')), el('th', {}, T('Idade', 'Age', 'Antigüedad')), el('th', {}, T('Quem pegou', 'Who took it', 'Reservado por')), el('th', {}, T('Votos', 'Votes', 'Votos')),
           el('th', {}, T('Ver', 'View', 'Ver')), el('th', {}, T('Ação', 'Action', 'Acción')))), tb)));
     }
-    listBox.append(el('p', { class: 'small muted', style: 'margin:.4rem 0 0' },
+    listBox.append(el('p', { class: 'small muted u-mt-.4 u-mb-0 u-mx-0' },
       T('Para avaliar como juiz (pegar + votar, fluxo dos 2 votos): ', 'To evaluate as a judge (take + vote, the 2-vote flow): ', 'Para evaluar como juez (reservar + votar, el flujo de 2 votos): '),
       el('a', { href: '/contest/judge/?c=' + enc(contest) }, T('área de avaliação →', 'evaluation area →', 'área de evaluación →'))));
   }
@@ -114,7 +114,7 @@ export function makeReviewBoard({ contest }) {
     perfBox.innerHTML = '';
     const js = (STATS && STATS.judges) || [], tot = (STATS && STATS.total) || {};
     if (!js.length) return;
-    perfBox.append(el('h3', { style: 'margin:1rem 0 .3rem' }, T('📈 Desempenho por juiz', '📈 Performance by judge', '📈 Desempeño por juez')));
+    perfBox.append(el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('📈 Desempenho por juiz', '📈 Performance by judge', '📈 Desempeño por juez')));
     const tb = el('tbody');
     js.forEach((j) => tb.append(el('tr', {},
       el('td', {}, el('b', {}, j.judge)),
@@ -144,7 +144,7 @@ export function makeReviewBoard({ contest }) {
   }
 
   root.append(sumBox,
-    el('div', { class: 'row', style: 'margin:.4rem 0' },
+    el('div', { class: 'row u-my-.4 u-mx-0' },
       el('span', { class: 'small muted' }, T('Filtrar:', 'Filter:', 'Filtrar:')), fStatus, fQ,
       el('button', { class: 'btn ghost', onclick: () => load() }, '↻')),
     listBox, perfBox);

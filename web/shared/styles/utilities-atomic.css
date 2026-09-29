@@ -1,0 +1,169 @@
+/* styles/utilities-atomic.css — UTILITÁRIOS ATÔMICOS: uma declaração por classe, com !important.
+   Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css.
+   Vieram do estilo INLINE do JS (`el(…, { style: 'margin:.4rem 0' })` → `class: 'u-my-.4 u-mx-0'`).
+   O !important reproduz a precedência do inline (que vence qualquer regra), então a troca não
+   muda nada na tela. Nome = propriedade abreviada + valor; número sem unidade = rem
+   (u-mt-.3 = margin-top:.3rem). Prefira componente/token em código novo: isto é o degrau entre
+   o inline e o componente, não o destino. */
+.u-case-uppercase{text-transform:uppercase !important}
+.u-cursor-default{cursor:default !important}
+.u-flex-column{flex-direction:column !important}
+.u-fs-\.8{font-size:.8rem !important}
+.u-fs-\.82{font-size:.82rem !important}
+.u-fs-\.85{font-size:.85rem !important}
+.u-fs-1\.7{font-size:1.7rem !important}
+.u-fw-400{font-weight:400 !important}
+.u-fw-600{font-weight:600 !important}
+.u-fw-700{font-weight:700 !important}
+.u-fw-800{font-weight:800 !important}
+.u-gap-\.25{gap:.25rem !important}
+.u-gap-\.3{gap:.3rem !important}
+.u-gap-\.35{gap:.35rem !important}
+.u-gap-\.4{gap:.4rem !important}
+.u-gap-\.5{gap:.5rem !important}
+.u-gap-\.6{gap:.6rem !important}
+.u-gap-\.7{gap:.7rem !important}
+.u-gap-\.8{gap:.8rem !important}
+.u-gap-1{gap:1rem !important}
+.u-grow{flex:1 !important}
+.u-h-1100px{height:1100px !important}
+.u-h-16px{height:16px !important}
+.u-h-18px{height:18px !important}
+.u-items-baseline{align-items:baseline !important}
+.u-items-center{align-items:center !important}
+.u-items-flex-end{align-items:flex-end !important}
+.u-items-flex-start{align-items:flex-start !important}
+.u-justify-space-between{justify-content:space-between !important}
+.u-lh-1{line-height:1 !important}
+.u-lh-1\.4{line-height:1.4 !important}
+.u-m-0{margin:0 !important}
+.u-maxh-12{max-height:12rem !important}
+.u-maxh-18{max-height:18rem !important}
+.u-maxh-9{max-height:9rem !important}
+.u-maxw-100px{max-width:100px !important}
+.u-maxw-16{max-width:16rem !important}
+.u-maxw-200px{max-width:200px !important}
+.u-maxw-22{max-width:22rem !important}
+.u-maxw-280px{max-width:280px !important}
+.u-maxw-80px{max-width:80px !important}
+.u-mb-\.1{margin-bottom:.1rem !important}
+.u-mb-\.2{margin-bottom:.2rem !important}
+.u-mb-\.3{margin-bottom:.3rem !important}
+.u-mb-\.4{margin-bottom:.4rem !important}
+.u-mb-\.5{margin-bottom:.5rem !important}
+.u-mb-\.6{margin-bottom:.6rem !important}
+.u-mb-\.8{margin-bottom:.8rem !important}
+.u-mb-0{margin-bottom:0 !important}
+.u-minw-0{min-width:0 !important}
+.u-minw-11{min-width:11rem !important}
+.u-minw-110px{min-width:110px !important}
+.u-minw-12{min-width:12rem !important}
+.u-minw-120px{min-width:120px !important}
+.u-minw-14{min-width:14rem !important}
+.u-minw-150px{min-width:150px !important}
+.u-minw-16{min-width:16rem !important}
+.u-minw-170px{min-width:170px !important}
+.u-minw-180px{min-width:180px !important}
+.u-minw-20{min-width:20rem !important}
+.u-minw-200px{min-width:200px !important}
+.u-minw-220px{min-width:220px !important}
+.u-minw-240px{min-width:240px !important}
+.u-ml-\.3{margin-left:.3rem !important}
+.u-ml-\.4{margin-left:.4rem !important}
+.u-ml-\.6{margin-left:.6rem !important}
+.u-ml-1{margin-left:1rem !important}
+.u-ml-1\.1{margin-left:1.1rem !important}
+.u-ml-1\.2{margin-left:1.2rem !important}
+.u-ml-1\.6{margin-left:1.6rem !important}
+.u-ml-auto{margin-left:auto !important}
+.u-mono{font-family:var(--font-mono) !important}
+.u-mr-\.2{margin-right:.2rem !important}
+.u-mr-\.25{margin-right:.25rem !important}
+.u-mr-\.3{margin-right:.3rem !important}
+.u-mr-0{margin-right:0 !important}
+.u-mr-4px{margin-right:4px !important}
+.u-mt-\.1{margin-top:.1rem !important}
+.u-mt-\.15{margin-top:.15rem !important}
+.u-mt-\.2{margin-top:.2rem !important}
+.u-mt-\.25{margin-top:.25rem !important}
+.u-mt-\.3{margin-top:.3rem !important}
+.u-mt-\.35{margin-top:.35rem !important}
+.u-mt-\.4{margin-top:.4rem !important}
+.u-mt-\.5{margin-top:.5rem !important}
+.u-mt-\.6{margin-top:.6rem !important}
+.u-mt-\.7{margin-top:.7rem !important}
+.u-mt-\.8{margin-top:.8rem !important}
+.u-mt-\.9{margin-top:.9rem !important}
+.u-mt-0{margin-top:0 !important}
+.u-mt-1{margin-top:1rem !important}
+.u-mt-1\.2{margin-top:1.2rem !important}
+.u-mt-1\.4{margin-top:1.4rem !important}
+.u-mx-0{margin-left:0 !important;margin-right:0 !important}
+.u-my-\.1{margin-top:.1rem !important;margin-bottom:.1rem !important}
+.u-my-\.15{margin-top:.15rem !important;margin-bottom:.15rem !important}
+.u-my-\.2{margin-top:.2rem !important;margin-bottom:.2rem !important}
+.u-my-\.22{margin-top:.22rem !important;margin-bottom:.22rem !important}
+.u-my-\.25{margin-top:.25rem !important;margin-bottom:.25rem !important}
+.u-my-\.3{margin-top:.3rem !important;margin-bottom:.3rem !important}
+.u-my-\.4{margin-top:.4rem !important;margin-bottom:.4rem !important}
+.u-my-\.5{margin-top:.5rem !important;margin-bottom:.5rem !important}
+.u-my-\.6{margin-top:.6rem !important;margin-bottom:.6rem !important}
+.u-nowrap{white-space:nowrap !important}
+.u-nums-tabular-nums{font-variant-numeric:tabular-nums !important}
+.u-overflow-auto{overflow:auto !important}
+.u-overflow-x-auto{overflow-x:auto !important}
+.u-p-\.5{padding:.5rem !important}
+.u-pl-\.5{padding-left:.5rem !important}
+.u-pl-1\.2{padding-left:1.2rem !important}
+.u-pointer{cursor:pointer !important}
+.u-pos-fixed{position:fixed !important}
+.u-pt-\.5{padding-top:.5rem !important}
+.u-pt-\.8{padding-top:.8rem !important}
+.u-px-\.3{padding-left:.3rem !important;padding-right:.3rem !important}
+.u-px-\.4{padding-left:.4rem !important;padding-right:.4rem !important}
+.u-px-\.5{padding-left:.5rem !important;padding-right:.5rem !important}
+.u-px-\.5em{padding-left:.5em !important;padding-right:.5em !important}
+.u-px-\.6{padding-left:.6rem !important;padding-right:.6rem !important}
+.u-px-\.7{padding-left:.7rem !important;padding-right:.7rem !important}
+.u-px-\.8{padding-left:.8rem !important;padding-right:.8rem !important}
+.u-px-\.9{padding-left:.9rem !important;padding-right:.9rem !important}
+.u-px-0{padding-left:0 !important;padding-right:0 !important}
+.u-py-\.05{padding-top:.05rem !important;padding-bottom:.05rem !important}
+.u-py-\.15{padding-top:.15rem !important;padding-bottom:.15rem !important}
+.u-py-\.15em{padding-top:.15em !important;padding-bottom:.15em !important}
+.u-py-\.2{padding-top:.2rem !important;padding-bottom:.2rem !important}
+.u-py-\.3{padding-top:.3rem !important;padding-bottom:.3rem !important}
+.u-py-\.35{padding-top:.35rem !important;padding-bottom:.35rem !important}
+.u-py-\.5{padding-top:.5rem !important;padding-bottom:.5rem !important}
+.u-py-\.7{padding-top:.7rem !important;padding-bottom:.7rem !important}
+.u-py-0{padding-top:0 !important;padding-bottom:0 !important}
+.u-text-center{text-align:center !important}
+.u-text-right{text-align:right !important}
+.u-valign-middle{vertical-align:middle !important}
+.u-w-1\.6em{width:1.6em !important}
+.u-w-11{width:11rem !important}
+.u-w-12{width:12rem !important}
+.u-w-14{width:14rem !important}
+.u-w-140px{width:140px !important}
+.u-w-150px{width:150px !important}
+.u-w-16{width:16rem !important}
+.u-w-160px{width:160px !important}
+.u-w-170px{width:170px !important}
+.u-w-18{width:18rem !important}
+.u-w-200px{width:200px !important}
+.u-w-3\.6{width:3.6rem !important}
+.u-w-30\%{width:30% !important}
+.u-w-4{width:4rem !important}
+.u-w-4\.5{width:4.5rem !important}
+.u-w-5{width:5rem !important}
+.u-w-6{width:6rem !important}
+.u-w-7{width:7rem !important}
+.u-w-70px{width:70px !important}
+.u-w-8{width:8rem !important}
+.u-w-800px{width:800px !important}
+.u-w-9{width:9rem !important}
+.u-w-90px{width:90px !important}
+.u-w-full{width:100% !important}
+.u-wrap{flex-wrap:wrap !important}
+.u-wrap-anywhere{overflow-wrap:anywhere !important}
+.u-ws-pre-wrap{white-space:pre-wrap !important}

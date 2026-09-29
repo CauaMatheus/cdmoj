@@ -91,7 +91,7 @@ function tbl(head, rows, cls) {
     const o = (c && typeof c === 'object') ? c : { t: c };
     return el('td', { class: o.n ? 'n' : '' }, o.b ? el('b', {}, String(o.t)) : String(o.t == null ? '—' : o.t));
   };
-  return el('div', { class: 'tblwrap', style: 'overflow-x:auto' },
+  return el('div', { class: 'tblwrap u-overflow-x-auto' },
     el('table', { class: 'moj' + (cls ? ' ' + cls : '') },
       el('thead', {}, el('tr', {}, ...head.map(th))),
       el('tbody', {}, ...rows.map((r) => el('tr', { class: r.grp ? 'grp' : '' }, ...r.cells.map(td))))));
@@ -291,7 +291,7 @@ function observations(a, cx, opts) {
   }
   if (!li.length) return null;
   return el('div', { class: 'section' }, el('h2', {}, T('🔎 Observações', '🔎 Observations', '🔎 Observaciones')),
-    el('div', { class: 'ml-obs' }, el('ul', { style: 'margin:.2rem 0 .2rem 1.1rem' }, ...li.map((x) => el('li', {}, x)))));
+    el('div', { class: 'ml-obs' }, el('ul', { class: 'u-my-.2 u-ml-1.1 u-mr-0' }, ...li.map((x) => el('li', {}, x)))));
 }
 function swapByBand(a) {
   const out = {};
@@ -566,7 +566,7 @@ function healthSection(a) {
     el('p', { class: 'ml-note' }, T(`Medido em ${n} máquina(s) com o agente novo do mlinux. As demais não informam estes dados.`,
       `Measured on ${n} machine(s) with the new mlinux agent. The others do not report this data.`,
       `Medido en ${n} máquina(s) con el agente nuevo de mlinux. Las demás no informan estos datos.`)),
-    el('ul', { style: 'margin:.2rem 0 0 1.1rem' }, ...items.map((x) => el('li', {}, x))));
+    el('ul', { class: 'u-mt-.2 u-mb-0 u-ml-1.1 u-mr-0' }, ...items.map((x) => el('li', {}, x))));
 }
 
 function attentionSection(a) {
@@ -580,7 +580,7 @@ function attentionSection(a) {
   }
   if (!flags.length) return null;
   return el('div', { class: 'section' }, el('h2', {}, T('Atenção', 'Attention', 'Atención')),
-    el('ul', { style: 'margin:.2rem 0 0 1.1rem' }, ...flags.map((x) => el('li', {}, x))));
+    el('ul', { class: 'u-mt-.2 u-mb-0 u-ml-1.1 u-mr-0' }, ...flags.map((x) => el('li', {}, x))));
 }
 function rankLine(r, label) {
   if (!r || !r.n) return null;
@@ -625,7 +625,7 @@ function fleetSection(a, cx, opts) {
             (m.home_pct || 0) >= 90 ? '💾' : '', m.oom ? '💥' + m.oom : ''].filter(Boolean).join(' '))));
       });
     secs.push(el('h3', {}, T('Máquinas', 'Machines', 'Máquinas')));
-    secs.push(el('div', { class: 'tblwrap', style: 'overflow-x:auto' },
+    secs.push(el('div', { class: 'tblwrap u-overflow-x-auto' },
       el('table', { class: 'moj' },
         el('thead', {}, el('tr', {},
           el('th', {}, 'MAC'), el('th', {}, T('Processador', 'Processor', 'Procesador')),
@@ -641,9 +641,9 @@ function fleetSection(a, cx, opts) {
 function legend(opts) {
   const li = (k, txt) => el('li', {}, el('b', {}, k + ': '), txt);
   const mode = (opts.link && opts.link.mode) || 'proxy';
-  return el('details', { class: 'small', style: 'margin:.3rem 0 .6rem' },
+  return el('details', { class: 'small u-mt-.3 u-mb-.6 u-mx-0' },
     el('summary', {}, T('Como ler este relatório', 'How to read this report', 'Cómo leer este informe')),
-    el('ul', { style: 'margin:.2rem 0 0 1.1rem' },
+    el('ul', { class: 'u-mt-.2 u-mb-0 u-ml-1.1 u-mr-0' },
       li(T('Vista na prova', 'Seen in the contest', 'Visto en la competencia'), T('máquina que reportou ao nutellaboot na janela da coleta (prova mais uma hora antes e depois).',
         'machine that reported to nutellaboot within the collection window (the contest plus one hour before and after).',
         'máquina que reportó a nutellaboot dentro de la ventana de recolección (la competencia más una hora antes y después).')),

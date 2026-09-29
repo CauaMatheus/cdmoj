@@ -84,7 +84,7 @@ export function makeTasksTab(CONTEST, opts = {}) {
   const fStatus = el('select', {}, el('option', { value: '' }, T('todos', 'all', 'todos')),
     el('option', { value: 'pending' }, T('pendentes', 'pending', 'pendientes')), el('option', { value: 'printed' }, T('processadas', 'processed', 'procesadas')),
     el('option', { value: 'delivered' }, T('entregues', 'delivered', 'entregadas')));
-  const fQ = el('input', { type: 'search', placeholder: T('aluno / staff…', 'student / staff…', 'estudiante / staff…'), style: 'min-width:170px' });
+  const fQ = el('input', { class: 'u-minw-170px', type: 'search', placeholder: T('aluno / staff…', 'student / staff…', 'estudiante / staff…') });
   [fKind, fStatus].forEach((i) => i.addEventListener('change', render));
   fQ.addEventListener('input', render);
 
@@ -127,7 +127,7 @@ export function makeTasksTab(CONTEST, opts = {}) {
       : t.status === 'printed' ? (t.processed_by || '')
       : (t.claimed_by ? t.claimed_by + T(' (pegou)', ' (claimed)', ' (tomada)') : '—');
     const age = t.status === 'pending' ? fmtS(nowE() - (t.time || nowE())) : fmtDate(t.time).slice(0, 17);
-    const acts = el('div', { class: 'row', style: 'gap:.25rem' });
+    const acts = el('div', { class: 'row u-gap-.25' });
     if (!isB || t.status !== 'delivered') acts.append(el('button', { class: 'btn ghost', title: T('Abrir o PDF', 'Open the PDF', 'Abrir el PDF'), onclick: () => openPdf(t.id) }, '📄'));
     if (t.status === 'pending') acts.append(el('button', { class: 'btn ghost', title: T('Marcar processada (impressa)', 'Mark processed (printed)', 'Marcar procesada (impresa)'), onclick: () => act(t.id, 'processed') }, '🖨️✓'));
     if (t.status === 'printed') acts.append(el('button', { class: 'btn ghost', title: T('Marcar entregue', 'Mark delivered', 'Marcar entregada'), onclick: () => act(t.id, 'delivered') }, '✅'));
@@ -149,7 +149,7 @@ export function makeTasksTab(CONTEST, opts = {}) {
       (!fKind.value || (fKind.value === 'balloon') === (t.kind === 'balloon'))
       && (!fStatus.value || t.status === fStatus.value)
       && (!q || [t.login, t.fullname, t.claimed_by, t.processed_by, t.delivered_by].some((x) => (x || '').toLowerCase().includes(q))));
-    box.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' }, items.length + T(' de ', ' of ', ' de ') + QUEUE.length + T(' tarefa(s).', ' task(s).', ' tarea(s).')));
+    box.append(el('div', { class: 'small muted u-my-.3 u-mx-0' }, items.length + T(' de ', ' of ', ' de ') + QUEUE.length + T(' tarefa(s).', ' task(s).', ' tarea(s).')));
     if (!items.length) { box.append(el('div', { class: 'muted' }, T('Nenhuma tarefa', 'No task', 'Ninguna tarea') + (QUEUE.length ? T(' com esses filtros.', ' with these filters.', ' con estos filtros.') : T(' ainda — pedidos de impressão e balões aparecem aqui.', ' yet — print requests and balloons appear here.', ' todavía — los pedidos de impresión y los globos aparecen aquí.')))); return box; }
     const tb = el('tbody'); items.forEach((t) => tb.append(taskRow(t)));
     box.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
@@ -161,7 +161,7 @@ export function makeTasksTab(CONTEST, opts = {}) {
   function buildPerf() {
     const staff = (SF && SF.staff) || [];
     if (!staff.length) return null;
-    const box = el('div', {}, el('h3', { style: 'margin:1rem 0 .3rem' }, T('📈 Desempenho por staff', '📈 Performance by staff', '📈 Desempeño por staff')));
+    const box = el('div', {}, el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('📈 Desempenho por staff', '📈 Performance by staff', '📈 Desempeño por staff')));
     const tb = el('tbody');
     staff.forEach((s) => {
       const done = QUEUE.filter((t) => t.processed_by === s.login).length;
@@ -200,7 +200,7 @@ export function makeTasksTab(CONTEST, opts = {}) {
   }
   function buildConfig() {
     const box = el('div', {});
-    box.append(el('h3', { style: 'margin:1.2rem 0 .3rem' }, T('⚙️ Escopo dos staffs/chefes de sede', '⚙️ Scope of staff/site chiefs', '⚙️ Alcance de staff/jefes de sede')));
+    box.append(el('h3', { class: 'u-mt-1.2 u-mb-.3 u-mx-0' }, T('⚙️ Escopo dos staffs/chefes de sede', '⚙️ Scope of staff/site chiefs', '⚙️ Alcance de staff/jefes de sede')));
     const staff = (SF && SF.staff) || [], regions = (SF && SF.regions) || [], filters = (SF && SF.filters) || {};
     blocks = {};
     if (!staff.length) {
@@ -214,22 +214,22 @@ export function makeTasksTab(CONTEST, opts = {}) {
       T('No .staff o escopo governa a fila/ações; no .cstaff governa a fila (leitura), as ETIQUETAS de credenciais e a CERIMÔNIA de revelação da sede — configure-o sempre. Os botões de sede semeiam ', 'For .staff the scope governs the queue/actions; for .cstaff it governs the queue (read-only), the credential BADGES and the site REVEAL ceremony — always configure it. The site buttons seed ', 'Para .staff el alcance gobierna la cola/acciones; para .cstaff gobierna la cola (solo lectura), las ETIQUETAS de credenciales y la ceremonia de REVELACIÓN de la sede — configúralo siempre. Los botones de sede siembran '),
       el('code', {}, T('region:<nome>', 'region:<name>', 'region:<name>')), '.'));
     staff.forEach((s) => {
-      const ta = el('textarea', { rows: '3', style: 'width:100%; font-family:monospace' });
+      const ta = el('textarea', { class: 'u-w-full', rows: '3', style: 'font-family:monospace' });
       ta.value = (filters[s.login] || []).join('\n'); ta.dataset.orig = ta.value;
       blocks[s.login] = ta;
       // semear: a ÁRVORE inteira num seletor (a da LATAM tem 211 nós — botão por nó não cabe). O token
       // region:<nome> cobre o nó e tudo abaixo dele (region:Nordeste = as sedes do Nordeste).
-      const chips = el('div', { class: 'row', style: 'flex-wrap:wrap; gap:.3rem; margin:.3rem 0' });
-      const pick = el('select', { style: 'max-width:22rem' }, el('option', { value: '' }, T('— escolha uma sede ou região —', '— choose a site or region —', '— elige una sede o región —')),
+      const chips = el('div', { class: 'row u-my-.3 u-mx-0 u-wrap u-gap-.3' });
+      const pick = el('select', { class: 'u-maxw-22' }, el('option', { value: '' }, T('— escolha uma sede ou região —', '— choose a site or region —', '— elige una sede o región —')),
         ...rgFlatten(regions).filter((nd) => nd.name).map((nd) => el('option', { value: 'region:' + nd.name },
           '\u00a0'.repeat(nd.depth * 2) + nd.name + (nd.view ? T(' (recorte)', ' (cut)', ' (recorte)') : ''))));
       chips.append(pick, el('button', { class: 'btn ghost', style: 'padding:.1rem .45rem', type: 'button',
         onclick: () => { const entry = pick.value; if (!entry) return; const cur = ta.value.trim(); const lines = cur ? cur.split(/\n+/) : [];
           if (!lines.includes(entry)) { lines.push(entry); ta.value = lines.join('\n'); } pick.value = ''; } },
         T('+ semear', '+ seed', '+ sembrar')));
-      box.append(el('div', { class: 'field', style: 'border-top:1px solid var(--line); padding-top:.5rem' },
+      box.append(el('div', { class: 'field u-pt-.5', style: 'border-top:1px solid var(--color-border)' },
         el('label', {}, el('b', {}, s.login), (s.fullname ? el('span', { class: 'small muted' }, ' — ' + s.fullname) : ''),
-          (s.disabled ? el('span', { class: 'small', style: 'margin-left:.4rem; color:#a00' }, T('(desabilitado)', '(disabled)', '(deshabilitado)')) : '')),
+          (s.disabled ? el('span', { class: 'small u-ml-.4', style: 'color:var(--js-tasks-span-text)' }, T('(desabilitado)', '(disabled)', '(deshabilitado)')) : '')),
         (regions.length && has('sedes') ? el('div', { class: 'small muted' }, T('Semear região:', 'Seed region:', 'Sembrar región:')) : ''), (regions.length && has('sedes') ? chips : ''),
         ta));
     });
@@ -245,7 +245,7 @@ export function makeTasksTab(CONTEST, opts = {}) {
         msg.className = 'small'; msg.textContent = T('✓ salvo', '✓ saved', '✓ guardado'); save.disabled = false; await refresh();
       } catch (e) { save.disabled = false; msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     });
-    box.append(el('div', { class: 'row', style: 'margin-top:.7rem' }, save, msg));
+    box.append(el('div', { class: 'row u-mt-.7' }, save, msg));
     return box;
   }
   function renderConfig() {
@@ -290,7 +290,7 @@ export function makeTasksTab(CONTEST, opts = {}) {
       el('h2', {}, T('🖨️ Staff — fila e escopo', '🖨️ Staff — queue and scope', '🖨️ Staff — cola y alcance')),
       el('p', { class: 'muted small' }, T('Impressões pedidas pelos alunos e balões (1ª solução aceita de cada time/problema). O admin acompanha e pode agir — abrir o PDF, marcar processada, marcar entregue.', 'Print requests from students and balloons (first accepted solution per team/problem). The admin follows and can act — open the PDF, mark processed, mark delivered.', 'Pedidos de impresión de los estudiantes y globos (primera solución aceptada por equipo/problema). El admin sigue y puede actuar — abrir el PDF, marcar procesada, marcar entregada.')),
       errBox, sumBox,
-      el('div', { class: 'row', style: 'margin:.4rem 0' },
+      el('div', { class: 'row u-my-.4 u-mx-0' },
         el('span', { class: 'small muted' }, T('Filtrar:', 'Filter:', 'Filtrar:')), fKind, fStatus, fQ,
         el('button', { class: 'btn ghost', onclick: () => refresh() }, '↻'), dl),
       listBox, perfBox, cfgBox));

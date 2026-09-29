@@ -20,7 +20,7 @@ export function makeUsersTab(CONTEST) {
   const conv = makeConvertCard(CONTEST, { onDone: () => loadList() });   // contest compartilhado (USERS_FROM)
 
   // filtros (sobrevivem ao re-render da lista) — essenciais em contest com 1000+ usuários
-  const fQ = el('input', { type: 'search', placeholder: T('login / nome / email…', 'login / name / email…', 'login / nombre / email…'), style: 'min-width:200px' });
+  const fQ = el('input', { class: 'u-minw-200px', type: 'search', placeholder: T('login / nome / email…', 'login / name / email…', 'login / nombre / email…') });
   const fSel = el('select', {}, el('option', { value: '' }, T('todos', 'all', 'todos')),
     el('option', { value: 'active' }, T('ativos', 'active', 'activos')), el('option', { value: 'disabled' }, T('desabilitados', 'disabled', 'deshabilitados')),
     el('option', { value: 'priv' }, T('privilegiados', 'privileged', 'privilegiados')));
@@ -48,7 +48,7 @@ export function makeUsersTab(CONTEST) {
       el('td', {}, u.login, u.admin ? el('span', { class: 'small muted' }, ' (admin)') : '',
         u.shared ? el('span', { class: 'small muted', title: T('entra com a conta do Treino Livre', 'logs in with the Free Training account', 'entra con la cuenta de Entrenamiento libre') }, T(' 🔗 treino', ' 🔗 training', ' 🔗 entrenamiento')) : '',
         u.disabled ? el('span', { class: 'flag-anom small' }, T(' (desabilitado)', ' (disabled)', ' (deshabilitado)')) : '',
-        u.disqualified ? el('span', { class: 'flag-anom small', style: 'font-weight:600' }, T(' (desclassificado)', ' (disqualified)', ' (descalificado)')) : ''),
+        u.disqualified ? el('span', { class: 'flag-anom small u-fw-600' }, T(' (desclassificado)', ' (disqualified)', ' (descalificado)')) : ''),
       el('td', {}, u.fullname || ''), el('td', { class: 'small' }, u.email || ''), el('td', {}, acts));
   }
   function renderList() {
@@ -60,13 +60,13 @@ export function makeUsersTab(CONTEST) {
       if (sel === 'priv' && !(u.admin || PRIV.test(u.login || ''))) return false;
       return !q || [u.login, u.fullname, u.email].some((x) => (x || '').toLowerCase().includes(q));
     });
-    list.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' }, items.length + T(' de ', ' of ', ' de ') + USERS.length + T(' usuário(s).', ' user(s).', ' usuario(s).')));
+    list.append(el('div', { class: 'small muted u-my-.3 u-mx-0' }, items.length + T(' de ', ' of ', ' de ') + USERS.length + T(' usuário(s).', ' user(s).', ' usuario(s).')));
     if (!items.length) { list.append(el('div', { class: 'muted' }, T('Nenhum com esses filtros.', 'None with these filters.', 'Ninguno con estos filtros.'))); return; }
     const CAP = 300, shown = showAll ? items : items.slice(0, CAP);
     const tb = el('tbody'); shown.forEach((u) => tb.append(userRow(u)));
     list.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
       el('thead', {}, el('tr', {}, el('th', {}, 'Login'), el('th', {}, T('Nome', 'Name', 'Nombre')), el('th', {}, 'Email'), el('th', {}, T('Ações', 'Actions', 'Acciones')))), tb)));
-    if (!showAll && items.length > CAP) list.append(el('div', { style: 'margin:.4rem 0' },
+    if (!showAll && items.length > CAP) list.append(el('div', { class: 'u-my-.4 u-mx-0' },
       el('button', { class: 'btn ghost', onclick: () => { showAll = true; renderList(); } }, T('mostrar todos (', 'show all (', 'mostrar todos (') + items.length + ')'),
       el('span', { class: 'small muted' }, T(' — exibindo os ' + CAP + ' primeiros', ' — showing the first ' + CAP, ' — mostrando los primeros ' + CAP))));
   }
@@ -82,7 +82,7 @@ export function makeUsersTab(CONTEST) {
   function makeBatchUsers() {
     let staged = [];       // [{login,password,fullname,email, team_name?,country?,region?,…}] da prévia
     let richMode = false;  // true = veio de CSV com cabeçalho (campos de time inclusos)
-    const ta = el('textarea', { rows: '5', placeholder: T('Cole aqui (ou envie um arquivo). Formatos por linha:\n  login:senha:nome:email\n  login,nome,email\n  Nome Completo   (login e senha gerados)\nOu CSV COM CABEÇALHO (ordem livre; nome = nome do time; carga única c/ país+sede):\n  login,senha,nome,pais,sede,univ,univ_nome', 'Paste here (or upload a file). Per-line formats:\n  login:senha:nome:email\n  login,nome,email\n  Full Name   (login and password generated)\nOr CSV WITH HEADER (any order; nome = team name; single load w/ country+site):\n  login,senha,nome,pais,sede,univ,univ_nome', 'Pega aquí (o sube un archivo). Formatos por línea:\n  login:senha:nome:email\n  login,nome,email\n  Nombre Completo   (login y contraseña generados)\nO CSV CON ENCABEZADO (orden libre; nome = nombre del equipo; carga única con país+sede):\n  login,senha,nome,pais,sede,univ,univ_nome'), style: 'width:100%' });
+    const ta = el('textarea', { class: 'u-w-full', rows: '5', placeholder: T('Cole aqui (ou envie um arquivo). Formatos por linha:\n  login:senha:nome:email\n  login,nome,email\n  Nome Completo   (login e senha gerados)\nOu CSV COM CABEÇALHO (ordem livre; nome = nome do time; carga única c/ país+sede):\n  login,senha,nome,pais,sede,univ,univ_nome', 'Paste here (or upload a file). Per-line formats:\n  login:senha:nome:email\n  login,nome,email\n  Full Name   (login and password generated)\nOr CSV WITH HEADER (any order; nome = team name; single load w/ country+site):\n  login,senha,nome,pais,sede,univ,univ_nome', 'Pega aquí (o sube un archivo). Formatos por línea:\n  login:senha:nome:email\n  login,nome,email\n  Nombre Completo   (login y contraseña generados)\nO CSV CON ENCABEZADO (orden libre; nome = nombre del equipo; carga única con país+sede):\n  login,senha,nome,pais,sede,univ,univ_nome') });
     const fileInp = el('input', { type: 'file', accept: '.txt,.csv,text/plain,text/csv', style: 'display:none' });
     fileInp.addEventListener('change', () => { const f = fileInp.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { ta.value = ta.value ? (ta.value.replace(/\s*$/, '') + '\n' + rd.result) : rd.result; }; rd.readAsText(f); fileInp.value = ''; });
     const onExisting = el('select', {}, el('option', { value: 'skip' }, T('pular os que já existem', 'skip existing ones', 'omitir los existentes')), el('option', { value: 'update' }, T('atualizar senha dos existentes', 'update password of existing ones', 'actualizar contraseña de los existentes')));
@@ -90,7 +90,7 @@ export function makeUsersTab(CONTEST) {
     const parse = (txt) => { const rich = parseRichCsv(txt); richMode = !!rich; return rich || parseUsers(txt); };
     const renderPrev = () => {
       prev.innerHTML = ''; if (!staged.length) return;
-      prev.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' },
+      prev.append(el('div', { class: 'small muted u-my-.3 u-mx-0' },
         staged.length + T(' linha(s) prontas (senhas em branco são geradas no servidor).', ' line(s) ready (blank passwords are generated on the server).', ' línea(s) lista(s) (las contraseñas en blanco se generan en el servidor).') +
         (richMode ? T(' Cabeçalho detectado — os campos de time/país/sede vão junto.', ' Header detected — the team/country/site fields go along.', ' Encabezado detectado — los campos de equipo/país/sede se incluyen.') : '')));
     };
@@ -116,10 +116,10 @@ export function makeUsersTab(CONTEST) {
       } catch (e) { send.disabled = false; msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     } }, T('Enviar lote', 'Send batch', 'Enviar lote'));
     return el('div', {},
-      el('h3', { style: 'margin:1rem 0 .3rem' }, T('📥 Usuários em lote', '📥 Batch users', '📥 Usuarios en lote')),
+      el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('📥 Usuários em lote', '📥 Batch users', '📥 Usuarios en lote')),
       el('p', { class: 'muted small' }, T('Suba competidores a qualquer momento (ex.: contest criado só com contas administrativas). Colar ou enviar arquivo .txt/.csv.', 'Upload competitors at any time (e.g.: contest created with only administrative accounts). Paste or upload a .txt/.csv file.', 'Sube competidores en cualquier momento (ej.: competencia creada solo con cuentas administrativas). Pega o sube un archivo .txt/.csv.')),
       ta,
-      el('div', { class: 'row', style: 'margin:.4rem 0' },
+      el('div', { class: 'row u-my-.4 u-mx-0' },
         el('button', { class: 'btn ghost', onclick: () => fileInp.click() }, T('📎 Enviar arquivo', '📎 Upload file', '📎 Subir archivo')), fileInp,
         proc, el('span', { class: 'small muted' }, T('existentes:', 'existing:', 'existentes:')), onExisting, send),
       prev, msg);
@@ -129,9 +129,9 @@ export function makeUsersTab(CONTEST) {
     if (built) { await loadList(); return; }
     built = true;
     panel.append(el('h2', {}, T('👥 Contas & senhas ', '👥 Accounts & passwords ', '👥 Cuentas y contraseñas '),
-      el('a', { class: 'btn ghost', style: 'font-size:.85rem; font-weight:400', target: '_blank',
+      el('a', { class: 'btn ghost u-fs-.85 u-fw-400', target: '_blank',
         href: '/contest/badges/?c=' + enc(CONTEST) }, T('🏷️ Etiquetas de credenciais', '🏷️ Credential badges', '🏷️ Etiquetas de credenciales'))), conv.el);
-    panel.append(el('div', { class: 'row', style: 'margin:.3rem 0' }, el('span', { class: 'small muted' }, T('Filtrar:', 'Filter:', 'Filtrar:')), fQ, fSel,
+    panel.append(el('div', { class: 'row u-my-.3 u-mx-0' }, el('span', { class: 'small muted' }, T('Filtrar:', 'Filter:', 'Filtrar:')), fQ, fSel,
       el('button', { class: 'btn ghost', onclick: () => loadList() }, '↻')), list);
     // add/reset (individual)
     const li = el('input', { placeholder: 'login' }), pw = el('input', { placeholder: T('senha (gerada se vazio)', 'password (generated if empty)', 'contraseña (generada si se deja vacía)') }),
@@ -146,7 +146,7 @@ export function makeUsersTab(CONTEST) {
       } catch (e) { add.disabled = false; amsg.className = 'small error-box'; amsg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     } }, T('Adicionar / resetar / reabilitar', 'Add / reset / re-enable', 'Agregar / restablecer / reactivar'));
     // troca de senha geral
-    const bpw = el('input', { placeholder: T('nova senha única', 'new single password', 'nueva contraseña única'), style: 'width:200px' }), binc = mkBool(false), bmsg = el('div', { class: 'small' });
+    const bpw = el('input', { class: 'u-w-200px', placeholder: T('nova senha única', 'new single password', 'nueva contraseña única') }), binc = mkBool(false), bmsg = el('div', { class: 'small' });
     const bulk = el('button', { class: 'btn danger', onclick: async () => {
       if (!bpw.value.trim()) { bpw.focus(); return; }
       if (!confirm(T('Trocar a senha de TODOS os usuários não-privilegiados para esta senha?', 'Change the password of ALL non-privileged users to this password?', '¿Cambiar la contraseña de TODOS los usuarios no privilegiados a esta contraseña?'))) return;
@@ -154,10 +154,10 @@ export function makeUsersTab(CONTEST) {
       try { const r = await call('users-set-password', { password: bpw.value, include_disabled: binc.checked }); bmsg.className = 'small'; bmsg.textContent = '✓ ' + r.count + T(' usuário(s) atualizados', ' user(s) updated', ' usuario(s) actualizado(s)'); bulk.disabled = false; bpw.value = ''; loadList(); }
       catch (e) { bulk.disabled = false; bmsg.className = 'small error-box'; bmsg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     } }, T('Trocar senha de todos', 'Change everyone\'s password', 'Cambiar la contraseña de todos'));
-    panel.append(el('h3', { style: 'margin:1rem 0 .3rem' }, T('➕ Adicionar / resetar senha', '➕ Add / reset password', '➕ Agregar / restablecer contraseña')),
+    panel.append(el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('➕ Adicionar / resetar senha', '➕ Add / reset password', '➕ Agregar / restablecer contraseña')),
       el('div', { class: 'row' }, li, pw, fn, em, add), amsg,
       makeBatchUsers(),
-      el('h3', { style: 'margin:1rem 0 .3rem' }, T('🔑 Troca de senha geral (prova)', '🔑 Bulk password change (contest)', '🔑 Cambio masivo de contraseña (competencia)')),
+      el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('🔑 Troca de senha geral (prova)', '🔑 Bulk password change (contest)', '🔑 Cambio masivo de contraseña (competencia)')),
       el('p', { class: 'muted small' }, T('Define uma senha única para todos os não-privilegiados (após os alunos logarem).', 'Sets a single password for all non-privileged users (after the students log in).', 'Define una contraseña única para todos los usuarios no privilegiados (después de que los estudiantes inicien sesión).')),
       el('div', { class: 'row' }, bpw, el('label', { class: 'small' }, binc, T(' incluir desabilitados', ' include disabled', ' incluir deshabilitados')), bulk), bmsg);
     await loadList();

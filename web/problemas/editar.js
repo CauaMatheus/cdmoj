@@ -564,9 +564,9 @@ function updateTestHint(row) {
   if (!$('scoreEnabled').checked) { ghint.textContent = ''; return; }
   if (gsel.value) { ghint.textContent = T('(fixado)', '(fixed)', '(fijado)'); ghint.style.color = ''; return; }
   const m = matchGroups((row._nameI ? row._nameI.value : '').trim());
-  if (m.length === 1) { ghint.textContent = '→ ' + m[0].name; ghint.style.color = '#7ee2a0'; }
-  else if (m.length === 0) { ghint.textContent = T('⚠ sem grupo', '⚠ no group', '⚠ sin grupo'); ghint.style.color = '#ffd98a'; }
-  else { ghint.textContent = T('⚠ casa ', '⚠ matches ', '⚠ coincide con ') + m.length + T(' grupos', ' groups', ' grupos'); ghint.style.color = '#ffd98a'; }
+  if (m.length === 1) { ghint.textContent = '→ ' + m[0].name; ghint.style.color = 'var(--js-editar-el-text)'; }
+  else if (m.length === 0) { ghint.textContent = T('⚠ sem grupo', '⚠ no group', '⚠ sin grupo'); ghint.style.color = 'var(--js-editar-el-text-2)'; }
+  else { ghint.textContent = T('⚠ casa ', '⚠ matches ', '⚠ coincide con ') + m.length + T(' grupos', ' groups', ' grupos'); ghint.style.color = 'var(--js-editar-el-text-2)'; }
 }
 
 // ---- testes ocultos -----------------------------------------------------------------------
@@ -895,10 +895,10 @@ const orgIsPrivate = () => { const o = selectedOrg(); return !!(o && o.public_al
 function updateRepoHint() {
   const hint = $('repoHint'); if (!hint) return;
   if (!REPOS.length && MODE === 'new') {
-    hint.style.display = ''; hint.className = 'small'; hint.style.color = '#ffd98a';
+    hint.style.display = ''; hint.className = 'small'; hint.style.color = 'var(--js-editar-el-text-2)';
     hint.innerHTML = T('Você ainda não tem nenhuma <b>org</b>. O problema é salvo <b>dentro de uma org</b> — clique <b>“+ nova org”</b> ali do lado para criar a primeira (ex.: uma por disciplina ou competição). Só depois o botão <b>Salvar</b> funciona.', 'You have no <b>org</b> yet. The problem is saved <b>inside an org</b> — click <b>“+ new org”</b> on the side to create the first one (e.g. one per course or competition). Only then does the <b>Save</b> button work.', 'Todavía no tienes ninguna <b>org</b>. El problema se guarda <b>dentro de una org</b> — haz clic en <b>“+ nueva org”</b> al lado para crear la primera (ej.: una por asignatura o competencia). Solo entonces funciona el botón <b>Guardar</b>.');
   } else if (orgIsPrivate()) {
-    hint.style.display = ''; hint.className = 'small'; hint.style.color = '#ffd98a';
+    hint.style.display = ''; hint.className = 'small'; hint.style.color = 'var(--js-editar-el-text-2)';
     hint.innerHTML = T('🔒 A org <b>', '🔒 The org <b>', '🔒 La org <b>') + REPO + T('</b> é <b>privada</b> — problemas nela não podem ficar públicos (anti-vazamento de prova). Um admin da org libera em Gestão de Problemas › Orgs.', '</b> is <b>private</b> — problems in it cannot become public (exam anti-leak). An org admin unlocks it in Problem Management › Orgs.', '</b> es <b>privada</b> — los problemas en ella no pueden quedar públicos (anti-filtración de examen). Un admin de la org lo habilita en Gestión de Problemas › Orgs.');
   } else hint.style.display = 'none';
 }
@@ -1384,7 +1384,7 @@ async function loadHistory(force) {
       };
       const btnDl = el('button', { class: 'btn ghost', type: 'button', style: 'font-size:.82em;padding:.1rem .5rem' }, T('Baixar .tar.gz', 'Download .tar.gz', 'Descargar .tar.gz'));
       btnDl.onclick = () => downloadAt(c.sha);
-      const row = el('div', { style: 'border-top:1px solid var(--line,#ddd);padding:.45rem 0' },
+      const row = el('div', { style: 'border-top:1px solid var(--color-border);padding:.45rem 0' },
         el('div', {},
           el('code', { class: 'small' }, c.sha.slice(0, 7)), ' ',
           el('b', {}, c.subject || '—'), ' ',
@@ -1504,7 +1504,7 @@ async function newColl() {
 // ---- visibilidade (público) — AÇÃO EXPLÍCITA, separada do salvar -------------------------
 function renderPubState() {
   const st = $('pubState'), btn = $('pubToggle'); if (!st || !btn) return;
-  if (loadedPublic) { st.textContent = T('🌐 PÚBLICO (treino livre)', '🌐 PUBLIC (free training)', '🌐 PÚBLICO (entrenamiento libre)'); st.style.color = '#1a7f37'; btn.textContent = T('tornar privado', 'make private', 'volver privado'); }
+  if (loadedPublic) { st.textContent = T('🌐 PÚBLICO (treino livre)', '🌐 PUBLIC (free training)', '🌐 PÚBLICO (entrenamiento libre)'); st.style.color = 'var(--js-editar-el-text-3)'; btn.textContent = T('tornar privado', 'make private', 'volver privado'); }
   else { st.textContent = T('🔒 privado (rascunho)', '🔒 private (draft)', '🔒 privado (borrador)'); st.style.color = ''; btn.textContent = T('tornar público', 'make public', 'volver público'); }
   // trava de público da ORG: se a org é privada, não dá p/ publicar (set-public devolve 403)
   const ph = $('pubOrgHint');

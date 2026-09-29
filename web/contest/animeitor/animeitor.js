@@ -238,7 +238,7 @@ function chipRow(fam, label, pool, labels, ids) {
     class: 'btn ' + (F.mode === 'family' && F[fam] === key ? '' : 'ghost'),
     onclick: () => { F.mode = 'family'; F[fam] = key; PAGE_I = 0; renderPhotos(); },
   }, `${txt} (${n})`);
-  return el('div', { class: 'row', style: 'gap:.3rem; align-items:center' },
+  return el('div', { class: 'row u-gap-.3 u-items-center' },
     el('span', { class: 'small muted' }, label),
     chip('no', labels[0], pool.length - nYes, ids[0]),
     chip('yes', labels[1], nYes, ids[1]),
@@ -289,7 +289,7 @@ function photosBar(box) {
 // pager do padrão da casa (treino/problemas): ‹ página X / Y ›
 function pager(pages) {
   if (pages <= 1) return '';
-  return el('div', { class: 'row', style: 'gap:.4rem; align-items:center; margin:.5rem 0' },
+  return el('div', { class: 'row u-my-.5 u-mx-0 u-gap-.4 u-items-center' },
     el('button', { class: 'btn ghost', onclick: () => { if (PAGE_I > 0) { PAGE_I--; renderPhotos(); } } }, '‹'),
     el('span', { class: 'small' }, ` ${T('página', 'page', 'página')} ${PAGE_I + 1} / ${pages} `),
     el('button', { class: 'btn ghost', onclick: () => { if (PAGE_I < pages - 1) { PAGE_I++; renderPhotos(); } } }, '›'));
@@ -315,7 +315,7 @@ function placeholderMusicRow(box) {
       msg(document.getElementById('phMsg') || box, T('Música padrão trocada.', 'Default music replaced.', 'Música predeterminada reemplazada.'), 'small');
     } catch (e) { msg(box, T('Falha: ', 'Failed: ', 'Error: ') + (e.message || e), 'error-box'); }
   });
-  return el('div', { class: 'row', style: 'gap:.3rem; margin-top:.35rem; align-items:center; flex-wrap:wrap' }, inp,
+  return el('div', { class: 'row u-gap-.3 u-items-center u-wrap u-mt-.35' }, inp,
     playBtn(phMusicUrl(), T('tocar a música padrão', 'play the default music', 'reproducir la música predeterminada')),
     el('span', { class: 'small muted' }, T('Música padrão', 'Default music', 'Música predeterminada'),
       custom ? T(' · sua faixa', ' · your track', ' · tu pista') : T(' · a do MOJ', ' · the MOJ one', ' · la del MOJ')),
@@ -357,7 +357,7 @@ function placeholderCard(box) {
         T('É o que a API responde — e o que vai no pacote — para quem ainda não mandou a sua.',
           'This is what the API answers — and what goes in the package — for teams without their own.',
           'Es lo que responde la API — y lo que va en el paquete — para quienes todavía no enviaron la suya.')),
-      el('div', { class: 'row', style: 'gap:.3rem; margin-top:.35rem; align-items:center; flex-wrap:wrap' }, inp,
+      el('div', { class: 'row u-gap-.3 u-items-center u-wrap u-mt-.35' }, inp,
         RO ? '' : el('button', { class: 'btn ghost', onclick: () => inp.click() }, T('trocar imagem', 'replace image', 'reemplazar imagen')),
         (custom && !RO) ? el('button', { class: 'btn ghost', onclick: async () => {
           if (!confirm(T('Voltar à foto padrão do MOJ?', 'Restore the MOJ default photo?', '¿Restaurar la foto predeterminada del MOJ?'))) return;
@@ -399,7 +399,7 @@ function renderPhotos() {
         : ''),
     placeholderCard(box),
     // lote e pacote são ESCRITA/exportação: o .staff não tem nenhum dos dois
-    NOWRITE ? '' : el('div', { class: 'row', style: 'gap:.5rem; margin-bottom:.4rem; flex-wrap:wrap' }, bulkInput(box),
+    NOWRITE ? '' : el('div', { class: 'row u-gap-.5 u-wrap u-mb-.4' }, bulkInput(box),
       el('button', { class: 'btn', onclick: () => document.getElementById('phBulk').click() },
         T('⬆ Enviar em lote — fotos e músicas (nome do arquivo = login)',
           '⬆ Bulk upload — photos and music (file name = login)',
@@ -465,7 +465,7 @@ function keyRow(k) {
     el('td', { class: 'small muted' }, k.last_at
       ? fmtDate(k.last_at) + (k.last_ip ? ' · ' + k.last_ip : '')
       : T('nunca buscada', 'never fetched', 'nunca consultada')),
-    el('td', {}, revoked ? '' : el('div', { class: 'row', style: 'gap:.3rem' },
+    el('td', {}, revoked ? '' : el('div', { class: 'row u-gap-.3' },
       el('button', { class: 'btn ghost', onclick: async () => {
         try { await navigator.clipboard.writeText(url); alert(T('URL copiada.', 'URL copied.', 'URL copiada.')); }
         catch { prompt(T('Copie a URL:', 'Copy the URL:', 'Copia la URL:'), url); }
@@ -483,7 +483,7 @@ function keyRow(k) {
 
 function streamSection() {
   const sel = el('select', {}, ...((WC.views || []).map((v) => el('option', { value: v.id }, v.name))));
-  const lbl = el('input', { type: 'text', placeholder: T('apelido (ex.: telão principal)', 'label (e.g. main screen)', 'etiqueta (ej.: pantalla principal)'), style: 'max-width:16rem' });
+  const lbl = el('input', { class: 'u-maxw-16', type: 'text', placeholder: T('apelido (ex.: telão principal)', 'label (e.g. main screen)', 'etiqueta (ej.: pantalla principal)') });
   const box = el('div', { class: 'small muted' });
   const keys = (WC.keys || []);
   return el('div', { class: 'section' },
@@ -496,7 +496,7 @@ function streamSection() {
       T('Quem tem a URL vê o placar descongelado durante a prova. Trate como senha e revogue depois do evento.',
         'Whoever holds the URL sees the unfrozen scoreboard during the contest. Treat it as a password and revoke it after the event.',
         'Quien tenga la URL ve el marcador descongelado durante la competencia. Trátala como una contraseña y revócala después del evento.')),
-    el('div', { class: 'row', style: 'gap:.5rem; align-items:center; flex-wrap:wrap; margin:.6rem 0' },
+    el('div', { class: 'row u-my-.6 u-mx-0 u-gap-.5 u-items-center u-wrap' },
       el('span', { class: 'small muted' }, T('Placar:', 'Board:', 'Marcador:')), sel, lbl,
       el('button', { class: 'btn', onclick: async () => {
         msg(box, T('Criando…', 'Creating…', 'Creando…'));
@@ -527,7 +527,7 @@ function streamSection() {
 function verifyBadge(v) {
   if (!v || !v.at) return el('p', { class: 'muted small' }, T('O MOJ ainda não conferiu o Animeitor para a sua sede.', 'MOJ has not checked the Animeitor for your site yet.', 'El MOJ todavía no verificó el Animeitor para tu sede.'));
   const at = new Date((v.final ? (v.final_at || v.at) : v.at) * 1000).toLocaleTimeString(uiLocale());
-  if (v.final) return el('p', { class: 'small', style: 'color:var(--ok,#1e7e34);font-weight:600' }, '✓ ', T(`Validado (${at}): a prova acabou e o Animeitor tem todas as submissões da sua sede.`, `Validated (${at}): the contest is over and the Animeitor has every submission of your site.`, `Validado (${at}): la competencia terminó y el Animeitor tiene todos los envíos de tu sede.`));
+  if (v.final) return el('p', { class: 'small u-fw-600', style: 'color:var(--color-success)' }, '✓ ', T(`Validado (${at}): a prova acabou e o Animeitor tem todas as submissões da sua sede.`, `Validated (${at}): the contest is over and the Animeitor has every submission of your site.`, `Validado (${at}): la competencia terminó y el Animeitor tiene todos los envíos de tu sede.`));
   if (v.ok) return el('p', { class: 'small' }, '✓ ', T(`Conferido às ${at}: o Animeitor tem todas as submissões da sua sede. A validação final sai quando a prova acabar para todas as sedes e nada estiver em julgamento.`,
     `Checked at ${at}: the Animeitor has every submission of your site. The final validation comes when the contest is over for every site and nothing is being judged.`,
     `Verificado a las ${at}: el Animeitor tiene todos los envíos de tu sede. La validación final llega cuando la competencia termine para todas las sedes y nada esté en evaluación.`));
@@ -548,7 +548,7 @@ function revealCard() {
   else body.push(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
     el('thead', {}, el('tr', {}, el('th', {}, T('Placar', 'Scoreboard', 'Marcador')), el('th', {}, T('Sede', 'Site', 'Sede')), el('th', {}, ''))),
     el('tbody', {}, ...R.links.map((x) => el('tr', {}, el('td', {}, el('b', {}, x.contest)), el('td', {}, x.site),
-      el('td', {}, el('div', { class: 'row', style: 'gap:.4rem' },
+      el('td', {}, el('div', { class: 'row u-gap-.4' },
         el('a', { class: 'btn', href: x.url, target: '_blank', rel: 'noopener' }, T('abrir a revelação', 'open the reveal', 'abrir la revelación')), copy(x.url)))))))));
   return el('div', { class: 'section', id: 'reveleitor' },
     el('h2', {}, T('🎬 Reveleitor da sua sede', '🎬 Reveal for your site', '🎬 Reveleitor de tu sede')),
@@ -568,7 +568,7 @@ function render() {
   // seção nova é o MESMO a cada render (o estado dela — tabela em edição, timer — não se perde).
   app.append(RO ? revealCard() : '', RO || !API ? '' : API.node,
     RO ? '' : el('details', { class: 'section', open: (WC && (WC.keys || []).some((k) => !k.revoked_at)) ? true : null },
-      el('summary', { style: 'cursor:pointer' }, T('🎥 Webcast BOCA (legado): o pacote .zip que o Animeitor antigo busca por chave', '🎥 BOCA webcast (legacy): the .zip package the old Animeitor polls by key', '🎥 Webcast BOCA (legado): el paquete .zip que el Animeitor antiguo consulta por clave')),
+      el('summary', { class: 'u-pointer' }, T('🎥 Webcast BOCA (legado): o pacote .zip que o Animeitor antigo busca por chave', '🎥 BOCA webcast (legacy): the .zip package the old Animeitor polls by key', '🎥 Webcast BOCA (legado): el paquete .zip que el Animeitor antiguo consulta por clave')),
       streamSection()),
     el('div', { class: 'section', id: 'photosSec' }));
   renderPhotos();

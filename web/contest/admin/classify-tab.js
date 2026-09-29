@@ -68,25 +68,25 @@ export function makeClassifyTab(CONTEST) {
   const cfgBox = el('div', {});
   const prevBox = el('div', {});
   panel.append(head, stageBox, cfgBox, prevBox,
-    el('p', { class: 'muted small', style: 'margin-top:1rem' },
+    el('p', { class: 'muted small u-mt-1' },
       T('Engate pronto p/ as próximas etapas: Final BR → PDA → Mundial (regras futuras).',
         'Hooks ready for the next stages: BR Finals → PDA → World Finals (future rules).',
         'Enganches listos para las próximas etapas: Final BR → PDA → Mundial (reglas futuras).')));
 
-  const fName = el('input', { value: 'Final Brasileira', style: 'min-width:180px' });
-  const fVenue = el('input', { value: 'Uberlândia', style: 'min-width:120px' });
-  const fWhen = el('input', { value: 'novembro/2026', style: 'min-width:120px' });
+  const fName = el('input', { class: 'u-minw-180px', value: 'Final Brasileira' });
+  const fVenue = el('input', { class: 'u-minw-120px', value: 'Uberlândia' });
+  const fWhen = el('input', { class: 'u-minw-120px', value: 'novembro/2026' });
   const fRegion = el('select', {}, el('option', { value: 'Brasil' }, T('Brasil', 'Brazil', 'Brasil')));
   // algoritmo de promoção: catálogo vem do servidor (GET .algorithms); a PDA entra lá, não aqui
   const fAlg = el('select', {});
   const msg = el('div', { class: 'small' });
   const showErr = (e) => { msg.className = 'small error-box'; msg.textContent = (e && e.message) || T('erro', 'error', 'error'); };
-  const fR1 = el('input', { type: 'number', value: '15', style: 'width:5rem' });
-  const f3 = el('input', { type: 'number', value: '3', style: 'width:4rem' });
-  const f2 = el('input', { type: 'number', value: '2', style: 'width:4rem' });
-  const f1 = el('input', { type: 'number', value: '1', style: 'width:4rem' });
-  const taSedes = el('textarea', { rows: 10, style: 'width:100%;font-family:var(--mono);font-size:.85rem' });
-  const taSuper = el('textarea', { rows: 7, style: 'width:100%;font-family:var(--mono);font-size:.85rem' });
+  const fR1 = el('input', { class: 'u-w-5', type: 'number', value: '15' });
+  const f3 = el('input', { class: 'u-w-4', type: 'number', value: '3' });
+  const f2 = el('input', { class: 'u-w-4', type: 'number', value: '2' });
+  const f1 = el('input', { class: 'u-w-4', type: 'number', value: '1' });
+  const taSedes = el('textarea', { class: 'u-w-full u-mono u-fs-.85', rows: 10 });
+  const taSuper = el('textarea', { class: 'u-w-full u-mono u-fs-.85', rows: 7 });
   taSedes.value = DEFAULT_BR_SEDES; taSuper.value = DEFAULT_BR_SUPER;
 
   const cfg = () => ({
@@ -115,7 +115,7 @@ export function makeClassifyTab(CONTEST) {
         } }, '✖')));
         tb.append(tr);
       });
-      wrap.append(el('h4', { style: 'margin:.7rem 0 .2rem' }, via[v] + ' — ' + rows.length),
+      wrap.append(el('h4', { class: 'u-mt-.7 u-mb-.2 u-mx-0' }, via[v] + ' — ' + rows.length),
         el('div', { class: 'chart-wrap' }, el('table', { class: 'moj narrow' },
           el('thead', {}, el('tr', {},
             el('th', { class: 'n' }, T('Posição', 'Place', 'Posición')), el('th', {}, T('Time', 'Team', 'Equipo')),
@@ -142,16 +142,16 @@ export function makeClassifyTab(CONTEST) {
       const pub = stage.status === 'published';
       const teams = Object.entries(stage.teams || {}).map(([login, v]) => Object.assign({ login }, v))
         .sort((a, b) => (a.place || 9e9) - (b.place || 9e9));
-      const addLogin = el('input', { placeholder: 'login', style: 'min-width:150px' });
-      const addNote = el('input', { placeholder: T('nota (ex.: regra 3, sede nova)', 'note (e.g., rule 3, new site)', 'nota (ej.: regla 3, sede nueva)'), style: 'min-width:220px' });
-      stageBox.append(el('div', { class: 'section', style: 'background:var(--card-bg,#f5f7fb)' },
+      const addLogin = el('input', { class: 'u-minw-150px', placeholder: 'login' });
+      const addNote = el('input', { class: 'u-minw-220px', placeholder: T('nota (ex.: regra 3, sede nova)', 'note (e.g., rule 3, new site)', 'nota (ej.: regla 3, sede nueva)') });
+      stageBox.append(el('div', { class: 'section', style: 'background:var(--color-surface-muted)' },
         el('h3', {}, (stage.name || 'Final Brasileira') + (stage.venue ? ' — ' + stage.venue : '') +
           (stage.when ? ' · ' + stage.when : '')),
         el('p', {}, pub
-          ? el('b', { style: 'color:var(--ok,#1a7f37)' }, T('📢 PUBLICADO no placar (chip ↑BR)', '📢 PUBLISHED on the scoreboard (↑BR chip)', '📢 PUBLICADA en el marcador (chip ↑BR)'))
-          : el('b', { style: 'color:var(--warn,#a66a00)' }, T('📝 RASCUNHO (só o admin vê)', '📝 DRAFT (admin only)', '📝 BORRADOR (solo admin)')),
+          ? el('b', { style: 'color:var(--color-success)' }, T('📢 PUBLICADO no placar (chip ↑BR)', '📢 PUBLISHED on the scoreboard (↑BR chip)', '📢 PUBLICADA en el marcador (chip ↑BR)'))
+          : el('b', { style: 'color:var(--color-warning)' }, T('📝 RASCUNHO (só o admin vê)', '📝 DRAFT (admin only)', '📝 BORRADOR (solo admin)')),
           el('span', { class: 'small muted' }, ' · ' + teams.length + T(' time(s)', ' team(s)', ' equipo(s)'))),
-        el('div', { class: 'row', style: 'gap:.5rem;flex-wrap:wrap;align-items:center' },
+        el('div', { class: 'row u-gap-.5 u-wrap u-items-center' },
           el('button', { class: pub ? 'btn ghost danger' : 'btn', onclick: async () => {
             const a = pub ? 'unpublish' : 'publish';
             if (pub) { if (!confirm(T('DESPUBLICAR do placar?', 'UNPUBLISH from the scoreboard?', '¿DESPUBLICAR del marcador?'))) return; }
@@ -167,7 +167,7 @@ export function makeClassifyTab(CONTEST) {
           } }, pub ? T('🔕 Despublicar', '🔕 Unpublish', '🔕 Despublicar') : T('📢 Publicar', '📢 Publish', '📢 Publicar')),
           el('span', { class: 'small muted' }, T('algoritmo: ', 'algorithm: ', 'algoritmo: ') + ((stage.config && stage.config.algorithm) || 'sbc-fase1'))),
         relationTable(teams, true),
-        el('div', { class: 'row', style: 'gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.5rem' }, addLogin, addNote,
+        el('div', { class: 'row u-gap-.5 u-wrap u-items-center u-mt-.5' }, addLogin, addNote,
           el('button', { class: 'btn', onclick: async () => {
             const l = addLogin.value.trim(); if (!l) return;
             try { await call({ action: 'add', login: l, note: addNote.value.trim() }); addLogin.value = ''; addNote.value = ''; load(); }
@@ -184,18 +184,18 @@ export function makeClassifyTab(CONTEST) {
     // --- config + prévia + aplicar ---
     cfgBox.append(el('details', { open: stage ? null : true },
       el('summary', {}, el('b', {}, T('⚙️ Regras e vagas', '⚙️ Rules and slots', '⚙️ Reglas y cupos'))),
-      el('div', { class: 'row', style: 'gap:.6rem;flex-wrap:wrap;align-items:center;margin:.4rem 0' },
+      el('div', { class: 'row u-my-.4 u-mx-0 u-gap-.6 u-wrap u-items-center' },
         el('label', {}, T('Algoritmo: ', 'Algorithm: ', 'Algoritmo: '), fAlg),
         el('label', {}, T('Etapa: ', 'Stage: ', 'Etapa: '), fName), el('label', {}, T('Local: ', 'Venue: ', 'Lugar: '), fVenue),
         el('label', {}, T('Quando: ', 'When: ', 'Cuándo: '), fWhen), el('label', {}, T('Região: ', 'Region: ', 'Región: '), fRegion)),
-      el('div', { class: 'row', style: 'gap:.6rem;flex-wrap:wrap;align-items:center;margin:.4rem 0' },
+      el('div', { class: 'row u-my-.4 u-mx-0 u-gap-.6 u-wrap u-items-center' },
         el('label', {}, T('Vagas regra 1: ', 'Rule 1 slots: ', 'Cupos regla 1: '), fR1),
         el('label', {}, T('Regra 4 — 3♀: ', 'Rule 4 — 3♀: ', 'Regla 4 — 3♀: '), f3),
         el('label', {}, ' ≥2♀: ', f2), el('label', {}, ' ≥1♀: ', f1)),
       el('div', { class: 'two-col' },
-        el('div', {}, el('h4', { style: 'margin:.4rem 0 .2rem' }, T('Vagas por SEDE (regra 2) — "Sede = vagas"', 'Slots per SITE (rule 2) — "Site = slots"', 'Cupos por SEDE (regla 2) — "Sede = cupos"')), taSedes),
-        el('div', {}, el('h4', { style: 'margin:.4rem 0 .2rem' }, T('Vagas por SUPERSEDE (≤1 por sede membra)', 'Slots per SUPERSITE (≤1 per member site)', 'Cupos por SUPERSEDE (≤1 por sede miembro)')), taSuper)),
-      el('div', { class: 'row', style: 'gap:.5rem;margin-top:.5rem' },
+        el('div', {}, el('h4', { class: 'u-mt-.4 u-mb-.2 u-mx-0' }, T('Vagas por SEDE (regra 2) — "Sede = vagas"', 'Slots per SITE (rule 2) — "Site = slots"', 'Cupos por SEDE (regla 2) — "Sede = cupos"')), taSedes),
+        el('div', {}, el('h4', { class: 'u-mt-.4 u-mb-.2 u-mx-0' }, T('Vagas por SUPERSEDE (≤1 por sede membra)', 'Slots per SUPERSITE (≤1 per member site)', 'Cupos por SUPERSEDE (≤1 por sede miembro)')), taSuper)),
+      el('div', { class: 'row u-gap-.5 u-mt-.5' },
         el('button', { class: 'btn', onclick: async () => {
           prevBox.innerHTML = ''; prevBox.append(el('p', { class: 'muted' }, T('calculando…', 'computing…', 'calculando…')));
           try {
@@ -206,7 +206,7 @@ export function makeClassifyTab(CONTEST) {
               el('p', { class: 'small muted' }, T('vagas não usadas: ', 'unused slots: ', 'cupos no usados: ') +
                 Object.entries(p.unused || {}).map(([k, v]) => k + ': ' + v).join(' · ')),
               relationTable(p.classified || [], false),
-              el('div', { class: 'row', style: 'gap:.5rem;margin-top:.6rem' },
+              el('div', { class: 'row u-gap-.5 u-mt-.6' },
                 el('button', { class: 'btn', onclick: async () => {
                   if (!confirm(T('Aplicar como RASCUNHO? (promoções manuais do comitê são preservadas; nada aparece no placar até Publicar)',
                                  'Apply as DRAFT? (manual committee promotions are kept; nothing shows on the scoreboard until you Publish)',

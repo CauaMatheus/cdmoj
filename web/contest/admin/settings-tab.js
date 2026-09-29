@@ -57,7 +57,7 @@ export function makeSettingsTab(CONTEST, opts = {}) {
     // a nota aparecem (o nó fica no editor — getValue() continua lendo o valor salvo)
     const uaField = panel.querySelector('[data-k="login_ua_substring"]');
     if (uaField) uaField.hidden = !has('maquinas');
-    if (has('maquinas')) panel.append(el('div', { class: 'small muted', style: 'margin:.4rem 0' },
+    if (has('maquinas')) panel.append(el('div', { class: 'small muted u-my-.4 u-mx-0' },
       T('O "gate de login por substring de UA" fica em Acesso só por compatibilidade: quem configura o gate por sede é Máquinas › Gate & trava, que enxerga o esperado × visto de cada time.',
         'The "login gate by UA substring" stays under Access only for compatibility: the per-site gate is configured in Machines › Gate & lock, which shows expected × seen per team.',
         'El "gate de login por substring de UA" se queda en Acceso solo por compatibilidad: el gate por sede se configura en Máquinas › Gate y bloqueo, que muestra esperado × visto por equipo.')));
@@ -79,7 +79,7 @@ export function makeSettingsTab(CONTEST, opts = {}) {
       } catch (e) { msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
       save.disabled = false;
     });
-    panel.append(el('div', { class: 'row', style: 'margin-top:.7rem' }, save, msg));
+    panel.append(el('div', { class: 'row u-mt-.7' }, save, msg));
     // (a ⏱ prorrogação por sede/grupo mora em Evento › Sedes & escolas — módulo `sedes`)
   }
   return { panel, load };
@@ -89,7 +89,7 @@ export function makeSettingsTab(CONTEST, opts = {}) {
 // Regras [{regex, end, reason}] contra o login: a 1ª que casa ESTENDE o fim do contest só
 // p/ aquele grupo (caso de uso: queda de energia numa sede -> minutos extras só p/ ela).
 export async function timeOverridesPanel(CONTEST, G) {
-  const box = el('div', { style: 'margin-top:1.2rem;border-top:1px solid #e3e9f2;padding-top:.8rem' },
+  const box = el('div', { class: 'u-mt-1.2 u-pt-.8', style: 'border-top:1px solid var(--js-settings-tab-div-border)' },
     el('h3', {}, T('⏱ Prorrogação por sede/grupo', '⏱ Extension by site/group', '⏱ Prórroga por sede/grupo')),
     el('p', { class: 'muted small' },
       T('Regras regex no login: a primeira que casar define o novo fim SÓ para aquele grupo ', 'Regex rules on the login: the first that matches sets the new end ONLY for that group ', 'Reglas regex en el login: la primera que coincide define el nuevo fin SOLO para ese grupo '),
@@ -104,13 +104,13 @@ export async function timeOverridesPanel(CONTEST, G) {
   const render = () => {
     list.innerHTML = '';
     rules.forEach((r, i) => {
-      const rx = el('input', { value: r.regex || '', placeholder: '^sede1-', style: 'width:11rem;font-family:var(--mono)' });
+      const rx = el('input', { class: 'u-w-11 u-mono', value: r.regex || '', placeholder: '^sede1-' });
       const en = el('input', { type: 'datetime-local', value: r.end ? toLocalDT(r.end) : '' });
-      const rs = el('input', { value: r.reason || '', placeholder: T('motivo (ex.: queda de energia)', 'reason (e.g.: power outage)', 'motivo (ej.: corte de energía)'), style: 'flex:1;min-width:12rem' });
+      const rs = el('input', { class: 'u-grow u-minw-12', value: r.reason || '', placeholder: T('motivo (ex.: queda de energia)', 'reason (e.g.: power outage)', 'motivo (ej.: corte de energía)') });
       rx.addEventListener('input', () => { r.regex = rx.value; });
       en.addEventListener('input', () => { r.end = dtToEpoch(en.value); });
       rs.addEventListener('input', () => { r.reason = rs.value; });
-      list.append(el('div', { class: 'row', style: 'gap:.4rem;margin:.25rem 0;flex-wrap:wrap' }, rx, en, rs,
+      list.append(el('div', { class: 'row u-my-.25 u-mx-0 u-gap-.4 u-wrap' }, rx, en, rs,
         el('button', { class: 'btn ghost danger', title: T('remover', 'remove', 'quitar'), onclick: () => { rules.splice(i, 1); render(); } }, '✕')));
     });
     if (!rules.length) list.append(el('div', { class: 'muted small' }, T('Nenhuma regra ativa (todos seguem o fim normal).', 'No active rule (everyone follows the normal end).', 'Ninguna regla activa (todos siguen el fin normal).')));
@@ -129,6 +129,6 @@ export async function timeOverridesPanel(CONTEST, G) {
     } catch (e) { msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     save.disabled = false;
   });
-  box.append(list, el('div', { class: 'row', style: 'margin-top:.5rem;gap:.5rem' }, add, save, msg));
+  box.append(list, el('div', { class: 'row u-gap-.5 u-mt-.5' }, add, save, msg));
   return box;
 }

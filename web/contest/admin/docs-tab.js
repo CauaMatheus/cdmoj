@@ -68,16 +68,16 @@ export function makeDocsTab(CONTEST, opts = {}) {
       .catch(() => { if (w) w.close(); alert(T('Falha ao abrir.', 'Failed to open.', 'No se pudo abrir.')); });
   }
 
-  const msg = el('div', { class: 'small', style: 'margin:.4rem 0' });
+  const msg = el('div', { class: 'small u-my-.4 u-mx-0' });
   const setMsg = (t, cls) => { msg.className = 'small ' + (cls || ''); msg.textContent = t; };
 
   function docRow(t) {
-    const row = el('div', { class: 'subcard', style: 'margin:.5rem 0' });
-    row.append(el('div', { class: 'row', style: 'gap:.6rem;align-items:baseline' },
+    const row = el('div', { class: 'subcard u-my-.5 u-mx-0' });
+    row.append(el('div', { class: 'row u-gap-.6 u-items-baseline' },
       el('b', {}, T(t.pt, t.en, t.es)), el('span', { class: 'small muted' }, T(t.hpt, t.hen, t.hes))));
     LANGS.forEach(lang => {
       const d = (DATA.docs || []).find(x => x.type === t.id && x.lang === lang);
-      const line = el('div', { class: 'row', style: 'gap:.5rem;margin-top:.35rem;align-items:center' },
+      const line = el('div', { class: 'row u-gap-.5 u-items-center u-mt-.35' },
         el('span', { class: 'pill' }, lang.toUpperCase()));
       if (d) {
         // PDF ENVIADO vence o gerado no que o mundo baixa — a linha diz qual é qual. Enviado
@@ -105,7 +105,7 @@ export function makeDocsTab(CONTEST, opts = {}) {
           : T('sem documento — gere ou envie um PDF', 'no document — generate or upload a PDF', 'sin documento — genera o sube un PDF')));
       }
       if (!readOnly) {
-        line.append(el('span', { style: 'flex:1' }));
+        line.append(el('span', { class: 'u-grow' }));
         line.append(uploadBtn(t.id, lang, !!(d && d.uploaded)));
         line.append(el('button', { class: 'btn', onclick: () => generate([t.id], [lang]) }, T('gerar', 'generate', 'generar')));
         if (d) {
@@ -113,7 +113,7 @@ export function makeDocsTab(CONTEST, opts = {}) {
             line.append(el('button', { class: 'btn ghost', onclick: () => publish(t.id, lang, false) }, T('despublicar', 'unpublish', 'despublicar')));
           } else {
             const chk = el('input', { type: 'checkbox', id: `news-${t.id}-${lang}` });
-            line.append(el('label', { class: 'small row', style: 'gap:.25rem' }, chk, T('+ notícia', '+ news', '+ noticia')),
+            line.append(el('label', { class: 'small row u-gap-.25' }, chk, T('+ notícia', '+ news', '+ noticia')),
               el('button', { class: 'btn', onclick: () => publish(t.id, lang, true, chk.checked) }, T('publicar', 'publish', 'publicar')));
           }
         }
@@ -145,7 +145,7 @@ export function makeDocsTab(CONTEST, opts = {}) {
       const f = inp.files && inp.files[0];
       if (f) sendPdf('upload', { type, lang }, f, T('✓ PDF enviado — é ele que os times baixam', '✓ PDF uploaded — this is what teams download', '✓ PDF subido — es lo que descargan los equipos'));
     });
-    const box = el('span', { class: 'row', style: 'gap:.3rem' }, inp,
+    const box = el('span', { class: 'row u-gap-.3' }, inp,
       el('button', { class: 'btn ghost', title: T('subir o PDF pronto deste documento (vence o gerado)', 'upload the finished PDF for this document (wins over the generated one)', 'sube el PDF terminado de este documento (gana al generado)'),
         onclick: () => inp.click() }, has ? T('trocar PDF', 'replace PDF', 'reemplazar PDF') : T('subir PDF', 'upload PDF', 'subir PDF')));
     if (has) box.append(el('button', { class: 'btn ghost', onclick: async () => {
@@ -182,7 +182,7 @@ export function makeDocsTab(CONTEST, opts = {}) {
   // aba — trocar de idioma não perde o que foi digitado; "Salvar" grava TODOS os idiomas alterados.
   // O texto é o do contest, senão o PADRÃO do MOJ (a API manda o padrão; `custom` diz qual é).
   function templateBox(kind, title, help, extraFor) {
-    const box = el('div', { class: 'subcard', style: 'margin:.6rem 0' });
+    const box = el('div', { class: 'subcard u-my-.6 u-mx-0' });
     const chips = el('div', { class: 'stmt-chips', title: T('idioma do documento', 'document language', 'idioma del documento') });
     const status = el('span', { class: 'small muted' });
     const extra = el('div', {});
@@ -220,9 +220,9 @@ export function makeDocsTab(CONTEST, opts = {}) {
       try { await api('/contest/admin/docs?contest=' + enc(CONTEST), { action: 'config', [kind + '_' + cur]: '' }); setMsg(T('✓ voltou ao padrão', '✓ back to the default', '✓ volvió al predeterminado')); await load(); }
       catch (e) { setMsg(e.message || T('falha', 'failed', 'fallido'), 'error-box'); }
     } }, T('voltar ao padrão', 'restore default', 'restaurar predeterminado'));
-    box.append(el('h3', { style: 'margin:.1rem 0 .4rem' }, title), el('p', { class: 'small muted', style: 'margin:.1rem 0 .5rem' }, help),
-      el('div', { class: 'row', style: 'gap:.6rem;align-items:center;margin-bottom:.4rem' }, chips, status), extra, area,
-      el('div', { class: 'row', style: 'gap:.4rem;margin-top:.4rem' }, save, reset));
+    box.append(el('h3', { class: 'u-mt-.1 u-mb-.4 u-mx-0' }, title), el('p', { class: 'small muted u-mt-.1 u-mb-.5 u-mx-0' }, help),
+      el('div', { class: 'row u-gap-.6 u-items-center u-mb-.4' }, chips, status), extra, area,
+      el('div', { class: 'row u-gap-.4 u-mt-.4' }, save, reset));
     show(cur);
     return box;
   }
@@ -239,7 +239,7 @@ export function makeDocsTab(CONTEST, opts = {}) {
           const f = file.files && file.files[0]; if (!f) return;
           sendPdf('cover', { lang }, f, T('✓ capa enviada — gere o caderno de novo', '✓ cover uploaded — generate the problem set again', '✓ portada subida — genera el cuadernillo de nuevo'));
         });
-        return el('div', { class: 'row', style: 'gap:.5rem;align-items:center;margin:.2rem 0 .4rem' },
+        return el('div', { class: 'row u-mt-.2 u-mb-.4 u-mx-0 u-gap-.5 u-items-center' },
           up ? el('span', { class: 'pill ok' }, T('PDF de capa enviado (vence o texto)', 'uploaded cover PDF (overrides the text)', 'PDF de portada subido (sustituye al texto)'))
              : el('span', { class: 'small muted' }, T('sem capa em PDF enviada', 'no uploaded cover PDF', 'sin PDF de portada subido')),
           el('button', { class: 'btn ghost', onclick: () => file.click() }, up ? T('trocar PDF de capa…', 'replace cover PDF…', 'reemplazar PDF de portada…') : T('enviar PDF de capa…', 'upload cover PDF…', 'subir PDF de portada…')),
@@ -266,13 +266,13 @@ export function makeDocsTab(CONTEST, opts = {}) {
         setMsg(T('✓ logo enviado — gere o caderno de novo', '✓ logo uploaded — generate the problem set again', '✓ logo subido — genera el cuadernillo de nuevo')); await load();
       } catch (e) { setMsg(e.message || T('falha', 'failed', 'fallido'), 'error-box'); }
     });
-    return el('div', { class: 'subcard', style: 'margin:.6rem 0' },
-      el('h3', { style: 'margin:.1rem 0 .4rem' }, T('🏷️ Logo do cabeçalho', '🏷️ Header logo', '🏷️ Logo del encabezado')),
-      el('p', { class: 'small muted', style: 'margin:.1rem 0 .5rem' },
+    return el('div', { class: 'subcard u-my-.6 u-mx-0' },
+      el('h3', { class: 'u-mt-.1 u-mb-.4 u-mx-0' }, T('🏷️ Logo do cabeçalho', '🏷️ Header logo', '🏷️ Logo del encabezado')),
+      el('p', { class: 'small muted u-mt-.1 u-mb-.5 u-mx-0' },
         T('Opcional. Uma faixa com os logos do evento (PNG, JPEG, WebP ou SVG, até 5MB) no topo de cada página do caderno e do editorial, e na capa gerada — como nos cadernos da Maratona SBC. Vale para os três idiomas.',
           'Optional. A strip with the event logos (PNG, JPEG, WebP or SVG, up to 5MB) at the top of every page of the problem set and the editorial, and on the generated cover — like the Maratona SBC booklets. Applies to all three languages.',
           'Opcional. Una franja con los logos del evento (PNG, JPEG, WebP o SVG, hasta 5MB) en la parte superior de cada página del cuadernillo y del editorial, y en la portada generada — como en los cuadernillos de la Maratona SBC. Vale para los tres idiomas.')),
-      el('div', { class: 'row', style: 'gap:.5rem;align-items:center' },
+      el('div', { class: 'row u-gap-.5 u-items-center' },
         lg.present ? el('span', { class: 'pill ok' }, T('logo enviado', 'logo uploaded', 'logo subido'))
                    : el('span', { class: 'small muted' }, T('sem logo', 'no logo', 'sin logo')),
         el('button', { class: 'btn ghost', onclick: () => file.click() }, lg.present ? T('trocar logo…', 'replace logo…', 'reemplazar logo…') : T('enviar logo…', 'upload logo…', 'subir logo…')),
@@ -286,15 +286,15 @@ export function makeDocsTab(CONTEST, opts = {}) {
 
   function configBox() {
     const cfg = DATA.config || {};
-    const ver = el('input', { value: cfg.caderno_version || 'v1.0', style: 'width:7rem' });
-    const note = el('textarea', { rows: '2', style: 'width:100%' }, cfg.cover_note || '');
-    const err = el('textarea', { rows: '3', style: 'width:100%' }, cfg.errata || '');
-    const box = el('div', { class: 'subcard', style: 'margin:.6rem 0' },
-      el('h3', { style: 'margin:.1rem 0 .4rem' }, T('⚙️ Dados dos documentos', '⚙️ Document data', '⚙️ Datos de los documentos')),
-      el('div', { class: 'row', style: 'gap:.5rem;align-items:center' }, el('span', { class: 'small' }, T('versão do caderno', 'problem set version', 'versión del cuadernillo')), ver),
-      el('div', { class: 'small', style: 'margin-top:.4rem' }, T('nota da capa (Markdown; entra no marcador {{NOTE}} da capa)', 'cover note (Markdown; fills the {{NOTE}} marker of the cover)', 'nota de portada (Markdown; llena el marcador {{NOTE}} de la portada)')), note,
-      el('div', { class: 'small', style: 'margin-top:.4rem' }, T('errata (aparece na folha de time limits)', 'errata (shown on the time limits sheet)', 'fe de erratas (aparece en la hoja de time limits)')), err,
-      el('button', { class: 'btn', style: 'margin-top:.4rem', onclick: async () => {
+    const ver = el('input', { class: 'u-w-7', value: cfg.caderno_version || 'v1.0' });
+    const note = el('textarea', { class: 'u-w-full', rows: '2' }, cfg.cover_note || '');
+    const err = el('textarea', { class: 'u-w-full', rows: '3' }, cfg.errata || '');
+    const box = el('div', { class: 'subcard u-my-.6 u-mx-0' },
+      el('h3', { class: 'u-mt-.1 u-mb-.4 u-mx-0' }, T('⚙️ Dados dos documentos', '⚙️ Document data', '⚙️ Datos de los documentos')),
+      el('div', { class: 'row u-gap-.5 u-items-center' }, el('span', { class: 'small' }, T('versão do caderno', 'problem set version', 'versión del cuadernillo')), ver),
+      el('div', { class: 'small u-mt-.4' }, T('nota da capa (Markdown; entra no marcador {{NOTE}} da capa)', 'cover note (Markdown; fills the {{NOTE}} marker of the cover)', 'nota de portada (Markdown; llena el marcador {{NOTE}} de la portada)')), note,
+      el('div', { class: 'small u-mt-.4' }, T('errata (aparece na folha de time limits)', 'errata (shown on the time limits sheet)', 'fe de erratas (aparece en la hoja de time limits)')), err,
+      el('button', { class: 'btn u-mt-.4', onclick: async () => {
         try {
           await api('/contest/admin/docs?contest=' + enc(CONTEST),
             { action: 'config', caderno_version: ver.value.trim(), cover_note: note.value, errata: err.value });
@@ -318,7 +318,7 @@ export function makeDocsTab(CONTEST, opts = {}) {
       } catch (e) { cb.checked = !cb.checked; setMsg(e.message || T('falha', 'failed', 'fallido'), 'error-box'); }
       cb.disabled = false;
     });
-    return el('label', { class: 'small', style: 'display:inline-flex;gap:.35rem;align-items:center',
+    return el('label', { class: 'small u-gap-.35 u-items-center', style: 'display:inline-flex',
       title: T('No caderno, cada exemplo vira uma tabela “Exemplo de entrada N | Exemplo de saída N”, como nos cadernos da Maratona SBC. Desligado, os exemplos saem em caixas empilhadas, como no site. Exemplo com linhas longas fica melhor empilhado.',
         'In the problem set, each sample becomes a “Sample input N | Sample output N” table, like the Maratona SBC booklets. Off, samples come out as stacked boxes, like on the site. Samples with long lines look better stacked.',
         'En el cuadernillo, cada ejemplo se convierte en una tabla “Ejemplo de entrada N | Ejemplo de salida N”, como en los cuadernillos de la Maratona SBC. Desactivado, los ejemplos salen en cajas apiladas, como en el sitio. Los ejemplos con líneas largas quedan mejor apilados.') },
@@ -340,9 +340,9 @@ export function makeDocsTab(CONTEST, opts = {}) {
         T('Documentos publicados pela organização — baixe e imprima na sede.',
           'Documents published by the organization — download and print at your site.',
           'Documentos publicados por la organización — descárgalos e imprímelos en tu sede.')));
-      panel.append(el('div', { class: 'row', style: 'gap:.5rem;margin:.3rem 0' },
+      panel.append(el('div', { class: 'row u-my-.3 u-mx-0 u-gap-.5' },
         el('button', { class: 'btn ghost', onclick: load }, T('↻ atualizar', '↻ refresh', '↻ actualizar'))));
-      if (!(DATA.docs || []).length) panel.append(el('div', { class: 'small muted', style: 'margin:.4rem 0' },
+      if (!(DATA.docs || []).length) panel.append(el('div', { class: 'small muted u-my-.4 u-mx-0' },
         T('A organização ainda não publicou documentos. Volte mais perto da prova.',
           'The organization has not published any documents yet. Check back closer to the contest.',
           'La organización todavía no publicó documentos. Vuelve más cerca de la competencia.')));
@@ -359,7 +359,7 @@ export function makeDocsTab(CONTEST, opts = {}) {
           T('✎ Algo torto no PDF gerado (espaço demais ou de menos entre os elementos, imagem grande)? Baixe o “✎ .odt”, ajuste no LibreOffice (ou Word), exporte em PDF e suba em “subir PDF” — o enviado vence o gerado e é ele que os times baixam.',
             '✎ Something off in the generated PDF (too much or too little space between elements, an oversized image)? Download the “✎ .odt”, adjust it in LibreOffice (or Word), export to PDF and upload it with “upload PDF” — the uploaded file wins and is what teams download.',
             '✎ ¿Algo torcido en el PDF generado (demasiado espacio o muy poco entre los elementos, una imagen grande)? Descarga el “✎ .odt”, ajústalo en LibreOffice (o Word), expórtalo a PDF y súbelo con “subir PDF” — el archivo subido gana al generado y es lo que descargan los equipos.')),
-        el('div', { class: 'row', style: 'gap:.5rem;margin:.5rem 0;align-items:center;flex-wrap:wrap' },
+        el('div', { class: 'row u-my-.5 u-mx-0 u-gap-.5 u-items-center u-wrap' },
           el('button', { class: 'btn', onclick: () => generate(TYPES.map(t => t.id), LANGS) },
             T('⚙️ Gerar todos (pt+en+es)', '⚙️ Generate all (pt+en+es)', '⚙️ Generar todo (pt+en+es)')),
           el('button', { class: 'btn ghost', onclick: load }, '↻'),
@@ -370,10 +370,10 @@ export function makeDocsTab(CONTEST, opts = {}) {
     if (!readOnly) {
       const probs = DATA.problems || [];
       const semEnun = probs.filter(p => !p.has_pdf && !p.has_html);
-      if (semEnun.length) panel.append(el('div', { class: 'error-box small', style: 'margin:.5rem 0' },
+      if (semEnun.length) panel.append(el('div', { class: 'error-box small u-my-.5 u-mx-0' },
         T('⚠️ sem enunciado no contest: ', '⚠️ no statement in the contest: ', '⚠️ sin enunciado en la competencia: ') + semEnun.map(p => p.letter).join(', ')
         + T(' — o caderno usa o enunciado do banco, se houver.', ' — the problem set falls back to the bank statement, if any.', ' — el cuadernillo recurre al enunciado del banco, si existe.')));
-      panel.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' },
+      panel.append(el('div', { class: 'small muted u-my-.3 u-mx-0' },
         T(`${probs.length} problema(s) · ${probs.filter(p => p.has_pdf).length} com PDF próprio`,
           `${probs.length} problem(s) · ${probs.filter(p => p.has_pdf).length} with their own PDF`,
           `${probs.length} problema(s) · ${probs.filter(p => p.has_pdf).length} con PDF propio`)));

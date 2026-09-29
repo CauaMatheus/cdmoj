@@ -48,8 +48,8 @@ export function makeSitesTab(CONTEST, opts = {}) {
   let explicit = new Map();               // login → sede GRAVADA hoje (flag x/o do mapa)
   let pending = new Map();                // login → sede proposta ("" = tirar)
   let moves = [];                         // renomeações desta edição: {from, to, n}
-  const view = el('div', {}), prev = el('div', {}), modeBar = el('div', { class: 'row', style: 'gap:.4rem;flex-wrap:wrap;margin:.4rem 0' });
-  const msg = el('div', { class: 'small', style: 'margin:.4rem 0' });
+  const view = el('div', {}), prev = el('div', {}), modeBar = el('div', { class: 'row u-my-.4 u-mx-0 u-gap-.4 u-wrap' });
+  const msg = el('div', { class: 'small u-my-.4 u-mx-0' });
 
   // ---------- prévia (rgAssign = a regra do servidor) ----------
   function preview() {
@@ -66,15 +66,15 @@ export function makeSitesTab(CONTEST, opts = {}) {
   function renderPreview() {
     const p = preview(); prev.innerHTML = '';
     const n = users.length, withSite = n - p.none.length;
-    const lst = (arr) => el('div', { class: 'small', style: 'max-height:9rem;overflow:auto' }, arr.slice(0, 200).join(', ') + (arr.length > 200 ? ' …' : ''));
-    const det = (title, arr, cls) => (arr.length ? el('details', { class: 'small', style: 'margin:.2rem 0' },
+    const lst = (arr) => el('div', { class: 'small u-maxh-9 u-overflow-auto' }, arr.slice(0, 200).join(', ') + (arr.length > 200 ? ' …' : ''));
+    const det = (title, arr, cls) => (arr.length ? el('details', { class: 'small u-my-.2 u-mx-0' },
       el('summary', { class: cls || '' }, title + ' (' + arr.length + ')'), lst(arr)) : '');
-    prev.append(el('h3', { style: 'margin:1rem 0 .3rem' }, T('👀 Prévia (o que o placar, as etiquetas e o escopo do staff vão ver)', '👀 Preview (what the scoreboard, badges and staff scope will see)', '👀 Vista previa (lo que verán el marcador, las etiquetas y el alcance del staff)')),
+    prev.append(el('h3', { class: 'u-mt-1 u-mb-.3 u-mx-0' }, T('👀 Prévia (o que o placar, as etiquetas e o escopo do staff vão ver)', '👀 Preview (what the scoreboard, badges and staff scope will see)', '👀 Vista previa (lo que verán el marcador, las etiquetas y el alcance del staff)')),
       el('p', { class: 'small' }, withSite + T(' de ', ' of ', ' de ') + n + T(' times com sede', ' teams with a site', ' equipos con sede')));
     const rows = p.res.nodes.filter((nd) => nd.name).map((nd) => el('tr', {},
       el('td', {}, ' '.repeat(nd.depth * 3) + nd.name + (nd.view ? T(' (recorte)', ' (cut)', ' (recorte)') : '') + (nd.orphan ? T(' ⚠ fora da árvore', ' ⚠ outside the tree', ' ⚠ fuera del árbol') : '')),
-      el('td', { style: 'text-align:right;font-variant-numeric:tabular-nums' }, String(p.cnt.get(nd.i) || 0))));
-    if (rows.length) prev.append(el('div', { class: 'chart-wrap', style: 'max-height:18rem;overflow:auto' }, el('table', { class: 'moj' }, el('tbody', {}, ...rows))));
+      el('td', { class: 'u-text-right u-nums-tabular-nums' }, String(p.cnt.get(nd.i) || 0))));
+    if (rows.length) prev.append(el('div', { class: 'chart-wrap u-maxh-18 u-overflow-auto' }, el('table', { class: 'moj' }, el('tbody', {}, ...rows))));
     prev.append(
       det(T('Sem sede', 'No site', 'Sin sede'), p.none),
       det(T('Pararam num grupo/país (a regex casou o grupo, nenhuma sede dele)', 'Stopped at a group/country (the regex matched the group, none of its sites)', 'Se quedaron en un grupo/país (la regex coincidió con el grupo, ninguna de sus sedes)'), p.stopped),
@@ -85,7 +85,7 @@ export function makeSitesTab(CONTEST, opts = {}) {
     if (JSON.stringify(tree) !== origTree) changes.push(T('a árvore de sedes', 'the site tree', 'el árbol de sedes'));
     if (pending.size) changes.push(pending.size + T(' atribuição(ões) de time', ' team assignment(s)', ' asignación(es) de equipo'));
     moves.forEach((m) => changes.push('«' + m.from + '» → «' + m.to + '»: ' + m.n + T(' time(s) gravados mudam de nome junto', ' stored team(s) are renamed along', ' equipo(s) grabados cambian de nombre también')));
-    if (changes.length) prev.append(el('div', { class: 'notice small', style: 'margin:.4rem 0' }, el('b', {}, T('A salvar: ', 'To save: ', 'Por guardar: ')), changes.join(' · ')));
+    if (changes.length) prev.append(el('div', { class: 'notice small u-my-.4 u-mx-0' }, el('b', {}, T('A salvar: ', 'To save: ', 'Por guardar: ')), changes.join(' · ')));
   }
   // toda mudança refaz a prévia E os botões de modo: uma edição no JSON do Avançado pode fazer a árvore deixar de
   // caber no Simples/Intermediário — o botão tem de desabilitar na hora (senão a volta perderia a regex)
@@ -100,8 +100,8 @@ export function makeSitesTab(CONTEST, opts = {}) {
       box.innerHTML = '';
       const tb = el('tbody');
       rows.forEach((r, i) => {
-        const nm = el('input', { value: r.name, placeholder: T('nome da sede', 'site name', 'nombre de la sede'), style: 'width:100%' });
-        const pf = el('input', { value: r.prefixes, placeholder: T('ex.: teambrdf, ctba', 'e.g.: teambrdf, ctba', 'ej.: teambrdf, ctba'), style: 'width:100%' });
+        const nm = el('input', { class: 'u-w-full', value: r.name, placeholder: T('nome da sede', 'site name', 'nombre de la sede') });
+        const pf = el('input', { class: 'u-w-full', value: r.prefixes, placeholder: T('ex.: teambrdf, ctba', 'e.g.: teambrdf, ctba', 'ej.: teambrdf, ctba') });
         nm.addEventListener('input', () => { r.name = nm.value; sync(); });
         // renomear: os times gravados com o nome velho acompanham (e a prévia mostra quantos)
         nm.addEventListener('change', () => {
@@ -115,7 +115,7 @@ export function makeSitesTab(CONTEST, opts = {}) {
       });
       box.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' },
         el('thead', {}, el('tr', {}, el('th', {}, T('Sede', 'Site', 'Sede')), el('th', {}, T('Logins que começam com (vírgula separa)', 'Logins that start with (comma-separated)', 'Usuarios que empiezan con (separados por coma)')), el('th', {}, ''))), tb)),
-        el('button', { class: 'btn ghost', type: 'button', style: 'margin:.3rem 0', onclick: () => { rows.push({ name: '', prefixes: '', orig: '' }); draw(); } }, T('+ sede', '+ site', '+ sede')));
+        el('button', { class: 'btn ghost u-my-.3 u-mx-0', type: 'button', onclick: () => { rows.push({ name: '', prefixes: '', orig: '' }); draw(); } }, T('+ sede', '+ site', '+ sede')));
     };
     draw();
     view.append(box, assignBox(() => SM.toSimple(tree).map((s) => s.name)));
@@ -123,12 +123,12 @@ export function makeSitesTab(CONTEST, opts = {}) {
 
   // atribuir a sede GRAVADA (vence a regex): colar logins, ou um a um nos times sem sede
   function assignBox(siteNames) {
-    const wrap = el('div', { style: 'margin-top:.8rem' });
+    const wrap = el('div', { class: 'u-mt-.8' });
     const draw = () => {
       wrap.innerHTML = '';
       const names = siteNames().filter(Boolean);
       const mkSel = (val) => { const s = el('select', {}, el('option', { value: '' }, T('— sem sede gravada —', '— no stored site —', '— sin sede grabada —')), ...names.map((n) => el('option', { value: n }, n))); s.value = val || ''; return s; };
-      const ta = el('textarea', { rows: '3', style: 'width:100%', placeholder: T('logins, um por linha (ou separados por vírgula)', 'logins, one per line (or comma-separated)', 'usuarios, uno por línea (o separados por coma)') });
+      const ta = el('textarea', { class: 'u-w-full', rows: '3', placeholder: T('logins, um por linha (ou separados por vírgula)', 'logins, one per line (or comma-separated)', 'usuarios, uno por línea (o separados por coma)') });
       const sel = mkSel(''), out = el('span', { class: 'small' });
       const known = new Set(users.map((u) => u.login));
       const go1 = el('button', { class: 'btn', type: 'button', onclick: () => {
@@ -146,13 +146,13 @@ export function makeSitesTab(CONTEST, opts = {}) {
         const none = preview().none;
         if (!none.length) return;
         const shown = none.slice(0, 60);
-        noneBox.append(el('p', { class: 'small muted', style: 'margin:.5rem 0 .2rem' }, none.length + T(' time(s) sem sede', ' team(s) without a site', ' equipo(s) sin sede') + (none.length > 60 ? T(' — mostrando 60', ' — showing 60', ' — mostrando 60') : '') + ':'),
-          el('div', { class: 'row', style: 'flex-wrap:wrap;gap:.3rem .8rem' }, ...shown.map((l) => { const s = mkSel(pending.get(l) || ''); s.addEventListener('change', () => { pending.set(l, s.value); changed(); }); return el('label', { class: 'small' }, l + ' ', s); })));
+        noneBox.append(el('p', { class: 'small muted u-mt-.5 u-mb-.2 u-mx-0' }, none.length + T(' time(s) sem sede', ' team(s) without a site', ' equipo(s) sin sede') + (none.length > 60 ? T(' — mostrando 60', ' — showing 60', ' — mostrando 60') : '') + ':'),
+          el('div', { class: 'row u-wrap', style: 'gap:.3rem .8rem' }, ...shown.map((l) => { const s = mkSel(pending.get(l) || ''); s.addEventListener('change', () => { pending.set(l, s.value); changed(); }); return el('label', { class: 'small' }, l + ' ', s); })));
       };
-      wrap.append(el('h4', { style: 'margin:.3rem 0' }, T('Atribuir times a uma sede', 'Assign teams to a site', 'Asignar equipos a una sede')),
-        el('p', { class: 'small muted', style: 'margin:0 0 .3rem' }, T('A sede GRAVADA no time vence o "começa com". Time inscrito guarda a sede na inscrição (não some quando o time muda).', 'The site STORED on the team wins over "starts with". A registered team keeps the site in its registration (it does not vanish when the team changes).', 'La sede GRABADA en el equipo gana sobre "empieza con". Un equipo inscrito guarda la sede en su inscripción (no desaparece cuando el equipo cambia).')),
-        ta, el('div', { class: 'row', style: 'gap:.4rem;margin:.3rem 0' }, el('span', { class: 'small' }, T('sede:', 'site:', 'sede:')), sel, go1, out), noneBox,
-        el('p', { class: 'small muted', style: 'margin:.5rem 0 0' }, T('Pelo IP da máquina da prova: ', 'By the IP of the contest machine: ', 'Por la IP de la máquina de la competencia: '),
+      wrap.append(el('h4', { class: 'u-my-.3 u-mx-0' }, T('Atribuir times a uma sede', 'Assign teams to a site', 'Asignar equipos a una sede')),
+        el('p', { class: 'small muted u-mt-0 u-mb-.3 u-mx-0' }, T('A sede GRAVADA no time vence o "começa com". Time inscrito guarda a sede na inscrição (não some quando o time muda).', 'The site STORED on the team wins over "starts with". A registered team keeps the site in its registration (it does not vanish when the team changes).', 'La sede GRABADA en el equipo gana sobre "empieza con". Un equipo inscrito guarda la sede en su inscripción (no desaparece cuando el equipo cambia).')),
+        ta, el('div', { class: 'row u-my-.3 u-mx-0 u-gap-.4' }, el('span', { class: 'small' }, T('sede:', 'site:', 'sede:')), sel, go1, out), noneBox,
+        el('p', { class: 'small muted u-mt-.5 u-mb-0 u-mx-0' }, T('Pelo IP da máquina da prova: ', 'By the IP of the contest machine: ', 'Por la IP de la máquina de la competencia: '),
           go && has('maquinas') ? el('button', { class: 'btn ghost', type: 'button', onclick: () => go('maquinas', 'gate') }, T('Máquinas › Gate →', 'Machines › Gate →', 'Máquinas › Gate →'))
             : el('span', {}, T('Máquinas › Gate (módulo máquinas).', 'Machines › Gate (machines module).', 'Máquinas › Gate (módulo máquinas).'))));
       drawNone();
@@ -168,43 +168,43 @@ export function makeSitesTab(CONTEST, opts = {}) {
     const sync = () => { tree = SM.fromRules(model); changed(); };
     const RL = RULE_LABEL();
     const siteEditor = (s, onRemove) => {
-      const nm = el('input', { value: s.name, placeholder: T('nome da sede', 'site name', 'nombre de la sede'), style: 'width:14rem' });
+      const nm = el('input', { class: 'u-w-14', value: s.name, placeholder: T('nome da sede', 'site name', 'nombre de la sede') });
       nm.addEventListener('input', () => { s.name = nm.value; sync(); });
       nm.addEventListener('change', () => { const to = nm.value.trim();
         if (s.orig && to && to !== s.orig) { const mv = SM.renameAssignments(explicit, pending, s.orig, to); if (mv.length) moves.push({ from: s.orig, to, n: mv.length }); s.orig = to; }
         sync(); });
-      const rl = el('div', { style: 'margin:.2rem 0 .2rem 1rem' });
+      const rl = el('div', { class: 'u-my-.2 u-ml-1 u-mr-0' });
       const drawRules = () => {
         rl.innerHTML = '';
         s.rules.forEach((r, j) => {
           const t = el('select', {}, ...SM.RULE_TYPES.map((k) => el('option', { value: k }, RL[k]))); t.value = r.t;
-          const v = el('input', { value: (r.v || []).join(', '), style: 'width:18rem', placeholder: T('valores, vírgula separa', 'values, comma-separated', 'valores, separados por coma') });
-          const err = el('span', { class: 'small', style: 'color:var(--err, #b00)' });
+          const v = el('input', { class: 'u-w-18', value: (r.v || []).join(', '), placeholder: T('valores, vírgula separa', 'values, comma-separated', 'valores, separados por coma') });
+          const err = el('span', { class: 'small', style: 'color:var(--color-danger)' });
           const chk = () => { const e = SM.ruleError(r); err.textContent = e ? '⚠ ' + regexErrText(e) : ''; };
           t.addEventListener('change', () => { r.t = t.value; chk(); sync(); });
           v.addEventListener('input', () => { r.v = v.value.split(',').map((x) => x.trim()).filter(Boolean); chk(); sync(); });
           chk();
-          rl.append(el('div', { class: 'row', style: 'gap:.3rem;margin:.15rem 0' }, t, v,
+          rl.append(el('div', { class: 'row u-my-.15 u-mx-0 u-gap-.3' }, t, v,
             el('button', { class: 'btn ghost', type: 'button', onclick: () => { s.rules.splice(j, 1); drawRules(); sync(); } }, '✕'), err));
         });
-        rl.append(el('button', { class: 'btn ghost', type: 'button', style: 'padding:.05rem .4rem', onclick: () => { s.rules.push({ t: 'starts', v: [] }); drawRules(); } }, T('+ regra', '+ rule', '+ regla')));
+        rl.append(el('button', { class: 'btn ghost u-py-.05 u-px-.4', type: 'button', onclick: () => { s.rules.push({ t: 'starts', v: [] }); drawRules(); } }, T('+ regra', '+ rule', '+ regla')));
       };
       drawRules();
-      return el('div', { style: 'border-left:3px solid var(--line);padding-left:.5rem;margin:.4rem 0' },
-        el('div', { class: 'row', style: 'gap:.3rem' }, nm, el('button', { class: 'btn ghost', type: 'button', title: T('remover sede', 'remove site', 'quitar sede'), onclick: onRemove }, '✕')), rl);
+      return el('div', { class: 'u-my-.4 u-mx-0 u-pl-.5', style: 'border-left:3px solid var(--color-border)' },
+        el('div', { class: 'row u-gap-.3' }, nm, el('button', { class: 'btn ghost', type: 'button', title: T('remover sede', 'remove site', 'quitar sede'), onclick: onRemove }, '✕')), rl);
     };
     const draw = () => {
       box.innerHTML = '';
       model.forEach((x, i) => {
         if (!x.group) { box.append(siteEditor(x, () => { model.splice(i, 1); draw(); sync(); })); return; }
-        const gn = el('input', { value: x.name, placeholder: T('nome do grupo (país, região)', 'group name (country, region)', 'nombre del grupo (país, región)'), style: 'width:14rem;font-weight:600' });
+        const gn = el('input', { class: 'u-w-14 u-fw-600', value: x.name, placeholder: T('nome do grupo (país, região)', 'group name (country, region)', 'nombre del grupo (país, región)') });
         gn.addEventListener('input', () => { x.name = gn.value; sync(); });
-        const inner = el('div', { style: 'margin-left:1rem' }, ...x.sites.map((s, j) => siteEditor(s, () => { x.sites.splice(j, 1); draw(); sync(); })),
+        const inner = el('div', { class: 'u-ml-1' }, ...x.sites.map((s, j) => siteEditor(s, () => { x.sites.splice(j, 1); draw(); sync(); })),
           el('button', { class: 'btn ghost', type: 'button', onclick: () => { x.sites.push({ name: '', rules: [], orig: '' }); draw(); } }, T('+ sede no grupo', '+ site in the group', '+ sede en el grupo')));
-        box.append(el('div', { style: 'margin:.6rem 0' }, el('div', { class: 'row', style: 'gap:.3rem' }, el('span', {}, '📁'), gn,
+        box.append(el('div', { class: 'u-my-.6 u-mx-0' }, el('div', { class: 'row u-gap-.3' }, el('span', {}, '📁'), gn,
           el('button', { class: 'btn ghost', type: 'button', title: T('remover grupo', 'remove group', 'quitar grupo'), onclick: () => { model.splice(i, 1); draw(); sync(); } }, '✕')), inner));
       });
-      box.append(el('div', { class: 'row', style: 'gap:.4rem;margin:.4rem 0' },
+      box.append(el('div', { class: 'row u-my-.4 u-mx-0 u-gap-.4' },
         el('button', { class: 'btn ghost', type: 'button', onclick: () => { model.push({ name: '', group: false, rules: [], orig: '' }); draw(); } }, T('+ sede', '+ site', '+ sede')),
         el('button', { class: 'btn ghost', type: 'button', onclick: () => { model.push({ name: '', group: true, sites: [], orig: '' }); draw(); } }, T('+ grupo', '+ group', '+ grupo'))));
     };
@@ -290,7 +290,7 @@ export function makeSitesTab(CONTEST, opts = {}) {
       el('p', { class: 'small muted' }, T('A sede alimenta o filtro do placar, o escopo do staff (region:<nome> cobre o nó e o que está abaixo), as etiquetas, o gate de navegador por sede, a estatística e o telão. Escolha o modo que der conta do seu contest — dá para subir de modo a qualquer momento.',
         'The site feeds the scoreboard filter, the staff scope (region:<name> covers the node and what is below it), the badges, the per-site browser gate, the statistics and the big screen. Pick the mode that fits your contest — you can move up a mode at any time.',
         'La sede alimenta el filtro del marcador, el alcance del staff (region:<nombre> cubre el nodo y lo que está debajo), las etiquetas, el gate de navegador por sede, las estadísticas y la pantalla. Elige el modo que sirva para tu competencia — se puede subir de modo en cualquier momento.')),
-      note, modeBar, view, prev, el('div', { class: 'row', style: 'margin-top:.6rem' }, saveBtn), msg);
+      note, modeBar, view, prev, el('div', { class: 'row u-mt-.6' }, saveBtn), msg);
     drawMode();
     // países e escolas (regex → bandeira/universidade) — salvar próprio, como antes
     const logins = users.map((u) => u.login);
@@ -303,11 +303,11 @@ export function makeSitesTab(CONTEST, opts = {}) {
       catch (e) { tmsg.textContent = e.message || T('falha', 'failed', 'fallido'); }
       tsave.disabled = false;
     });
-    panel.append(el('h3', { style: 'margin:1.4rem 0 .2rem' }, T('🏳️ Países e escolas (por regex no login)', '🏳️ Countries and schools (by login regex)', '🏳️ Países y escuelas (por regex de login)')),
-      el('p', { class: 'small muted', style: 'margin:0 0 .3rem' }, T('Preenche bandeira/universidade dos times que casarem — conveniência de carga; o valor por time pode ser editado em 👥 Times.',
+    panel.append(el('h3', { class: 'u-mt-1.4 u-mb-.2 u-mx-0' }, T('🏳️ Países e escolas (por regex no login)', '🏳️ Countries and schools (by login regex)', '🏳️ Países y escuelas (por regex de login)')),
+      el('p', { class: 'small muted u-mt-0 u-mb-.3 u-mx-0' }, T('Preenche bandeira/universidade dos times que casarem — conveniência de carga; o valor por time pode ser editado em 👥 Times.',
         'Fills flag/university for matching teams — a bulk convenience; the per-team value can be edited in 👥 Teams.',
         'Completa bandera/universidad de los equipos que coincidan — una conveniencia masiva; el valor por equipo se puede editar en 👥 Equipos.')),
-      teamsEd.el, el('div', { class: 'row', style: 'margin-top:.4rem;gap:.5rem' }, tsave, tmsg));
+      teamsEd.el, el('div', { class: 'row u-gap-.5 u-mt-.4' }, tsave, tmsg));
     panel.append(await timeOverridesPanel(CONTEST, G));
   }
   return { panel, load };

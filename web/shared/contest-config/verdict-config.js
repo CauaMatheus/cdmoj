@@ -18,13 +18,13 @@ export function makeVerdictOptionsEditor(contest) {
   let CLASSES = CANON;
   const verdSel = (v) => el('select', {}, ...CLASSES.map(c => el('option', { value: c, selected: c === v ? 'selected' : null }, c)));
   function addRow(o) {
-    const label = el('input', { value: (o && o.label) || '', placeholder: T('o juiz escolhe (ex.: 5 - NO - Wrong answer)', 'the judge picks (e.g. 5 - NO - Wrong answer)', 'lo que elige el juez (ej. 5 - NO - Wrong answer)'), style: 'width:30%' });
+    const label = el('input', { class: 'u-w-30%', value: (o && o.label) || '', placeholder: T('o juiz escolhe (ex.: 5 - NO - Wrong answer)', 'the judge picks (e.g. 5 - NO - Wrong answer)', 'lo que elige el juez (ej. 5 - NO - Wrong answer)') });
     const verd = verdSel((o && o.verdict) || 'Wrong Answer');
-    const team = el('input', { value: (o && o.team) || '', placeholder: T('o time vê (vazio = a classe)', 'the team sees (empty = the class)', 'lo que ve el equipo (vacío = la clase)'), style: 'width:30%' });
+    const team = el('input', { class: 'u-w-30%', value: (o && o.team) || '', placeholder: T('o time vê (vazio = a classe)', 'the team sees (empty = the class)', 'lo que ve el equipo (vacío = la clase)') });
     const sync = () => { team.disabled = verd.value === 'Accepted'; if (team.disabled) team.value = ''; };
     verd.addEventListener('change', sync); sync();
     const rm = el('button', { class: 'btn ghost danger', type: 'button', title: T('remover', 'remove', 'quitar'), onclick: () => row.remove() }, '✕');
-    const row = el('div', { class: 'row', style: 'gap:.4rem; margin:.2rem 0; flex-wrap:wrap' }, label, el('span', { class: 'small muted' }, '→'), verd, el('span', { class: 'small muted' }, '→'), team, rm);
+    const row = el('div', { class: 'row u-my-.2 u-mx-0 u-gap-.4 u-wrap' }, label, el('span', { class: 'small muted' }, '→'), verd, el('span', { class: 'small muted' }, '→'), team, rm);
     row._get = () => ({ label: label.value.trim(), verdict: verd.value, team: team.value.trim() });
     rows.append(row);
   }
@@ -47,8 +47,8 @@ export function makeVerdictOptionsEditor(contest) {
     T('Cada opção tem três campos. O primeiro é o que o juiz escolhe. O segundo é a classe: uma das seis classes canônicas. A classe define a pontuação, a penalidade e a cor no placar. O terceiro é o texto que o time vê. Deixe o texto vazio para mostrar a classe. A classe Accepted não tem texto próprio.',
       'Each option has three fields. The first is what the judge picks. The second is the class: one of the six canonical classes. The class sets the score, the penalty and the colour on the scoreboard. The third is the text the team sees. Leave the text empty to show the class. The Accepted class has no custom text.',
       'Cada opción tiene tres campos. El primero es lo que elige el juez. El segundo es la clase: una de las seis clases canónicas. La clase define el puntaje, la penalización y el color en el marcador. El tercero es el texto que ve el equipo. Deja el texto vacío para mostrar la clase. La clase Accepted no tiene texto propio.')),
-    el('div', { class: 'row small muted', style: 'gap:.4rem' }, el('span', { style: 'width:30%' }, T('juiz vê', 'judge sees', 've el juez')), el('span', {}, ' '), el('span', {}, T('classe', 'class', 'clase')), el('span', {}, ' '), el('span', { style: 'width:30%' }, T('time vê', 'team sees', 've el equipo'))),
-    rows, el('div', { class: 'row', style: 'margin-top:.5rem' }, addBtn, save, msg));
+    el('div', { class: 'row small muted u-gap-.4' }, el('span', { class: 'u-w-30%' }, T('juiz vê', 'judge sees', 've el juez')), el('span', {}, ' '), el('span', {}, T('classe', 'class', 'clase')), el('span', {}, ' '), el('span', { class: 'u-w-30%' }, T('time vê', 'team sees', 've el equipo'))),
+    rows, el('div', { class: 'row u-mt-.5' }, addBtn, save, msg));
   return box;
 }
 
@@ -76,11 +76,11 @@ export function makeAutoVerdictEditor(contest) {
   }
   const box = el('div', { class: 'section' }, el('h2', {}, T('🔎 O que vai para revisão', '🔎 What goes to review', '🔎 Qué va a revisión')));
   const banner = el('div', {});
-  const summary = el('div', { class: 'small muted', style: 'margin:.2rem 0 .5rem' });
-  const gridBox = el('div', { style: 'overflow-x:auto' });
+  const summary = el('div', { class: 'small muted u-mt-.2 u-mb-.5 u-mx-0' });
+  const gridBox = el('div', { class: 'u-overflow-x-auto' });
   const exList = el('div', {});
   const exSum = el('summary', {});
-  const exBox = el('details', { class: 'fgroup', style: 'margin-top:.8rem' }, exSum,
+  const exBox = el('details', { class: 'fgroup u-mt-.8' }, exSum,
     el('p', { class: 'muted small' }, T('Uma exceção vale para UMA linguagem e vence a tabela. Exemplo: Python · TLE · vai para revisão — o TLE de Python vai para os juízes mesmo que a tabela deixe TLE automático. A exceção de um problema vence a de "todos os problemas".',
       'An exception applies to ONE language and overrides the table. Example: Python · TLE · goes to review — Python TLE goes to the judges even if the table leaves TLE automatic. A problem exception overrides an "all problems" one.',
       'Una excepción vale para UN lenguaje y vence a la tabla. Ejemplo: Python · TLE · va a revisión — el TLE de Python va a los jueces aunque la tabla deje TLE automático. La excepción de un problema vence a la de "todos los problemas".')),
@@ -139,7 +139,7 @@ export function makeAutoVerdictEditor(contest) {
         cells[it.id][v] = c;
         return el('td', {}, c);
       });
-      return el('tr', {}, el('td', { class: 'p' }, el('label', { style: 'display:flex;gap:.4rem;align-items:center;cursor:pointer' },
+      return el('tr', {}, el('td', { class: 'p' }, el('label', { class: 'u-gap-.4 u-items-center u-pointer', style: 'display:flex' },
         ra, el('span', { title: it.id }, el('b', {}, it.letter || ''), ' ', it.title || it.id,
           it.title ? el('span', { class: 'id' }, it.id.includes('#') ? it.id.slice(it.id.indexOf('#') + 1) : it.id) : null))), ...tds);
     });
@@ -151,7 +151,7 @@ export function makeAutoVerdictEditor(contest) {
   function exRow(x) {
     const langs = LANGS.slice(); if (x && x.lang && !langs.includes(x.lang)) langs.push(x.lang);
     const lang = el('select', {}, ...langs.map((l) => el('option', { value: l, selected: x && x.lang === l ? 'selected' : null }, l)));
-    const prob = el('select', { style: 'max-width:16rem' }, el('option', { value: '*' }, T('todos os problemas', 'all problems', 'todos los problemas')),
+    const prob = el('select', { class: 'u-maxw-16' }, el('option', { value: '*' }, T('todos os problemas', 'all problems', 'todos los problemas')),
       ...ITEMS.map((it) => el('option', { value: it.id, selected: x && x.problem === it.id ? 'selected' : null }, probLabel(it))));
     const to = el('select', {},
       el('option', { value: 'review', selected: !x || x.to !== 'auto' ? 'selected' : null }, T('vai para revisão', 'goes to review', 'va a revisión')),
@@ -187,7 +187,7 @@ export function makeAutoVerdictEditor(contest) {
         out.textContent = T(`✓ ${r.released || 0} liberada(s); ${r.left || 0} seguem na fila dos juízes.`, `✓ ${r.released || 0} released; ${r.left || 0} remain in the judges' queue.`, `✓ ${r.released || 0} liberada(s); ${r.left || 0} siguen en la cola de los jueces.`);
       } catch (e) { go.disabled = false; out.className = 'small error-box'; out.textContent = e.message || T('falha', 'failed', 'fallido'); }
     });
-    relBox.append(el('div', { class: 'notice small', style: 'margin-top:.6rem' },
+    relBox.append(el('div', { class: 'notice small u-mt-.6' },
       T(`${n} submissão(ões) retida(s) agora sairiam automáticas pelas regras salvas (nenhum juiz votou nelas ainda). `,
         `${n} held submission(s) would now be automatic under the saved rules (no judge has voted on them yet). `,
         `${n} envío(s) retenido(s) ahora saldrían automáticos según las reglas guardadas (ningún juez votó todavía). `),
@@ -213,15 +213,15 @@ export function makeAutoVerdictEditor(contest) {
     if (Array.isArray(r.verdicts) && r.verdicts.length) VERDS = r.verdicts;
     ITEMS = Array.isArray(r.items) ? r.items : (r.problems || []).map((id) => ({ id, letter: '', title: '' }));
     LANGS = Array.isArray(r.langs) ? r.langs : [];
-    if (r.manual_verdict === false) banner.append(el('div', { class: 'notice small', style: 'margin:.3rem 0' },
+    if (r.manual_verdict === false) banner.append(el('div', { class: 'notice small u-my-.3 u-mx-0' },
       T('O veredicto manual está DESLIGADO neste contest: tudo sai automático e esta tabela só passa a valer quando o admin ligar o veredicto manual (Central › Regras).',
         'Manual verdict is OFF in this contest: everything is automatic, and this table only takes effect once the admin turns manual verdict on (Home › Rules).',
         'El veredicto manual está DESACTIVADO en esta competencia: todo sale automático y esta tabla solo entra en vigor cuando el admin active el veredicto manual (Central › Reglas).')));
-    if (r.state === 'invalid') banner.append(el('div', { class: 'error-box small', style: 'margin:.3rem 0' },
+    if (r.state === 'invalid') banner.append(el('div', { class: 'error-box small u-my-.3 u-mx-0' },
       T('O arquivo de regras está ilegível, então TUDO está indo para revisão. Salve a tabela para corrigir.',
         'The rules file is unreadable, so EVERYTHING is going to review. Save the table to fix it.',
         'El archivo de reglas es ilegible, así que TODO está yendo a revisión. Guarda la tabla para corregirlo.')));
-    if (r.state === 'v1') banner.append(el('div', { class: 'small muted', style: 'margin:.3rem 0' },
+    if (r.state === 'v1') banner.append(el('div', { class: 'small muted u-my-.3 u-mx-0' },
       T('Regras no formato anterior ("o que sai automático"), mostradas aqui convertidas. Nada muda até você salvar; ao salvar, grava o equivalente.',
         'Rules in the previous format ("what is automatic"), shown here converted. Nothing changes until you save; saving writes the equivalent.',
         'Reglas en el formato anterior ("lo que sale automático"), mostradas aquí convertidas. Nada cambia hasta que guardes; al guardar se escribe el equivalente.')));
@@ -239,10 +239,10 @@ export function makeAutoVerdictEditor(contest) {
       'Check what the judges review before the team sees the result. Whatever is not checked goes out automatically, straight from the machine. Applies when manual verdict is on.',
       'Marca lo que los jueces revisan antes de que el equipo vea el resultado. Lo que no esté marcado sale automático, directo de la máquina. Aplica cuando el veredicto manual está activado.')),
     banner, summary, gridBox,
-    el('div', { class: 'row', style: 'margin-top:.5rem;gap:.4rem' },
+    el('div', { class: 'row u-gap-.4 u-mt-.5' },
       el('button', { class: 'btn ghost', type: 'button', onclick: () => setAll(() => true, true) }, T('Revisar tudo', 'Review everything', 'Revisar todo')),
       el('button', { class: 'btn ghost', type: 'button', onclick: () => setAll(() => true, false) }, T('Nada em revisão', 'Nothing in review', 'Nada en revisión'))),
     exBox,
-    el('div', { class: 'row', style: 'margin-top:.6rem' }, save, msg), relBox);
+    el('div', { class: 'row u-mt-.6' }, save, msg), relBox);
   return box;
 }

@@ -48,7 +48,7 @@ export function makeConvertCard(CONTEST, { onDone } = {}) {
   const G = { contest: CONTEST, auth: true };
   const call = (body) => apiPost('/contest/admin/users-convert?contest=' + enc(CONTEST), body, G);
   const box = el('div', {});
-  const card = el('div', { class: 'notice', style: 'margin:.4rem 0 .8rem; display:none' });
+  const card = el('div', { class: 'notice u-mt-.4 u-mb-.8 u-mx-0', style: 'display:none' });
   let SRC = '', DONE = false, introRow = null;   // DONE: o resultado (com as senhas) fica na tela mesmo depois que o contest deixa de ser compartilhado
 
   function intro() {
@@ -56,7 +56,7 @@ export function makeConvertCard(CONTEST, { onDone } = {}) {
     const prevBtn = el('button', { class: 'btn', onclick: () => preview() }, T('Ver prévia da conversão', 'Preview the conversion', 'Ver vista previa de la conversión'));
     card.append(
       el('b', {}, T('🔗 Contas compartilhadas com o Treino Livre', '🔗 Accounts shared with Free Training', '🔗 Cuentas compartidas con Entrenamiento libre'), ' (', SRC, ')'),
-      el('p', { class: 'small', style: 'margin:.3rem 0' },
+      el('p', { class: 'small u-my-.3 u-mx-0' },
         T('Os participantes entram com a conta e a senha do Treino Livre: você não as vê nem redefine, e as etiquetas saem sem senha. Para uma prova, converta em contas PRÓPRIAS deste contest: cada participante ganha uma senha NOVA, o histórico e o placar ficam. A conversão não tem volta.',
           'Participants log in with their Free Training account and password: you cannot see or reset them, and the badges come out without a password. For an exam, convert them into this contest\'s OWN accounts: each participant gets a NEW password, the history and the scoreboard stay. The conversion cannot be undone.',
           'Los participantes entran con la cuenta y la contraseña de Entrenamiento libre: no las ves ni las restableces, y las etiquetas salen sin contraseña. Para un examen, conviértelas en cuentas PROPIAS de esta competencia: cada participante recibe una contraseña NUEVA; el historial y el marcador se mantienen. La conversión no tiene vuelta atrás.')),
@@ -81,10 +81,10 @@ export function makeConvertCard(CONTEST, { onDone } = {}) {
       (f.registration || 0) + T(' inscritos', ' registered', ' inscritos');
     const sample = (title, arr, fmt) => (arr && arr.length)
       ? el('details', { class: 'small' }, el('summary', {}, title + ' (' + arr.length + (arr.length >= 50 ? '+' : '') + ')'),
-        el('div', { style: 'max-height:12rem; overflow:auto' }, arr.map(fmt).join(', '))) : '';
+        el('div', { class: 'u-maxh-12 u-overflow-auto' }, arr.map(fmt).join(', '))) : '';
     const logout = el('input', { type: 'checkbox' });
     const ack = el('input', { type: 'checkbox' });
-    const typed = el('input', { placeholder: CONTEST, autocomplete: 'off', style: 'width:14rem' });
+    const typed = el('input', { class: 'u-w-14', placeholder: CONTEST, autocomplete: 'off' });
     const go = el('button', { class: 'btn danger' }, T('Converter em contas próprias', 'Convert into own accounts', 'Convertir en cuentas propias'));
     go.disabled = true;
     const msg = el('div', { class: 'small' });
@@ -107,20 +107,20 @@ export function makeConvertCard(CONTEST, { onDone } = {}) {
       }
     };
     box.append(
-      note ? el('div', { class: 'error-box small', style: 'margin:.4rem 0' }, note) : '',
-      el('ul', { class: 'small', style: 'margin:.4rem 0; padding-left:1.2rem' }, ...lines.map((x) => el('li', {}, x))),
+      note ? el('div', { class: 'error-box small u-my-.4 u-mx-0' }, note) : '',
+      el('ul', { class: 'small u-my-.4 u-mx-0 u-pl-1.2' }, ...lines.map((x) => el('li', {}, x))),
       el('div', { class: 'small muted' }, from),
       sample(T('Participantes', 'Participants', 'Participantes'), s.individuals, (x) => x),
       sample(T('Times', 'Teams', 'Equipos'), s.teams, (t) => t.login + (t.members && t.members.length ? ' [' + t.members.join(' ') + ']' : '')),
       sample(T('Membros desabilitados', 'Disabled members', 'Miembros deshabilitados'), s.members_with_history, (m) => m.login + ' → ' + m.team),
-      el('ul', { class: 'small', style: 'margin:.5rem 0; padding-left:1.2rem' }, ...(p.warnings || []).map((w) => el('li', {}, '⚠ ' + warnText(w, p)))),
-      el('label', { class: 'small', style: 'display:block; margin:.3rem 0' }, logout,
+      el('ul', { class: 'small u-my-.5 u-mx-0 u-pl-1.2' }, ...(p.warnings || []).map((w) => el('li', {}, '⚠ ' + warnText(w, p)))),
+      el('label', { class: 'small u-my-.3 u-mx-0', style: 'display:block' }, logout,
         T(' Derrubar as sessões abertas dos participantes (entram de novo com a senha nova)', ' Log out the participants\' open sessions (they log in again with the new password)', ' Cerrar las sesiones abiertas de los participantes (vuelven a entrar con la contraseña nueva)')),
       live
-        ? el('div', { class: 'error-box small', style: 'margin:.4rem 0' },
+        ? el('div', { class: 'error-box small u-my-.4 u-mx-0' },
           T('A prova já começou. Para confirmar, digite o id do contest (', 'The contest has already started. To confirm, type the contest id (', 'La competencia ya empezó. Para confirmar, escribe el id de la competencia ('),
           el('b', {}, CONTEST), '): ', typed)
-        : el('label', { class: 'small', style: 'display:block; margin:.3rem 0' }, ack,
+        : el('label', { class: 'small u-my-.3 u-mx-0', style: 'display:block' }, ack,
           T(' Entendi: a conversão não tem volta.', ' I understand: the conversion cannot be undone.', ' Entendido: la conversión no tiene vuelta atrás.')),
       el('div', { class: 'row' }, go), msg);
   }
@@ -132,10 +132,10 @@ export function makeConvertCard(CONTEST, { onDone } = {}) {
     const adm = creds.find((x) => x.kind === 'admin' && x.password);
     if (introRow) introRow.style.display = 'none';
     box.append(el('p', {}, '✓ ' + T('Convertido: ', 'Converted: ', 'Convertido: ') + withPw.length + T(' conta(s) com senha nova.', ' account(s) with a new password.', ' cuenta(s) con contraseña nueva.')));
-    if (adm) box.append(el('div', { class: 'error-box', style: 'margin:.4rem 0' },
+    if (adm) box.append(el('div', { class: 'error-box u-my-.4 u-mx-0' },
       T('Sua senha de admin agora é ', 'Your admin password is now ', 'Tu contraseña de admin ahora es '), el('span', { class: 'cred' }, adm.password),
       ' (', adm.login, ') — ', T('guarde-a: a do Treino Livre não vale mais aqui.', 'keep it: the Free Training one no longer works here.', 'guárdala: la de Entrenamiento libre ya no vale aquí.')));
-    box.append(el('div', { class: 'row', style: 'margin:.4rem 0' },
+    box.append(el('div', { class: 'row u-my-.4 u-mx-0' },
       el('button', { class: 'btn', onclick: () => downloadCsv(CONTEST + '-credenciais.csv', withPw) }, T('⬇ baixar credenciais (CSV)', '⬇ download credentials (CSV)', '⬇ descargar credenciales (CSV)')),
       el('a', { class: 'btn ghost', target: '_blank', href: '/contest/badges/?c=' + enc(CONTEST) }, T('🏷️ Etiquetas de credenciais', '🏷️ Credential badges', '🏷️ Etiquetas de credenciales'))),
       el('p', { class: 'small muted' }, T('As senhas só aparecem agora e nas etiquetas. ', 'The passwords only show up now and on the badges. ', 'Las contraseñas solo aparecen ahora y en las etiquetas. ') +

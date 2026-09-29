@@ -52,7 +52,7 @@ export function makeCentralTab(CONTEST, opts = {}) {
 
   const gcard = (title, state, ...actions) => el('div', { class: 'gen-card' },
     el('h4', {}, title), el('span', { class: 'st' }, state),
-    el('div', { class: 'row', style: 'gap:.35rem;flex-wrap:wrap' }, ...actions));
+    el('div', { class: 'row u-gap-.35 u-wrap' }, ...actions));
 
   const num = (n) => (n == null ? '—' : String(n));
   // EM LUGAR: o tick de 15 s só refaz os cartões quando os NÚMEROS mudam (assinatura sem relógio)
@@ -65,9 +65,9 @@ export function makeCentralTab(CONTEST, opts = {}) {
     const dc = (val, label, warn) => el('div', { class: 'dash-card' + (warn ? ' warn' : '') },
       el('div', { class: 'dash-val' }, val), el('div', { class: 'dash-lbl' }, label));
     const box = el('div', {});
-    box.append(el('div', { class: 'row', style: 'gap:.6rem;align-items:baseline' },
-      el('h2', { style: 'margin:.1rem 0' }, T('📡 Ao vivo', '📡 Live', '📡 En vivo')),
-      el('span', { style: 'flex:1' }),
+    box.append(el('div', { class: 'row u-gap-.6 u-items-baseline' },
+      el('h2', { class: 'u-my-.1 u-mx-0' }, T('📡 Ao vivo', '📡 Live', '📡 En vivo')),
+      el('span', { class: 'u-grow' }),
       el('button', { class: 'btn ghost', onclick: () => go('operacao', 'situacao') }, T('ver tudo →', 'see all →', 'ver todo →'))),
       el('div', { class: 'dash-cards' },
         dc(num(sub && sub.pending), T('pendentes', 'pending', 'pendientes'), sub && sub.pending > 0),
@@ -116,7 +116,7 @@ export function makeCentralTab(CONTEST, opts = {}) {
       const msg = el('span', { class: 'small muted' });
       const btn = el('button', { class: 'btn' }, T('🔥 Aquecer juízes', '🔥 Warm up judges', '🔥 Calentar jueces'));
       btn.onclick = () => warmJudges(btn, msg);
-      act = el('div', { class: 'row', style: 'gap:.35rem;flex-wrap:wrap;align-items:center;margin-top:.35rem' }, btn, msg);
+      act = el('div', { class: 'row u-gap-.35 u-wrap u-items-center u-mt-.35' }, btn, msg);
     }
     return el('div', { class: 'ck' },
       el('span', { class: 'ico' }, ICON[c.level] || '•'),
@@ -148,14 +148,14 @@ export function makeCentralTab(CONTEST, opts = {}) {
         : s.warn > 0 ? el('span', { class: 'pill' }, T(`${s.warn} aviso(s) — nada crítico`, `${s.warn} warning(s) — nothing critical`, `${s.warn} aviso(s) — nada crítico`))
           : el('span', { class: 'pill ok' }, T('tudo pronto', 'all clear', 'todo listo'));
     const box1 = el('div', { class: 'section' },
-      el('div', { class: 'row', style: 'gap:.6rem;align-items:baseline' },
-        el('h2', { style: 'margin:.1rem 0' }, T('🚦 Falta para começar', '🚦 Before you start', '🚦 Antes de empezar')), head,
-        el('span', { style: 'flex:1' }),
+      el('div', { class: 'row u-gap-.6 u-items-baseline' },
+        el('h2', { class: 'u-my-.1 u-mx-0' }, T('🚦 Falta para começar', '🚦 Before you start', '🚦 Antes de empezar')), head,
+        el('span', { class: 'u-grow' }),
         el('button', { class: 'btn ghost', title: T('rodar de novo', 'run again', 'ejecutar de nuevo'), onclick: load }, '↻')));
     const bad = checks.filter((c) => c.level === 'fail').concat(checks.filter((c) => c.level === 'warn'));
     const good = checks.filter((c) => c.level === 'ok');
     bad.forEach((c) => box1.append(checkEl(c)));
-    if (!bad.length) box1.append(el('div', { class: 'small muted', style: 'padding:.3rem 0' },
+    if (!bad.length) box1.append(el('div', { class: 'small muted u-py-.3 u-px-0' },
       T('Nenhum item pendente.', 'Nothing pending.', 'Nada pendiente.')));
     if (good.length) box1.append(el('details', { class: 'fgroup' },
       el('summary', {}, T(`${good.length} itens já conferidos`, `${good.length} items already checked`, `${good.length} elementos ya revisados`)),
@@ -169,7 +169,7 @@ export function makeCentralTab(CONTEST, opts = {}) {
     const postEnd = !st || !st.end || Math.floor(Date.now() / 1000) > st.end;
     if (fin && fin._err) {
       if (postEnd) panel.append(el('div', { class: 'section' },
-        el('h2', { style: 'margin:.1rem 0' }, T('🏁 Depois da prova', '🏁 After the contest', '🏁 Después de la competencia')),
+        el('h2', { class: 'u-my-.1 u-mx-0' }, T('🏁 Depois da prova', '🏁 After the contest', '🏁 Después de la competencia')),
         el('div', { class: 'small error-box' },
           T('Não foi possível consultar o encerramento: ', 'Could not load the finish checklist: ', 'No se pudo cargar el checklist de cierre: ') + fin._err)));
     } else if (fin && (fin.can_finish || postEnd)) {
@@ -182,12 +182,12 @@ export function makeCentralTab(CONTEST, opts = {}) {
       const npd = (fin.pending_docs || []).length;
       const btn = el('button', { class: 'btn' + (fs.fail ? '' : ' ghost') }, T('🏁 Encerrar evento', '🏁 Finish event', '🏁 Terminar evento'));
       const box = el('div', { class: 'section' },
-        el('div', { class: 'row', style: 'gap:.6rem;align-items:baseline' },
-          el('h2', { style: 'margin:.1rem 0' }, T('🏁 Depois da prova', '🏁 After the contest', '🏁 Después de la competencia')),
+        el('div', { class: 'row u-gap-.6 u-items-baseline' },
+          el('h2', { class: 'u-my-.1 u-mx-0' }, T('🏁 Depois da prova', '🏁 After the contest', '🏁 Después de la competencia')),
           !fin.can_finish ? el('span', { class: 'pill' }, T('aguardando o fim em todas as sedes', 'waiting for every site to finish', 'esperando a que todas las sedes terminen'))
             : fs.fail > 0 ? el('span', { class: 'pill bad' }, T(`${fs.fail} item(ns) ainda fechado(s)`, `${fs.fail} item(s) still closed`, `${fs.fail} elemento(s) todavía cerrado(s)`))
               : el('span', { class: 'pill ok' }, T('resultado liberado', 'results released', 'resultado liberado'))),
-        el('div', { class: 'small muted', style: 'margin:.1rem 0 .5rem' },
+        el('div', { class: 'small muted u-mt-.1 u-mb-.5 u-mx-0' },
           T('O botão abre o PLACAR (tira o congelamento) e publica os documentos já gerados. O resto continua sendo escolha sua — cada item abaixo tem o atalho para resolver.',
             'The button opens the SCOREBOARD (removes the freeze) and publishes the documents already generated. Everything else stays your call — each item below links to where it is fixed.',
             'El botón abre el MARCADOR (quita el congelamiento) y publica los documentos ya generados. Todo lo demás sigue siendo tu decisión — cada elemento abajo tiene el acceso directo para resolverlo.')));
@@ -211,7 +211,7 @@ export function makeCentralTab(CONTEST, opts = {}) {
         } catch (e) { fmsg.className = 'small error-box'; fmsg.textContent = e.message || T('falha', 'failed', 'fallido'); btn.disabled = false; }
       });
       if (!canAct) {
-        box.append(el('div', { class: 'small muted', style: 'margin-top:.6rem' },
+        box.append(el('div', { class: 'small muted u-mt-.6' },
           T('Só o admin do contest pode encerrar — para o juiz-chefe este checklist é somente leitura.',
             'Only the contest admin can finish — for the chief judge this checklist is read-only.',
             'Solo el admin de la competencia puede terminarla — para el juez principal este checklist es de solo lectura.')));
@@ -224,7 +224,7 @@ export function makeCentralTab(CONTEST, opts = {}) {
             ? T('disponível a partir de ', 'available from ', 'disponible a partir de ') + new Date(at * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + T(' (fim para todas as sedes + 1 min)', ' (end for every site + 1 min)', ' (fin para todas las sedes + 1 min)')
             : T('disponível depois do fim para todas as sedes', 'available after every site finishes', 'disponible después de que todas las sedes terminen');
         }
-        box.append(el('div', { class: 'row', style: 'gap:.5rem;margin-top:.6rem;align-items:center' }, btn, fmsg));
+        box.append(el('div', { class: 'row u-gap-.5 u-items-center u-mt-.6' }, btn, fmsg));
       }
       panel.append(box);
     }
@@ -235,7 +235,7 @@ export function makeCentralTab(CONTEST, opts = {}) {
     const next = rd ? (rd.next || '') : '';
     const blk = (rd && rd.promote_ready && rd.promote_ready.blockers) || [];
     panel.append(el('div', { class: 'section' },
-      el('h2', { style: 'margin:.1rem 0 .5rem' }, T('🧰 Gerar', '🧰 Generate', '🧰 Generar')),
+      el('h2', { class: 'u-mt-.1 u-mb-.5 u-mx-0' }, T('🧰 Gerar', '🧰 Generate', '🧰 Generar')),
       // cartões de módulo só com o módulo ligado (documentos, rodadas, telão); os comuns sempre
       el('div', { class: 'tcards' },
         !has('documentos') ? null : gcard(T('📄 Documentos da prova', '📄 Contest documents', '📄 Documentos de la competencia'),
@@ -301,24 +301,24 @@ export function makeCentralTab(CONTEST, opts = {}) {
         save.disabled = false;
       });
       panel.append(el('div', { class: 'section' },
-        el('h2', { style: 'margin:.1rem 0 .4rem' }, T('⏱️ Regras da prova', '⏱️ Contest rules', '⏱️ Reglas de la competencia')),
-        el('div', { class: 'row', style: 'gap:.7rem;flex-wrap:wrap;align-items:flex-end' },
+        el('h2', { class: 'u-mt-.1 u-mb-.4 u-mx-0' }, T('⏱️ Regras da prova', '⏱️ Contest rules', '⏱️ Reglas de la competencia')),
+        el('div', { class: 'row u-gap-.7 u-wrap u-items-flex-end' },
           field(T('início', 'start', 'inicio'), ini), field(T('fim', 'end', 'fin'), fim), field(T('freeze do placar', 'scoreboard freeze', 'congelamiento del marcador'), fz)),
-        el('div', { class: 'small muted', style: 'margin:.2rem 0' },
+        el('div', { class: 'small muted u-my-.2 u-mx-0' },
           T('Apagar o freeze descongela o placar. O MOJ só aceita isso a partir do fim da prova para todas as sedes + 1 min (prorrogações incluídas).',
             'Clearing the freeze unfreezes the scoreboard. The MOJ only accepts this from the end of the contest for every site + 1 min (extensions included).',
             'Borrar el congelamiento descongela el marcador. MOJ solo acepta esto desde el fin de la competencia para todas las sedes + 1 min (prórrogas incluidas).')),
-        el('div', { class: 'small muted', style: 'margin:.2rem 0' },
+        el('div', { class: 'small muted u-my-.2 u-mx-0' },
           T('modo: ', 'mode: ', 'modo: '), el('span', { class: 'pill' }, (st.mode || 'icpc').toUpperCase()),
           T(' (definido na criação) · linguagens: ', ' (set at creation) · languages: ', ' (definido en la creación) · idiomas: '),
           (st.languages || []).join(', ') || T('todas', 'all', 'todas')),
-        el('div', { class: 'small muted', style: 'margin:.2rem 0' },
+        el('div', { class: 'small muted u-my-.2 u-mx-0' },
           T('módulos: ', 'modules: ', 'módulos: '),
-          ...(mods().length ? MODULES().filter((m) => mods().includes(m.id)).map((m) => el('span', { class: 'pill', style: 'margin-right:.25rem' }, m.icon + ' ' + m.name))
+          ...(mods().length ? MODULES().filter((m) => mods().includes(m.id)).map((m) => el('span', { class: 'pill u-mr-.25' }, m.icon + ' ' + m.name))
             : [el('span', { class: 'pill' }, T('nenhum (prova comum)', 'none (plain contest)', 'ninguno (competencia común)'))]),
           ' ', el('a', { href: '#central/modulos', class: 'small' }, T('ligar/desligar →', 'turn on/off →', 'activar/desactivar →'))),
-        el('div', { class: 'row', style: 'gap:.5rem;margin-top:.3rem' }, save, msg,
-          el('span', { style: 'flex:1' }),
+        el('div', { class: 'row u-gap-.5 u-mt-.3' }, save, msg,
+          el('span', { class: 'u-grow' }),
           el('button', { class: 'btn ghost', onclick: () => go('central', 'regras') }, T('⚙ todas as configurações…', '⚙ all settings…', '⚙ toda la configuración…')))));
     }
   }

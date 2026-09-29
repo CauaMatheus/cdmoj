@@ -23,17 +23,17 @@ export function makeColorsEditor(opts = {}) {
       const hex = state[L] || norm(initial[L]) || PALETTE[L] || 'CCCCCC';
       state[L] = hex;
       const picker = el('input', { type: 'color', value: '#' + hex });
-      const txt = el('input', { value: hex, maxlength: '6', style: 'width:90px;font-family:monospace;text-transform:uppercase' });
+      const txt = el('input', { class: 'u-w-90px u-case-uppercase', value: hex, maxlength: '6', style: 'font-family:monospace' });
       picker.addEventListener('input', () => { const v = picker.value.replace('#', '').toUpperCase(); txt.value = v; state[L] = v; });
       txt.addEventListener('input', () => { const v = norm(txt.value); state[L] = v; if (v.length === 6) picker.value = '#' + v; });
-      rows.append(el('div', { style: 'display:flex;align-items:center;gap:.5rem;margin:.22rem 0' },
-        el('span', { style: 'font-weight:800;width:1.6em;text-align:center' }, L), picker, txt));
+      rows.append(el('div', { class: 'u-my-.22 u-mx-0 u-items-center u-gap-.5', style: 'display:flex' },
+        el('span', { class: 'u-fw-800 u-w-1.6em u-text-center' }, L), picker, txt));
     });
   }
   rebuild();
 
   const panel = el('div', {},
-    el('label', { style: 'font-weight:400;display:block;margin-bottom:.4rem' }, sonic, T(' 🦔 Modo secreto do Sonic (balões viram GIFs)', ' 🦔 Sonic secret mode (balloons become GIFs)', ' 🦔 Modo secreto de Sonic (los globos se vuelven GIFs)')),
+    el('label', { class: 'u-fw-400 u-mb-.4', style: 'display:block' }, sonic, T(' 🦔 Modo secreto do Sonic (balões viram GIFs)', ' 🦔 Sonic secret mode (balloons become GIFs)', ' 🦔 Modo secreto de Sonic (los globos se vuelven GIFs)')),
     rows);
   return {
     el: panel,

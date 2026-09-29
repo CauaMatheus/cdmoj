@@ -97,7 +97,7 @@ async function render() {
   const gbtn = (x) => el('button', { class: x.id === grp.id ? 'active' : '', onclick: () => go(x.id, x.panels[0].id) }, x.label);
   common.forEach((x) => gbar.append(gbtn(x)));
   if (event.length) { gbar.append(el('span', { class: 'groupbar-sep' })); event.forEach((x) => gbar.append(gbtn(x))); }
-  gbar.append(el('span', { style: 'flex:1' }),
+  gbar.append(el('span', { class: 'u-grow' }),
     el('a', { class: 'btn ghost', target: '_blank', href: docHref('MANUAL-ADMIN') }, T('📖 Manual', '📖 Manual', '📖 Manual')));
 
   snav.innerHTML = '';

@@ -29,7 +29,7 @@ export function makeReportTab(CONTEST, opts = {}) {
   } }, T('📦 Baixar tar.gz', '📦 Download tar.gz', '📦 Descargar tar.gz'));
 
   // --- 2. publicação (caixa persistente) ---------------------------------------------------
-  const pubBox = el('div', { class: 'row', style: 'gap:.5rem;align-items:center;flex-wrap:wrap' });
+  const pubBox = el('div', { class: 'row u-gap-.5 u-items-center u-wrap' });
   const pubMsg = el('div', { class: 'small' });
   async function act(action, msg, extra) {
     if (msg && !confirm(msg)) return;
@@ -108,7 +108,7 @@ export function makeReportTab(CONTEST, opts = {}) {
         el('p', { class: 'muted small' }, T('Um site estático navegável (placar aberto, placar congelado, runs com veredicto canônico, clarifications anônimas, estatísticas, enunciados, tarefas do staff). Sem código-fonte, sem log de juiz, sem senha.',
           'A browsable static site (open scoreboard, frozen scoreboard, runs with canonical verdict, anonymous clarifications, statistics, statements, staff tasks). No source code, no judge log, no password.',
           'Un sitio estático navegable (marcador abierto, marcador congelado, runs con veredicto canónico, aclaraciones anónimas, estadísticas, enunciados, tareas del staff). Sin código fuente, sin log del juez, sin contraseña.')),
-        el('div', { class: 'row', style: 'gap:.6rem;align-items:center;flex-wrap:wrap' }, dlBtn,
+        el('div', { class: 'row u-gap-.6 u-items-center u-wrap' }, dlBtn,
           el('span', { class: 'muted small' }, T('para guardar ou mandar aos participantes (abre em file:// ou em qualquer servidor web)', 'to keep or send to participants (opens from file:// or any web server)', 'para guardar o enviar a los participantes (se abre desde file:// o cualquier servidor web)')))),
       el('div', { class: 'section' },
         el('h2', {}, T('📢 Publicação (histórico do evento)', '📢 Publication (event history)', '📢 Publicación (histórico del evento)')),

@@ -81,8 +81,8 @@ export function paintSolvedCell(td, color, opts) {
     td.style.color = balloonIsDark(color) ? '#fff' : '#222';
     if (!fts) td.style.boxShadow = `inset 0 0 0 ${ring}px ${balloonEdge(color)}`;
   } else {
-    td.style.background = '#e2ffe9';
-    td.style.color = '#222';
+    td.style.background = 'var(--js-score-colors-el-bg)';
+    td.style.color = 'var(--js-score-colors-el-text)';
   }
   if (fts) td.style.boxShadow = 'inset 0 0 0 2px currentColor';
 }

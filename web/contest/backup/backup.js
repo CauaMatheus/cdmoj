@@ -28,7 +28,7 @@ async function loadList() {
   const items = r.backups || [];
   listBox.innerHTML = '';
   if (!items.length) { listBox.append(el('p', { class: 'muted' }, T('Nenhum arquivo guardado ainda.', 'No files stored yet.', 'Todavía no hay archivos guardados.'))); return; }
-  listBox.append(el('div', { class: 'small muted', style: 'margin:.2rem 0' }, items.length + T(' arquivo(s).', ' file(s).', ' archivo(s).')));
+  listBox.append(el('div', { class: 'small muted u-my-.2 u-mx-0' }, items.length + T(' arquivo(s).', ' file(s).', ' archivo(s).')));
   items.forEach((b) => {
     const kb = b.size ? Math.max(1, Math.round(b.size / 1024)) + ' KB' : '';
     listBox.append(el('div', { class: 'bk-row' },

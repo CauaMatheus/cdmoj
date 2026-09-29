@@ -70,7 +70,7 @@ export function makeRegionsEditor(opts = {}) {
   let regions = initial.map((r) => ({ ...r }));
   let lastGood = initial;
   const list = el('div', {});
-  const lockNote = el('p', { class: 'small', style: 'display:none;margin:.3rem 0' },
+  const lockNote = el('p', { class: 'small u-my-.3 u-mx-0', style: 'display:none' },
     T('🔒 Esta configuração usa sub-regiões, recortes ou campos que a lista simples não mostra — ela só é editada no JSON abaixo (a lista a perderia).',
       '🔒 This setup uses sub-regions, views or fields the simple list does not show — edit it only in the JSON below (the list would lose it).',
       '🔒 Esta configuración usa subregiones, recortes o campos que la lista simple no muestra — solo se edita en el JSON de abajo (la lista la perdería).'));
@@ -78,15 +78,15 @@ export function makeRegionsEditor(opts = {}) {
     list.innerHTML = '';
     if (!regions.length) list.append(el('p', { class: 'muted small' }, T('Sem filtros de região. Ex.: nome “DF”, regex “^br-df-”.', 'No region filters. E.g.: name “DF”, regex “^br-df-”.', 'Sin filtros de región. Ej.: nombre “DF”, regex “^br-df-”.')));
     regions.forEach((r, i) => {
-      const name = el('input', { value: r.name || '', placeholder: T('nome (ex.: DF)', 'name (e.g. DF)', 'nombre (ej. DF)'), style: 'width:150px' });
+      const name = el('input', { class: 'u-w-150px', value: r.name || '', placeholder: T('nome (ex.: DF)', 'name (e.g. DF)', 'nombre (ej. DF)') });
       name.addEventListener('input', () => { r.name = name.value; });
-      const rx = el('input', { value: r.regex || '', placeholder: T('regex (opcional, ex.: ^br-df-)', 'regex (optional, e.g. ^br-df-)', 'regex (opcional, ej. ^br-df-)'), style: 'flex:1' });
+      const rx = el('input', { class: 'u-grow', value: r.regex || '', placeholder: T('regex (opcional, ex.: ^br-df-)', 'regex (optional, e.g. ^br-df-)', 'regex (opcional, ej. ^br-df-)') });
       rx.addEventListener('input', () => { r.regex = rx.value; });
       const rm = el('button', { class: 'btn danger ghost', title: T('remover', 'remove', 'quitar'), onclick: () => { regions.splice(i, 1); render(); } }, '✕');
-      list.append(el('div', { class: 'row', style: 'margin:.25rem 0' }, name, rx, rm));
+      list.append(el('div', { class: 'row u-my-.25 u-mx-0' }, name, rx, rm));
     });
   }
-  const adv = el('textarea', { rows: '8', style: 'width:100%;display:none;font-family:monospace;font-size:.82rem', placeholder: T('JSON avançado com subregions…', 'advanced JSON with subregions…', 'JSON avanzado con subregiones…') });
+  const adv = el('textarea', { class: 'u-w-full u-fs-.82', rows: '8', style: 'display:none;font-family:monospace', placeholder: T('JSON avançado com subregions…', 'advanced JSON with subregions…', 'JSON avanzado con subregiones…') });
   const advMsg = el('div', { class: 'small', style: 'display:none' });
   const addBtn = el('button', { class: 'btn ghost', onclick: () => { regions.push({ name: '', regex: '' }); render(); } }, T('+ região', '+ region', '+ región'));
   const inJson = () => adv.style.display !== 'none';

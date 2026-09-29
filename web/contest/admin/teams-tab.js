@@ -75,7 +75,7 @@ export function makeTeamsTab(CONTEST) {
     const syncLogo = () => {
       logoBox.innerHTML = '';
       if (r.has_logo) logoBox.append(setMediaSrc(
-        el('img', { style: 'height:18px;vertical-align:middle;border-radius:2px', loading: 'lazy' }),
+        el('img', { class: 'u-h-18px u-valign-middle', style: 'border-radius:2px', loading: 'lazy' }),
         assetUrl('logo', r.login, r.stamp), { lazy: true }));
     };
     syncLogo();
@@ -103,7 +103,7 @@ export function makeTeamsTab(CONTEST) {
     const photoDel = () => postAsset({ action: 'delete', kind: 'photo', login: r.login }).then(() => { r.has_photo = false; syncPhoto(); }).catch(() => {});
 
     return el('tr', {},
-      el('td', { class: 'small', style: 'font-family:var(--mono)' }, r.login),
+      el('td', { class: 'small u-mono' }, r.login),
       el('td', {}, mk('fullname', T('nome do time', 'team name', 'nombre del equipo'), 'width:11rem')),
       el('td', {}, country, ' ', flagBox),
       el('td', {}, region),
@@ -122,7 +122,7 @@ export function makeTeamsTab(CONTEST) {
     // o acervo de mídia em MASSA (galeria, lote, música, pacote .zip) é a mesa do telão — aqui
     // fica a identidade tabular do time. O admin entra lá com os mesmos poderes do .animeitor.
     panel.innerHTML = ''; panel.append(el('h2', {}, T('👥 Times', '👥 Teams', '👥 Equipos'), ' ',
-      el('a', { class: 'btn ghost', style: 'font-size:.85rem; font-weight:400', target: '_blank',
+      el('a', { class: 'btn ghost u-fs-.85 u-fw-400', target: '_blank',
         href: '/contest/animeitor/?c=' + enc(CONTEST) },
         T('🎥 Fotos e músicas no telão', '🎥 Photos & music on the big screen', '🎥 Fotos y música en la pantalla'))));
     let usersR, teamsR, regionsR;
@@ -249,14 +249,14 @@ export function makeTeamsTab(CONTEST) {
         T('Cada linha é a identidade no account.json (placar, crachás e impressão leem daqui; ', 'Each row is the identity in account.json (scoreboard, badges and printing read from here; ', 'Cada fila es la identidad en account.json (el marcador, las etiquetas y la impresión leen de aquí; '),
         T('o que faltar continua sendo completado pelas regras regex de Evento › Sedes & escolas). ', 'whatever is missing keeps being completed by the regex rules in Event › Sites & schools). ', 'lo que falte lo siguen completando las reglas regex de Evento › Sedes & escuelas). '),
         T('Fotos/brasões em lote: cada arquivo se chama <login>.<ext>.', 'Photos/logos in bulk: each file is named <login>.<ext>.', 'Fotos/logos en lote: cada archivo se llama <login>.<ext>.')),
-      el('div', { class: 'row', style: 'gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem' },
+      el('div', { class: 'row u-gap-.5 u-wrap u-mb-.5' },
         save, mat,
         el('button', { class: 'btn ghost', onclick: () => csvInp.click() }, T('📥 Importar CSV', '📥 Import CSV', '📥 Importar CSV')), csvInp, csvExp,
         el('button', { class: 'btn ghost', onclick: () => phInp.click() }, T('📷 Fotos em lote', '📷 Photos in bulk', '📷 Fotos en lote')), phInp,
         el('button', { class: 'btn ghost', onclick: () => lgInp.click() }, T('🛡️ Brasões em lote', '🛡️ Logos in bulk', '🛡️ Logos en lote')), lgInp,
         msg),
       flagsDl, regionsDl, table);
-    if (!ROWS.length) panel.append(el('div', { class: 'muted', style: 'margin-top:.5rem' }, T('Nenhum competidor ainda — crie as contas em Pessoas › Contas.', 'No competitor yet — create the accounts in People › Accounts.', 'Ningún competidor todavía — crea las cuentas en Personas › Cuentas.')));
+    if (!ROWS.length) panel.append(el('div', { class: 'muted u-mt-.5' }, T('Nenhum competidor ainda — crie as contas em Pessoas › Contas.', 'No competitor yet — create the accounts in People › Accounts.', 'Ningún competidor todavía — crea las cuentas en Personas › Cuentas.')));
   }
 
   return { panel, load };

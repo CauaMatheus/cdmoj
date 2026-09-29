@@ -62,7 +62,7 @@ export function makeRegistrationsTab(CONTEST) {
     const cl = el('input', { type: 'datetime-local', value: toLocalDT(w.closes_at) });
     const lm = el('input', { type: 'number', min: '0', style: 'width:6rem',
       value: String(Math.max(0, Math.round(((w.late_until || 0) - (w.closes_at || 0)) / 60))) });
-    const mx = el('input', { type: 'number', min: '1', max: '9', style: 'width:5rem', value: String(DATA.team_max || 3) });
+    const mx = el('input', { class: 'u-w-5', type: 'number', min: '1', max: '9', value: String(DATA.team_max || 3) });
     const tm = el('input', { type: 'checkbox' }); tm.checked = DATA.teams_allowed !== false;
     const rm = el('input', { type: 'checkbox' }); rm.checked = DATA.remind !== false;
     // a data herdada é a da PROVA OFICIAL (o aquecimento pode ficar dias no ar) — ver
@@ -82,12 +82,11 @@ export function makeRegistrationsTab(CONTEST) {
       (tzName() ? tzName() + ' · ' : '') + tzOffset(), ')',
       ctz ? T('. Fuso da prova: ', '. Contest timezone: ', '. Zona horaria de la competencia: ') + ctz : '',
       difere ? el('b', {}, T(' — lá, “fecha” é ', ' — there, “closes” is ', ' — allá, “cierra” es ') + inTz(w.closes_at, ctz)) : '');
-    const form = el('div', { class: 'row', style: 'gap:.8rem; flex-wrap:wrap; align-items:flex-end' },
+    const form = el('div', { class: 'row u-gap-.8 u-wrap u-items-flex-end' },
       field(T('abre', 'opens', 'abre'), op), field(T('fecha', 'closes', 'cierra'), cl),
       field(T('atraso (min)', 'late (min)', 'retraso (min)'), lm), field(T('tamanho do time', 'team size', 'tamaño del equipo'), mx),
-      el('div', { class: 'field' }, el('label', { style: 'font-weight:400' }, tm, ' ' + T('aceita times', 'teams allowed', 'equipos permitidos'))),
-      el('div', { class: 'field' }, el('label', {
-        style: 'font-weight:400',
+      el('div', { class: 'field' }, el('label', { class: 'u-fw-400' }, tm, ' ' + T('aceita times', 'teams allowed', 'equipos permitidos'))),
+      el('div', { class: 'field' }, el('label', { class: 'u-fw-400',
         title: T('na véspera do fechamento, o mojinho manda UMA DM a cada convite ainda pendente',
                  'the day before it closes, mojinho sends ONE DM per still-pending invite',
                  'el día antes de que cierre, mojinho envía UN DM por cada invitación aún pendiente'),
@@ -115,10 +114,10 @@ export function makeRegistrationsTab(CONTEST) {
     const meta = (t.invited_meta && t.invited_meta.length) ? t.invited_meta
       : (t.invited || []).map((l) => ({ login: l, tg: false, at: 0, dm_at: 0, warned_at: 0 }));
     if (!meta.length) return el('span', { class: 'muted small' }, '—');
-    return el('div', { class: 'row', style: 'gap:.35rem; flex-wrap:wrap' }, ...meta.map((m) => {
+    return el('div', { class: 'row u-gap-.35 u-wrap' }, ...meta.map((m) => {
       const last = Math.max(m.dm_at || 0, m.warned_at || 0);
       const btn = el('button', {
-        class: 'btn ghost', style: 'padding:0 .3rem; line-height:1.4',
+        class: 'btn ghost u-py-0 u-px-.3 u-lh-1.4',
         title: m.tg ? T('mandar um lembrete agora pelo mojinho', 'send a reminder now via mojinho', 'enviar un recordatorio ahora por mojinho')
                     : T('sem Telegram vinculado — nenhum lembrete alcança essa pessoa',
                         'no Telegram linked — no reminder can reach this person',
@@ -127,7 +126,7 @@ export function makeRegistrationsTab(CONTEST) {
           T('Lembrete a caminho.', 'Reminder on its way.', 'Recordatorio en camino.')),
       }, '🔔');
       if (!m.tg) btn.disabled = true;
-      return el('span', { class: 'pill', style: 'gap:.3rem' },
+      return el('span', { class: 'pill u-gap-.3' },
         el('span', {}, (m.tg ? '📨 ' : '⚠️ ') + m.login),
         el('span', { class: 'small muted' },
           ago(m.at) + (last ? ' · ' + T('avisado ', 'notified ', 'avisado ') + ago(last) : '')),
@@ -181,7 +180,7 @@ export function makeRegistrationsTab(CONTEST) {
     panel.innerHTML = '';
     const t = DATA.totals || {};
     // convertido em contas próprias (Pessoas › Contas): o roster foi arquivado e ninguém mais se inscreve pela web
-    if (DATA.converted) panel.append(el('div', { class: 'notice', style: 'margin:.4rem 0' },
+    if (DATA.converted) panel.append(el('div', { class: 'notice u-my-.4 u-mx-0' },
       T('Este contest foi convertido em contas próprias em ', 'This contest was converted into own accounts on ', 'Esta competencia se convirtió en cuentas propias el ') + fmtDate(DATA.converted.at) +
       T(' (as contas vinham de "', ' (the accounts came from "', ' (las cuentas venían de "') + (DATA.converted.from || '') + '"). ' +
       (DATA.converted.archived
@@ -189,8 +188,8 @@ export function makeRegistrationsTab(CONTEST) {
         : '') +
       T(' A inscrição pela web não vale mais: novas contas, em Pessoas › Contas.', ' Web registration no longer applies: new accounts go in People › Accounts.', ' La inscripción por la web ya no vale: las cuentas nuevas van en Personas › Cuentas.')));
     panel.append(
-      el('div', { class: 'row', style: 'align-items:baseline; gap:.6rem; flex-wrap:wrap' },
-        el('h2', { style: 'margin:.2rem 0' }, T('📝 Inscrições', '📝 Registrations', '📝 Inscripciones')),
+      el('div', { class: 'row u-items-baseline u-gap-.6 u-wrap' },
+        el('h2', { class: 'u-my-.2 u-mx-0' }, T('📝 Inscrições', '📝 Registrations', '📝 Inscripciones')),
         el('span', { class: 'pill ' + (DATA.enabled ? 'ok' : '') },
           DATA.enabled ? T('ligada · ', 'on · ', 'activada · ') + STATE() : T('desligada', 'off', 'desactivada')),
         // no aquecimento a porta fica aberta: o roster só é exigido quando a prova entra no ar
@@ -224,7 +223,7 @@ export function makeRegistrationsTab(CONTEST) {
       el('div', { id: 'rgMsg', class: 'small' }));
 
     if (!DATA.enabled) {
-      panel.append(el('div', { class: 'notice', style: 'margin:.6rem 0' },
+      panel.append(el('div', { class: 'notice u-my-.6 u-mx-0' },
         T('Sem inscrição: qualquer conta da fonte de usuários entra no contest, a qualquer momento. Ligue para exigir inscrição prévia (e liberar times).',
           'No registration: any account from the user source can enter the contest at any time. Turn it on to require prior registration (and to allow teams).',
           'Sin inscripción: cualquier cuenta de la fuente de usuarios entra en la competencia en cualquier momento. Actívala para exigir inscripción previa (y permitir equipos).')));
@@ -249,22 +248,22 @@ export function makeRegistrationsTab(CONTEST) {
   }
 
   function addBox() {
-    const who = el('input', { placeholder: T('login', 'username', 'usuario'), style: 'width:11rem' });
-    const tname = el('input', { placeholder: T('nome do time', 'team name', 'nombre del equipo'), style: 'width:12rem' });
-    const tmem = el('input', { placeholder: T('logins separados por vírgula (o 1º é o capitão)', 'comma-separated usernames (1st is the captain)', 'usuarios separados por comas (el 1º es el capitán)'), style: 'min-width:20rem' });
+    const who = el('input', { class: 'u-w-11', placeholder: T('login', 'username', 'usuario') });
+    const tname = el('input', { class: 'u-w-12', placeholder: T('nome do time', 'team name', 'nombre del equipo') });
+    const tmem = el('input', { class: 'u-minw-20', placeholder: T('logins separados por vírgula (o 1º é o capitão)', 'comma-separated usernames (1st is the captain)', 'usuarios separados por comas (el 1º es el capitán)') });
     return el('div', { class: 'section' },
       el('h3', {}, T('✍️ Inscrever à mão', '✍️ Register by hand', '✍️ Inscribir a mano')),
-      el('div', { class: 'row', style: 'gap:.5rem; flex-wrap:wrap; align-items:flex-end' },
+      el('div', { class: 'row u-gap-.5 u-wrap u-items-flex-end' },
         field(T('individual', 'individual', 'individual'), who),
         el('button', { class: 'btn ghost', onclick: () => act({ action: 'add', login: who.value.trim() }, T('Inscrito.', 'Registered.', 'Inscrito.')) },
           T('Inscrever', 'Register', 'Inscribir'))),
-      el('div', { class: 'row', style: 'gap:.5rem; flex-wrap:wrap; align-items:flex-end; margin-top:.4rem' },
+      el('div', { class: 'row u-gap-.5 u-wrap u-items-flex-end u-mt-.4' },
         field(T('time', 'team', 'equipo'), tname), field(T('membros', 'members', 'miembros'), tmem),
         el('button', { class: 'btn ghost', onclick: () => act({
           action: 'team-add', name: tname.value.trim(),
           members: tmem.value.split(',').map((s) => s.trim()).filter(Boolean),
         }, T('Time criado.', 'Team created.', 'Equipo creado.')) }, T('Criar time', 'Create team', 'Crear equipo'))),
-      el('div', { class: 'row', style: 'margin-top:.6rem' },
+      el('div', { class: 'row u-mt-.6' },
         el('button', { class: 'btn ghost', onclick: () => {
           const rows = [[T('tipo', 'kind', 'tipo'), 'login', T('nome', 'name', 'nombre'), T('membros', 'members', 'miembros'), T('coorte', 'cohort', 'cohorte'), 'univ', 'IA', T('bandeira', 'flag', 'bandera'), T('foto', 'photo', 'foto')]];
           (DATA.teams || []).forEach((x) => rows.push(['time', x.login, x.name, (x.members || []).join(' '), x.cohort || '', x.univ || '', x.ai === true ? 'sim' : x.ai === false ? 'nao' : '', x.flag || '', x.has_photo ? 'sim' : '']));

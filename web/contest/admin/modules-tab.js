@@ -23,7 +23,7 @@ export function makeModulesTab(CONTEST) {
   function notice(text) {
     noticeBox.innerHTML = '';
     if (!text) return;
-    noticeBox.append(el('div', { class: 'alert row', style: 'gap:.6rem;align-items:center' }, el('span', { style: 'flex:1' }, text),
+    noticeBox.append(el('div', { class: 'alert row u-gap-.6 u-items-center' }, el('span', { class: 'u-grow' }, text),
       el('button', { class: 'btn ghost small', title: T('dispensar', 'dismiss', 'descartar'), onclick: () => { noticeBox.innerHTML = ''; } }, '✕')));
   }
 
@@ -35,18 +35,18 @@ export function makeModulesTab(CONTEST) {
       ? el('span', { class: 'pill ok', title: r.reason || '' }, T('dados presentes', 'data present', 'datos presentes'))
       : el('span', { class: 'pill', title: T('nenhum arquivo deste módulo no contest', 'no file of this module in the contest', 'ningún archivo de este módulo en la competencia') }, T('sem dados', 'no data', 'sin datos'));
     return el('div', { class: 'gen-card' + (r.on ? '' : ' off') },
-      el('label', { style: 'display:flex;gap:.5rem;align-items:flex-start;cursor:pointer' }, cb,
-        el('div', { style: 'flex:1' },
-          el('h4', { style: 'margin:0' }, m.icon + ' ' + m.name, ' ', dataPill),
-          el('div', { class: 'small muted', style: 'margin:.2rem 0' }, m.desc),
+      el('label', { class: 'u-gap-.5 u-items-flex-start u-pointer', style: 'display:flex' }, cb,
+        el('div', { class: 'u-grow' },
+          el('h4', { class: 'u-m-0' }, m.icon + ' ' + m.name, ' ', dataPill),
+          el('div', { class: 'small muted u-my-.2 u-mx-0' }, m.desc),
           el('div', { class: 'small' }, T('Abre: ', 'Opens: ', 'Abre: '), m.panels.join(' · ')),
-          r.detected && !r.on ? el('div', { class: 'small', style: 'color:#7a5c00;margin-top:.2rem' },
+          r.detected && !r.on ? el('div', { class: 'small u-mt-.2', style: 'color:var(--js-modules-tab-div-text)' },
             T('Desligado com dados existentes: os painéis não aparecem, mas nada foi apagado.', 'Off with existing data: the panels are hidden, but nothing was deleted.', 'Apagado con datos existentes: los paneles se ocultan, pero nada fue eliminado.')) : null)));
   }
   function renderCards() { grid.innerHTML = ''; MODULES().forEach((m) => grid.append(card(m))); }
 
   function presetsRow() {
-    return el('div', { class: 'row', style: 'gap:.4rem;flex-wrap:wrap;align-items:center;margin:.4rem 0' },
+    return el('div', { class: 'row u-my-.4 u-mx-0 u-gap-.4 u-wrap u-items-center' },
       el('span', { class: 'small muted' }, T('Pré-marcar:', 'Pre-select:', 'Preseleccionar:')),
       ...PRESETS().map((p) => el('button', { class: 'btn ghost small', title: p.hint, onclick: () => {
         Object.entries(checks).forEach(([id, cb]) => { cb.checked = p.mods.includes(id); });
@@ -85,7 +85,7 @@ export function makeModulesTab(CONTEST) {
             'A module is a group of features this contest uses. Turning it on shows the matching panels, Home checks and cards; turning it off hides them without deleting anything. A course exam usually enables none; an exam on Maratona Linux enables Machines; the Maratona enables all.',
             'Un módulo es un grupo de funciones que esta competencia usa. Activarlo muestra los paneles, las revisiones de la Central y las tarjetas correspondientes; desactivarlo los oculta sin eliminar nada. Un examen de curso normalmente no activa ninguno; un examen con Maratona Linux activa Máquinas; la Maratona activa todos.')),
         noticeBox, presetsRow(), grid,
-        el('div', { class: 'row', style: 'gap:.6rem;align-items:center;margin-top:.6rem' },
+        el('div', { class: 'row u-gap-.6 u-items-center u-mt-.6' },
           el('button', { class: 'btn', onclick: save }, T('💾 Salvar módulos', '💾 Save modules', '💾 Guardar módulos')), msg));
       built = true;
     }

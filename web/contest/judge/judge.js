@@ -44,7 +44,7 @@ function stLabel(st) {
 
 function quorum() { return (rv && Number.isInteger(rv.quorum) && rv.quorum >= 1) ? rv.quorum : 2; }
 function countsBar(c) {
-  return el('div', { class: 'row', style: 'gap:.6rem; flex-wrap:wrap; margin-bottom:.5rem' },
+  return el('div', { class: 'row u-gap-.6 u-wrap u-mb-.5' },
     el('span', { class: 'dash-card' }, el('b', {}, c.not_evaluated || 0), T(' não avaliadas', ' not evaluated', ' sin evaluar')),
     el('span', { class: 'dash-card' }, el('b', {}, c.being_evaluated || 0), T(' sendo avaliadas', ' being evaluated', ' en evaluación')),
     el('span', { class: 'dash-card' }, el('b', {}, c.awaiting_second || 0),
@@ -69,19 +69,19 @@ function evalPanel(it) {
     catch (e) { vb.disabled = false; msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
   });
   startTick(left);
-  return el('div', { class: 'section', style: 'border:2px solid #0a7; background:#f4fff9' },
+  return el('div', { class: 'section', style: 'border:2px solid var(--js-judge-div-border);background:var(--js-judge-div-bg)' },
     el('h2', {}, T('⏳ Avaliando — Problema ', '⏳ Evaluating — Problem ', '⏳ Evaluando — Problema '), el('b', {}, shortOf(it.problem_id))),
-    el('div', { class: 'row', style: 'gap:1rem; flex-wrap:wrap; align-items:center; margin:.3rem 0' },
+    el('div', { class: 'row u-my-.3 u-mx-0 u-gap-1 u-wrap u-items-center' },
       el('div', {}, el('span', { class: 'small muted' }, T('Veredicto computado (referência): ', 'Computed verdict (reference): ', 'Veredicto calculado (referencia): ')),
         el('span', { class: 'verdict ' + verdictClass(it.computed_verdict), style: 'font-weight:700' }, it.computed_verdict || '?')),
       logLink(it), srcLink(it)),
-    el('div', { class: 'row', style: 'gap:.5rem; align-items:center; margin:.5rem 0' },
+    el('div', { class: 'row u-my-.5 u-mx-0 u-gap-.5 u-items-center' },
       el('label', { class: 'small' }, T('Seu veredicto: ', 'Your verdict: ', 'Tu veredicto: ')), sel, vb, msg),
-    el('div', { class: 'row', style: 'margin-top:.4rem; align-items:center; gap:.5rem' },
+    el('div', { class: 'row u-items-center u-gap-.5 u-mt-.4' },
       el('span', { class: 'small muted' }, T('Tempo restante: ', 'Time left: ', 'Tiempo restante: ')), cdEl,
       el('button', { class: 'btn ghost', onclick: () => act('claim', it.id, 'extend') }, '+5 min'),
       el('button', { class: 'btn ghost', onclick: () => act('claim', it.id, 'giveup') }, T('Desistir', 'Give up', 'Desistir'))),
-    el('p', { class: 'small muted', style: 'margin-top:.4rem' }, T('A página não recarrega enquanto você avalia. Ao votar, sua tarefa encerra e libera você para a próxima.', 'The page does not reload while you evaluate. When you vote, your task ends and releases you for the next one.', 'La página no se recarga mientras evalúas. Al votar, tu tarea termina y quedas libre para la siguiente.')));
+    el('p', { class: 'small muted u-mt-.4' }, T('A página não recarrega enquanto você avalia. Ao votar, sua tarefa encerra e libera você para a próxima.', 'The page does not reload while you evaluate. When you vote, your task ends and releases you for the next one.', 'La página no se recarga mientras evalúas. Al votar, tu tarea termina y quedas libre para la siguiente.')));
 }
 
 function renderReview() {
@@ -119,7 +119,7 @@ function renderReview() {
       el('td', {}, el('span', { class: 'verdict ' + verdictClass(s.computed_verdict) }, s.computed_verdict || '?')),
       el('td', {}, el('span', { class: 'verdict ' + (s.conflict ? 'flag-anom' : '') }, stLabel(s.status) + (s.conflict ? ' ⚠' : ''))),
       el('td', {}, whoCell),
-      el('td', {}, el('div', { class: 'row', style: 'gap:.4rem' }, logLink(s), srcLink(s))),
+      el('td', {}, el('div', { class: 'row u-gap-.4' }, logLink(s), srcLink(s))),
       el('td', {}, actionCell)));
   });
   box.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' }, head, tb)));
@@ -170,7 +170,7 @@ function renderLegacy() {
       el('td', { class: 'small' }, langLabel(s.lang)),
       el('td', {}, el('span', { class: 'verdict ' + verdictClass(s.verdict) }, isPending(s.verdict) ? el('span', {}, el('span', { class: 'spin' }), ' ' + s.verdict) : s.verdict)),
       ...(PRIV ? [el('td', {}, sel, ' ', btn, ' ', msg)] : []),
-      el('td', {}, el('div', { class: 'row', style: 'gap:.4rem' }, logLink({ id: s.id, sub_epoch: s.epoch }), srcLink({ id: s.id, sub_epoch: s.epoch, lang: s.lang })))));
+      el('td', {}, el('div', { class: 'row u-gap-.4' }, logLink({ id: s.id, sub_epoch: s.epoch }), srcLink({ id: s.id, sub_epoch: s.epoch, lang: s.lang })))));
   });
   box.append(el('div', { class: 'chart-wrap' }, el('table', { class: 'moj' }, head, tb)));
 }

@@ -36,7 +36,7 @@ const probLabel = (p) => (p === 'general' ? T('Geral', 'General', 'General') : T
 function askForm() {
   const probSel = el('select', {}, el('option', { value: 'general' }, T('Geral', 'General', 'General')),
     ...problems.map((p) => el('option', { value: p.short_name }, p.short_name + (p.full_name ? ' · ' + p.full_name : ''))));
-  const q = el('textarea', { rows: '3', placeholder: T('Sua pergunta…', 'Your question…', 'Tu pregunta…'), style: 'width:100%' });
+  const q = el('textarea', { class: 'u-w-full', rows: '3', placeholder: T('Sua pergunta…', 'Your question…', 'Tu pregunta…') });
   const msg = el('div', { class: 'small' });
   const send = el('button', { class: 'btn' }, T('Enviar pergunta', 'Submit question', 'Enviar pregunta'));
   send.addEventListener('click', async () => {
@@ -56,8 +56,8 @@ function askForm() {
 function broadcastForm() {
   const probSel = el('select', {}, el('option', { value: 'general' }, T('Geral', 'General', 'General')),
     ...problems.map((p) => el('option', { value: p.short_name }, p.short_name)));
-  const subj = el('input', { placeholder: T('assunto (opcional) — vira o título do aviso', 'subject (optional) — becomes the notice title', 'asunto (opcional) — se convierte en el título del aviso'), style: 'width:100%' });
-  const a = el('textarea', { rows: '3', placeholder: T('texto do aviso…', 'notice text…', 'texto del aviso…'), style: 'width:100%' });
+  const subj = el('input', { class: 'u-w-full', placeholder: T('assunto (opcional) — vira o título do aviso', 'subject (optional) — becomes the notice title', 'asunto (opcional) — se convierte en el título del aviso') });
+  const a = el('textarea', { class: 'u-w-full', rows: '3', placeholder: T('texto do aviso…', 'notice text…', 'texto del aviso…') });
   const msg = el('div', { class: 'small' });
   const send = el('button', { class: 'btn' }, T('Publicar aviso oficial', 'Publish official notice', 'Publicar aviso oficial'));
   send.addEventListener('click', async () => {
@@ -75,7 +75,7 @@ function broadcastForm() {
 }
 
 function answerEditor(c, isEdit) {
-  const ans = el('textarea', { rows: '3', placeholder: T('Resposta…', 'Answer…', 'Respuesta…'), style: 'width:100%' }); ans.value = c.answer || ''; ans.dataset.orig = c.answer || '';
+  const ans = el('textarea', { class: 'u-w-full', rows: '3', placeholder: T('Resposta…', 'Answer…', 'Respuesta…') }); ans.value = c.answer || ''; ans.dataset.orig = c.answer || '';
   const pub = el('input', { type: 'checkbox' }); pub.checked = c.public !== false;
   const sb = el('button', { class: 'btn ghost' }, isEdit ? T('Salvar edição (juiz-chefe/admin)', 'Save edit (chief judge/admin)', 'Guardar edición (juez principal/admin)') : T('Responder', 'Answer', 'Responder'));
   const msg = el('span', { class: 'small' });
@@ -84,7 +84,7 @@ function answerEditor(c, isEdit) {
     try { await post('clarification-answer', { id: c.id, answer: ans.value.trim(), public: pub.checked }); refresh(); }
     catch (e) { sb.disabled = false; msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
   });
-  return el('div', { class: 'editor', style: 'margin-top:.4rem' }, ans,
+  return el('div', { class: 'editor u-mt-.4' }, ans,
     el('div', { class: 'row' }, el('label', { class: 'small' }, pub, T(' pública (todo o contest vê)', ' public (whole contest sees)', ' pública (toda la competencia la ve)')), sb, msg));
 }
 
@@ -99,14 +99,14 @@ function answerControls(card, c) {
     if (claimBy && claimBy !== myLogin) {
       // reservada por OUTRO: ninguém pega por cima (a API responde 409). O juiz-chefe/admin
       // tem um botão próprio, com confirmação, que manda force:true — nunca "sem querer".
-      const bar = el('div', { class: 'row', style: 'margin-top:.3rem;gap:.6rem;align-items:center' },
+      const bar = el('div', { class: 'row u-gap-.6 u-items-center u-mt-.3' },
         el('span', { class: 'small muted' }, T('⏳ sendo respondida por ', '⏳ being answered by ', '⏳ siendo respondida por ') + claimBy));
       if (canEdit) bar.append(el('button', { class: 'btn ghost danger small', onclick: () => claimAction({ id: c.id, action: 'release', force: true },
         T(`Liberar a reserva de ${claimBy}? Ele perde a pergunta e ela volta a ficar livre. Use só se ele saiu.`, `Release ${claimBy}'s reservation? They lose the question and it becomes free again. Use only if they left.`, `¿Liberar la reserva de ${claimBy}? Pierde la pregunta y vuelve a quedar libre. Úsalo solo si esa persona se fue.`)) },
       T('⚠ Liberar reserva de ', '⚠ Release reservation of ', '⚠ Liberar reserva de ') + claimBy));
       card.append(bar); return;
     }
-    const bar = el('div', { class: 'row', style: 'margin-top:.3rem' });
+    const bar = el('div', { class: 'row u-mt-.3' });
     if (claimBy === myLogin) {
       bar.append(el('span', { class: 'small muted' }, T('✔ reservada por você ', '✔ claimed by you ', '✔ reservada por ti ')),
         el('a', { href: '#', class: 'small', onclick: (e) => { e.preventDefault(); claimAction({ id: c.id, action: 'release' }); } }, T('liberar', 'release', 'liberar')));
@@ -117,7 +117,7 @@ function answerControls(card, c) {
       card.append(bar);
     }
   } else if (canEdit) {
-    card.append(el('details', { style: 'margin-top:.3rem' }, el('summary', { class: 'small' }, T('✎ editar resposta (juiz-chefe/admin)', '✎ edit answer (chief judge/admin)', '✎ editar respuesta (juez principal/admin)')), answerEditor(c, true)));
+    card.append(el('details', { class: 'u-mt-.3' }, el('summary', { class: 'small' }, T('✎ editar resposta (juiz-chefe/admin)', '✎ edit answer (chief judge/admin)', '✎ editar respuesta (juez principal/admin)')), answerEditor(c, true)));
   }
 }
 
@@ -197,7 +197,7 @@ function setTitle(d, text) { const b = d.querySelector('summary b'); if (b.textC
 
 function skeleton() {
   SK.err = el('div', {});
-  SK.bar = el('div', { class: 'row', style: 'gap:.5rem;align-items:center;margin:.3rem 0' },
+  SK.bar = el('div', { class: 'row u-my-.3 u-mx-0 u-gap-.5 u-items-center' },
     el('span', { class: 'small muted' }, T('Filtrar:', 'Filter:', 'Filtrar:')), filterSel,
     el('button', { class: 'btn ghost small', onclick: () => refresh(), title: T('atualizar agora (a página atualiza sozinha a cada 30 s)', 'refresh now (the page refreshes by itself every 30 s)', 'actualizar ahora (la página se actualiza sola cada 30 s)') }, '↻'));
   SK.a = section(canAnswer ? 'open' : 'mine', true);
@@ -248,7 +248,7 @@ function newsSection() {
   const box = el('div', { class: 'section' }, el('h2', {}, T('📰 Notícias do contest', '📰 Contest news', '📰 Noticias de la competencia')));
   const list = el('div', {});
   const title = el('input', { placeholder: T('título', 'title', 'título') });
-  const text = el('textarea', { rows: '2', placeholder: T('texto (opcional)', 'text (optional)', 'texto (opcional)'), style: 'width:100%' });
+  const text = el('textarea', { class: 'u-w-full', rows: '2', placeholder: T('texto (opcional)', 'text (optional)', 'texto (opcional)') });
   const fileInput = el('input', { type: 'file', title: T('anexo opcional (aluno baixa)', 'optional attachment (student downloads)', 'adjunto opcional (el estudiante lo descarga)') });
   const add = el('button', { class: 'btn' }, T('Publicar notícia', 'Publish news', 'Publicar noticia'));
   add.addEventListener('click', async () => {
@@ -269,14 +269,14 @@ function newsSection() {
       const rm = el('button', { class: 'btn ghost danger', title: T('remover', 'remove', 'quitar'), onclick: async () => { if (!confirm(T('Remover esta notícia?', 'Remove this news item?', '¿Eliminar esta noticia?'))) return; await post('admin/news', { action: 'remove', id: n.id }); loadNews(); } }, '✕');
       // editar (já publicada): só juiz-chefe/admin
       const edit = canEdit ? el('button', { class: 'btn ghost', onclick: () => openEdit(n) }, T('✎ editar', '✎ edit', '✎ editar')) : '';
-      list.append(el('div', { class: 'row', style: 'justify-content:space-between; border-top:1px solid #eef2f8; padding:.3rem 0' },
-        el('div', {}, el('b', {}, n.title), ' ', el('span', { class: 'small muted', style: 'white-space:pre-wrap' }, n.text || ''),
-          n.file ? el('span', { class: 'small', style: 'margin-left:.4rem' }, '📎 ' + n.file.name) : ''),
+      list.append(el('div', { class: 'row u-py-.3 u-px-0 u-justify-space-between', style: 'border-top:1px solid var(--color-pending-bg)' },
+        el('div', {}, el('b', {}, n.title), ' ', el('span', { class: 'small muted u-ws-pre-wrap' }, n.text || ''),
+          n.file ? el('span', { class: 'small u-ml-.4' }, '📎 ' + n.file.name) : ''),
         el('div', { class: 'row' }, edit, rm)));
     });
   }
   function openEdit(n) {
-    const t = el('input', { value: n.title }); const x = el('textarea', { rows: '2', style: 'width:100%' }); x.value = n.text || '';
+    const t = el('input', { value: n.title }); const x = el('textarea', { class: 'u-w-full', rows: '2' }); x.value = n.text || '';
     const msg = el('span', { class: 'small' });
     const save = el('button', { class: 'btn' }, T('Salvar (juiz-chefe/admin)', 'Save (chief judge/admin)', 'Guardar (juez principal/admin)'));
     save.addEventListener('click', async () => {
@@ -284,12 +284,12 @@ function newsSection() {
       try { await post('admin/news', { action: 'edit', id: n.id, title: t.value.trim(), text: x.value }); loadNews(); }
       catch (e) { save.disabled = false; msg.className = 'small error-box'; msg.textContent = e.message || T('falha', 'failed', 'fallido'); }
     });
-    list.prepend(el('div', { class: 'field', style: 'border:1px solid var(--line); padding:.5rem; border-radius:.5rem; margin-bottom:.4rem' },
+    list.prepend(el('div', { class: 'field u-p-.5 u-mb-.4', style: 'border:1px solid var(--color-border);border-radius:.5rem' },
       el('label', {}, T('✎ Editar notícia', '✎ Edit news', '✎ Editar noticia')), t, x, el('div', { class: 'row' }, save, el('button', { class: 'btn ghost', onclick: () => loadNews() }, T('cancelar', 'cancel', 'cancelar')), msg)));
   }
   loadNews();
-  box.append(list, el('div', { class: 'field', style: 'margin-top:.6rem' }, el('label', {}, T('Nova notícia', 'New news', 'Noticia nueva')), title, text,
-    el('div', { class: 'small muted', style: 'margin-top:.3rem' }, T('Anexo (opcional):', 'Attachment (optional):', 'Adjunto (opcional):')), fileInput), el('div', {}, add));
+  box.append(list, el('div', { class: 'field u-mt-.6' }, el('label', {}, T('Nova notícia', 'New news', 'Noticia nueva')), title, text,
+    el('div', { class: 'small muted u-mt-.3' }, T('Anexo (opcional):', 'Attachment (optional):', 'Adjunto (opcional):')), fileInput), el('div', {}, add));
   return box;
 }
 

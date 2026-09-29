@@ -96,7 +96,7 @@ export function makeSubmissionsTable({ contest, basic, problems, userinfo, filte
       const rtxt = pending ? '' : resumoText(subSumm[s.subid]);
       const vcell = el('td', {}, el('span', { class: 'verdict ' + verdictClass(s.verdict) },
         pending ? el('span', {}, el('span', { class: 'spin' }), ' ' + s.verdict) : s.verdict),
-        rtxt ? el('div', { class: 'small muted', style: 'margin-top:.15rem' }, rtxt) : '');
+        rtxt ? el('div', { class: 'small muted u-mt-.15' }, rtxt) : '');
       const logCell = canLog ? el('td', {}, el('a', { href: '#', onclick: (e) => { e.preventDefault();
         openReportAuthed(`/submission/log?contest=${enc(contest)}&id=${enc(s.subid)}&time=${enc(s.epoch)}`); } }, 'log')) : null;
       tb.append(el('tr', {}, el('td', {}, minuto(s.epoch)),

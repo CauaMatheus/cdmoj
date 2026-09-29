@@ -121,10 +121,10 @@ export function renderOBI(parsed, opts) {
       const n = parseInt(v, 10);
       if (v !== '' && n > 0) {
         const td = el('td', { class: 'cell ok', title: sn + ': ' + v }, el('span', { class: 'pv' }, v));
-        td.style.cssText = 'background:#dde9ff;color:#1346aa;font-weight:700'; tr.append(td);
+        td.style.cssText = 'background:var(--js-score-obi-el-css);color:var(--js-score-obi-el-css-2);font-weight:700'; tr.append(td);
       } else if (v === '0') {
         const td = el('td', { class: 'cell c-try', title: sn + ': 0' }, el('span', { class: 'pv' }, v));
-        td.style.cssText = 'background:#fbe7e9;color:#c4314b;font-weight:700'; tr.append(td);
+        td.style.cssText = 'background:var(--js-score-obi-el-css-3);color:var(--js-score-obi-el-css-4);font-weight:700'; tr.append(td);
       } else tr.append(el('td', { class: 'cell', title: sn }, ''));
     });
     tr.append(el('td', { class: 'cell tot' }, t.total));

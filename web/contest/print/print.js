@@ -36,7 +36,7 @@ async function loadList() {
   const items = r.requests || [];
   listBox.innerHTML = '';
   if (!items.length) { listBox.append(el('p', { class: 'muted' }, T('Nenhum pedido de impressão ainda.', 'No printing requests yet.', 'Aún no hay solicitudes de impresión.'))); return; }
-  listBox.append(el('div', { class: 'small muted', style: 'margin:.2rem 0' }, items.length + T(' pedido(s).', ' request(s).', ' solicitud(es).')));
+  listBox.append(el('div', { class: 'small muted u-my-.2 u-mx-0' }, items.length + T(' pedido(s).', ' request(s).', ' solicitud(es).')));
   items.forEach((b) => {
     const st = STATUS(b.status) || STATUS('pending');
     const pg = (b.pages > 0 && b.status !== 'pending') ? ' · ' + b.pages + T(' pág.', ' pg.', ' pág.') : '';

@@ -337,7 +337,7 @@ async function pollRetag() {
   box.innerHTML = '';
   if (jobs.length) {
     RETAG_WAS_RUNNING = true;
-    jobs.forEach(x => box.append(el('div', { class: 'small', style: 'margin:.2rem 0 .4rem;padding:.3rem .5rem;border:1px solid #b90;border-radius:6px' },
+    jobs.forEach(x => box.append(el('div', { class: 'small', style: 'margin:.2rem 0 .4rem;padding:.3rem .5rem;border:1px solid var(--js-problemas-div-border);border-radius:6px' },
       '⏳ ' + (x.to
         ? `${T('re-tag em andamento: “', 're-tag in progress: “', 're-tag en curso: “')}${x.from}${T('” → “', '” → “', '” → “')}${x.to}”`
         : `${T('removendo a tag “', 'removing tag “', 'quitando la etiqueta “')}${x.from}”`)
@@ -445,7 +445,7 @@ function renderOrgs() {
           el('button', { class: 'btn ghost', style: 'padding:.1rem .5rem', onclick: () => orgMember(o, inp.value.trim(), true, inp) }, T('+ membro', '+ member', '+ miembro')),
           el('span', { style: 'flex:1' }),
           el('button', {
-            class: 'btn ghost', style: 'padding:.1rem .5rem;color:#e66;border-color:#a44',
+            class: 'btn ghost', style: 'padding:.1rem .5rem;color:var(--js-problemas-button-text);border-color:var(--js-problemas-button-border)',
             disabled: !empty,
             title: empty ? T('Remover esta org vazia', 'Remove this empty org', 'Eliminar esta org vacía') : T('Esvazie a org (mova/exclua os problemas) antes de removê-la', 'Empty the org (move/delete the problems) before removing it', 'Vacía la org (mueve/elimina los problemas) antes de eliminarla'),
             onclick: empty ? () => deleteOrg(o) : null,

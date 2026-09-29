@@ -33,7 +33,7 @@ export function makeJudgePicker(selectedHosts, apiCtx) {
       if (!boxes.length) box.append(el('span', { class: 'muted small' }, T('nenhum juiz registrado', 'no judge registered', 'ningún juez registrado')));
     } catch {
       // degrada p/ texto livre — não bloqueia a criação/edição do contest
-      fallback = el('input', { value: [...sel].join(' '), placeholder: T('hosts separados por espaço (vazio = todos)', 'hosts separated by space (empty = all)', 'hosts separados por espacio (vacío = todos)'), style: 'width:100%' });
+      fallback = el('input', { class: 'u-w-full', value: [...sel].join(' '), placeholder: T('hosts separados por espaço (vazio = todos)', 'hosts separated by space (empty = all)', 'hosts separados por espacio (vacío = todos)') });
       box.replaceChildren(el('span', { class: 'muted small' }, T('não deu para listar os juízes — informe os hosts:', "couldn't list the judges — enter the hosts:", "no se pudo listar los jueces — indica los hosts:")), fallback);
     }
   })();

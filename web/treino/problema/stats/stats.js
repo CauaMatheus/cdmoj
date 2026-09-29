@@ -40,7 +40,7 @@ function cleanLangs(byLang) {
 
 function metric(v, l) { return el('div', { class: 'metric' }, el('div', { class: 'v' }, (v && v.nodeType) ? v : String(v)), el('div', { class: 'l' }, l)); }
 function chartCard(title, node) {
-  return el('div', { class: 'subcard' }, el('h3', { class: 'small', style: 'margin:.1rem 0 .6rem;color:var(--blue-dark)' }, title), node);
+  return el('div', { class: 'subcard' }, el('h3', { class: 'small', style: 'margin:.1rem 0 .6rem;color:var(--color-primary-strong)' }, title), node);
 }
 async function boot() {
   await renderAuthArea(document.getElementById('authArea'), CONTEST, () => {});
@@ -53,7 +53,7 @@ async function boot() {
   content.innerHTML = '';
 
   content.append(el('div', { class: 'section' },
-    el('h1', { style: 'margin:0;color:var(--blue-dark)' }, '📊 ', s.title || ID),
+    el('h1', { style: 'margin:0;color:var(--color-primary-strong)' }, '📊 ', s.title || ID),
     el('p', { class: 'small muted', style: 'margin:.3rem 0 0' }, T('Problema do Treino Livre · ', 'Free Training problem · ', 'Problema de Entrenamiento libre · '),
       el('a', { href: '/treino/problema/?id=' + encodeURIComponent(ID) }, T('abrir o problema →', 'open the problem →', 'abrir el problema →')),
       ' · ', el('a', { href: docHref('ESTATISTICAS-PROBLEMA'), target: '_blank' },
@@ -118,7 +118,7 @@ async function boot() {
     const ratePts = monthly.map((m) => { cum += m.subs; cumAc += m.ac; return { x: m.m + '-15', y: Math.round((cumAc / Math.max(1, cum)) * 100), label: fmonth(m.m) }; });
     content.append(el('div', { class: 'section' }, el('h2', {}, T('📈 Linha do tempo', '📈 Timeline', '📈 Línea de tiempo')),
       el('div', { class: 'subcard' },
-        el('h3', { class: 'small', style: 'margin:.1rem 0 .6rem;color:var(--blue-dark)' }, T('Submissões por mês, desde a primeira', 'Submissions per month, since the first', 'Envíos por mes, desde el primero')),
+        el('h3', { class: 'small', style: 'margin:.1rem 0 .6rem;color:var(--color-primary-strong)' }, T('Submissões por mês, desde a primeira', 'Submissions per month, since the first', 'Envíos por mes, desde el primero')),
         el('div', { class: 'chart-wrap' }, hist)),
       el('div', { class: 'chart-grid two', style: 'margin-top:1rem' },
         acPts.length ? chartCard(T('Resolvedores acumulados', 'Cumulative solvers', 'Resolutores acumulados'),

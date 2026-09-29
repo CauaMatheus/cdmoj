@@ -144,7 +144,7 @@ function renderStart() {
     me.official ? el('li', { class: 'muted' }, T('Você competiu nesta prova oficialmente — a sua linha virtual sai marcada com isso.', 'You competed in this contest officially — your virtual row is marked accordingly.', 'Competiste en esta competencia oficialmente — tu fila virtual queda marcada así.')) : ''));
   const acc = el('input', { type: 'checkbox', id: 'vacc' });
   const at = el('input', { type: 'datetime-local' });
-  const err = el('div', { class: 'small', style: 'color:#c0392b' });
+  const err = el('div', { class: 'small', style: 'color:var(--js-virtual-div-text)' });
   const go = async (when) => {
     err.textContent = '';
     if (!acc.checked) { err.textContent = T('Marque que leu e aceita as regras.', 'Tick that you have read and accept the rules.', 'Marca que leíste y aceptas las reglas.'); return; }
@@ -243,7 +243,7 @@ function sendForm(p) {
       await apiPost('/submit?contest=treino', { problem_id: p.id, filename: f.name, code_b64: await fileToBase64(f), source: 'file', virtual: CID }, A);
       msg.textContent = T('enviado — aguarde o veredicto', 'sent — wait for the verdict', 'enviado — espera el veredicto'); file.value = ''; name.textContent = T('nenhum arquivo', 'no file', 'ningún archivo');
       await refreshRun();
-    } catch (e) { msg.style.color = '#c0392b'; msg.textContent = e.message; send.disabled = false; }
+    } catch (e) { msg.style.color = 'var(--js-virtual-el-text)'; msg.textContent = e.message; send.disabled = false; }
   });
   return el('div', { class: 'vr-send' }, file,
     el('button', { class: 'btn ghost', onclick: () => file.click() }, T('Escolher arquivo…', 'Choose file…', 'Elegir archivo…')), name, send, msg,
