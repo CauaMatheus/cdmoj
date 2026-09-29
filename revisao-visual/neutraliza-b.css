@@ -1,0 +1,172 @@
+/* Injetado nos DOIS lados das capturas, antes da 1ª pintura: em B anula as mudanças já RELEVADAS
+   (ver RELEVADAS.md); em A só reafirma o que A já tem. Assim a comparação para na próxima diferença
+   ainda não revisada. Uma regra por entrada. */
+
+/* R1 — botão ☾ do tema escuro na barra (be1bc4f1) */
+.theme-toggle { display: none !important; }
+
+/* R2 — borda dos tutoriais: em A o var(--border,#2a2a2a) caía no reserva quase preto (token indefinido).
+   Seletores do _tutorial.css de A + o .cycle span do <style> de problemas/tutorial.html e treino/criar/tutorial.html. */
+.ttoc, .tmain pre, .cheat th, .cheat td, .shot img, .rolehead, .rolenav a:not(.cur), .cycle span { border-color: #2a2a2a !important; }
+.tmain h2 { border-top-color: #2a2a2a !important; }
+
+/* R3 — índice dos tutoriais no celular: em A o sticky vencia o static do @media (32670369) */
+@media (max-width: 900px) { .ttoc { position: sticky !important; } }
+
+/* R4 — cadastro do treino: var(--border,…) indefinido com reservas CLAROS (#e2e8f0 cartão, #cbd5e1 campos),
+   hoje os dois são --color-border-strong (#d0d7de). Só nesta página (o <link> do CSS dela só existe em B). */
+html:has(link[href$="pages/treino-cadastro.css"]) .card { border-color: #e2e8f0 !important; }
+html:has(link[href$="pages/treino-cadastro.css"]) .card input { border-color: #cbd5e1 !important; }
+
+/* R5 — link da página atual sublinhado no quicknav também em badges e animeitor (6bdaf638).
+   Só nessas duas: as outras 18 páginas de contest já sublinhavam em A. */
+html:has(link[href$="pages/contest-badges.css"]) .quicknav a.active,
+html:has(link[href$="pages/contest-animeitor.css"]) .quicknav a.active { text-decoration: none !important; }
+
+/* R6 — gestão de problemas (/problemas/): o <style> de A usava var(--border,#2a2a2a) nas abas, nos cartões de
+   contagem, nas coleções, nos chips e na prévia. Só nesta página; .scard.hl tem contorno de destaque próprio. */
+html:has(link[href$="pages/problemas.css"]) .tabs { border-bottom-color: #2a2a2a !important; }
+html:has(link[href$="pages/problemas.css"]) :is(.scard:not(.hl), .coll, .chip, #detail iframe) { border-color: #2a2a2a !important; }
+
+/* R7 — editor de problemas: o <style> INTEIRO de A reaplicado nesta página, com --bg/--border/--fg (indefinidas
+   em A) trocadas pelas reservas de tema escuro que o navegador usava. GERADO por:
+   git show a8f45511:web/problemas/editar.html | ferramentas/gen-neutral.py pages/problemas-editar.css --bg --border --fg */
+html:has(link[href$="pages/problemas-editar.css"]) .grid2 {display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+html:has(link[href$="pages/problemas-editar.css"]) .field {margin:.5rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .field label {display:block;font-size:.85rem;opacity:.85;margin-bottom:.2rem}
+html:has(link[href$="pages/problemas-editar.css"]) .field input[type=text], html:has(link[href$="pages/problemas-editar.css"]) .field textarea, html:has(link[href$="pages/problemas-editar.css"]) .field select {width:100%;box-sizing:border-box}
+html:has(link[href$="pages/problemas-editar.css"]) textarea {font-family:ui-monospace,Menlo,Consolas,monospace;min-height:6rem}
+html:has(link[href$="pages/problemas-editar.css"]) textarea.big {min-height:16rem}
+html:has(link[href$="pages/problemas-editar.css"]) .editor-mount {border:1px solid #2a2a2a;border-radius:.5rem;overflow:hidden;resize:vertical;height:28rem;min-height:28rem}
+html:has(link[href$="pages/problemas-editar.css"]) .editor-mount .cm-editor {height:100%}
+html:has(link[href$="pages/problemas-editar.css"]) .editor-mount .cm-scroller {overflow:auto}
+html:has(link[href$="pages/problemas-editar.css"]) .editor-mount .code-fallback {width:100%;height:100%;box-sizing:border-box;border:0;resize:none}
+html:has(link[href$="pages/problemas-editar.css"]) #enunMount {height:36rem;min-height:36rem}
+html:has(link[href$="pages/problemas-editar.css"]) .editor-mount.sec {height:13rem;min-height:9rem}
+html:has(link[href$="pages/problemas-editar.css"]) #descMount {height:24rem;min-height:16rem}
+html:has(link[href$="pages/problemas-editar.css"]) .modal {position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:50}
+html:has(link[href$="pages/problemas-editar.css"]) .modal .box {background:#fff;border-radius:.6rem;width:min(900px,95vw);height:min(85vh,900px);display:flex;flex-direction:column}
+html:has(link[href$="pages/problemas-editar.css"]) .modal .box header {display:flex;justify-content:space-between;align-items:center;padding:.5rem .8rem;border-bottom:1px solid #eee;color:#111}
+html:has(link[href$="pages/problemas-editar.css"]) .modal iframe {flex:1;border:0;border-radius:0 0 .6rem .6rem;background:#fff}
+html:has(link[href$="pages/problemas-editar.css"]) .subtabs {display:flex;gap:.25rem;flex-wrap:wrap;margin:.2rem 0 .6rem}
+html:has(link[href$="pages/problemas-editar.css"]) .subtab {background:var(--card,#1b1f26);border:1px solid #2a2a2a;padding:.3rem .7rem;border-radius:999px;cursor:pointer;color:#cdd6e4;font-size:.85rem;display:inline-flex;gap:.4rem;align-items:center}
+html:has(link[href$="pages/problemas-editar.css"]) .subtab.on {outline:2px solid var(--accent,#5b8cff);outline-offset:1px}
+html:has(link[href$="pages/problemas-editar.css"]) .subtab .subcount {opacity:.7}
+html:has(link[href$="pages/problemas-editar.css"]) .solpanel[hidden] {display:none}
+html:has(link[href$="pages/problemas-editar.css"]) .solrow {border:1px solid #2a2a2a;border-radius:.5rem;padding:.4rem;margin:.4rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .btn.small {padding:.05rem .45rem;font-size:.9rem;line-height:1.4}
+html:has(link[href$="pages/problemas-editar.css"]) .judgecard {border:1px solid #2a2a2a;border-radius:.5rem;padding:.4rem .6rem;margin:.3rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .tlsummary-wrap {overflow-x:auto;margin:.2rem 0 .6rem}
+html:has(link[href$="pages/problemas-editar.css"]) table.tlsummary {border-collapse:collapse;font-size:.85rem}
+html:has(link[href$="pages/problemas-editar.css"]) table.tlsummary th, html:has(link[href$="pages/problemas-editar.css"]) table.tlsummary td {border:1px solid #2a2a2a;padding:.18rem .55rem;text-align:center;white-space:nowrap}
+html:has(link[href$="pages/problemas-editar.css"]) table.tlsummary th {background:var(--card,#1b1f26);font-weight:600}
+html:has(link[href$="pages/problemas-editar.css"]) table.tlsummary th:first-child, html:has(link[href$="pages/problemas-editar.css"]) table.tlsummary td:first-child {text-align:left}
+html:has(link[href$="pages/problemas-editar.css"]) table.tlsummary .served {background:rgba(90,160,255,.16)}
+html:has(link[href$="pages/problemas-editar.css"]) table.tlsummary th .cpu {font-weight:400;font-size:.7rem;opacity:.7;max-width:13rem;overflow:hidden;text-overflow:ellipsis}
+html:has(link[href$="pages/problemas-editar.css"]) .caliblog {max-height:26rem;overflow:auto;background:#fff;color:#111;border:1px solid #2a2a2a;border-radius:.4rem;
+      padding:.5rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;line-height:1.45;white-space:pre-wrap;word-break:break-word;margin:0}
+html:has(link[href$="pages/problemas-editar.css"]) .solrow {display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin:.18rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) table.soltests {border-collapse:collapse;font-size:.78rem;margin:.15rem 0 .4rem 1.2rem}
+html:has(link[href$="pages/problemas-editar.css"]) table.soltests th, html:has(link[href$="pages/problemas-editar.css"]) table.soltests td {border:1px solid #2a2a2a;padding:.12rem .5rem;white-space:nowrap}
+html:has(link[href$="pages/problemas-editar.css"]) table.soltests th {background:var(--card,#1b1f26);font-weight:600}
+html:has(link[href$="pages/problemas-editar.css"]) table.soltests td.num {text-align:right;font-variant-numeric:tabular-nums}
+html:has(link[href$="pages/problemas-editar.css"]) table.soltests td.bad {color:#ff8a8a}
+html:has(link[href$="pages/problemas-editar.css"]) table.soltests td.drift {color:#eab308;font-weight:600}
+html:has(link[href$="pages/problemas-editar.css"]) table.soltests td.vmsg {white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;max-width:38rem}
+html:has(link[href$="pages/problemas-editar.css"]) .solexp {flex-basis:100%;margin:0 0 0 .2rem;font-size:.78rem;opacity:.85;line-height:1.35}
+html:has(link[href$="pages/problemas-editar.css"]) .solexp .got {color:#e0a64b;opacity:1}
+html:has(link[href$="pages/problemas-editar.css"]) .solsum {margin:.2rem 0 .4rem;padding:.3rem .6rem;border-radius:.4rem;font-size:.86rem;border:1px solid #2a2a2a}
+html:has(link[href$="pages/problemas-editar.css"]) .solsum.ok {border-color:#2e6b44}
+html:has(link[href$="pages/problemas-editar.css"]) .solsum.todo {border-color:#8a6a2a}
+html:has(link[href$="pages/problemas-editar.css"]) .solsum.bad {border-color:#8a2e2e;background:rgba(224,86,75,.08)}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy.seal {font-weight:600;margin-left:.4rem}
+html:has(link[href$="pages/problemas-editar.css"]) details.issue {border:1px solid #2a2a2a;border-radius:.5rem;padding:.35rem .6rem;margin:.35rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) details.issue.closed {opacity:.75}
+html:has(link[href$="pages/problemas-editar.css"]) details.issue > summary {display:flex;gap:.35rem;align-items:center;flex-wrap:wrap}
+html:has(link[href$="pages/problemas-editar.css"]) .issue-text {white-space:pre-wrap;word-break:break-word;margin:.35rem 0;line-height:1.45}
+html:has(link[href$="pages/problemas-editar.css"]) .issue-comment {border-left:3px solid #2a2a2a;padding-left:.6rem;margin:.45rem 0 .45rem .2rem}
+html:has(link[href$="pages/problemas-editar.css"]) .issue-reply textarea, html:has(link[href$="pages/problemas-editar.css"]) .issue-new textarea, html:has(link[href$="pages/problemas-editar.css"]) .issue-new input {width:100%;box-sizing:border-box}
+html:has(link[href$="pages/problemas-editar.css"]) .issue-reply {margin-top:.4rem;display:flex;flex-direction:column;gap:.35rem}
+html:has(link[href$="pages/problemas-editar.css"]) details.issue-new {margin:.4rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy.run .dot {background:#e0a64b;animation:moj-pulse 1s ease-in-out infinite}
+@keyframes moj-pulse {0%,100%{opacity:1}50%{opacity:.25}}
+html:has(link[href$="pages/problemas-editar.css"]) .running {display:flex;align-items:center;gap:.5rem;color:#ffd98a;margin:.3rem 0 .4rem;font-size:.9rem}
+html:has(link[href$="pages/problemas-editar.css"]) .spin {width:.95rem;height:.95rem;border:2px solid #ffd98a;border-top-color:transparent;border-radius:50%;display:inline-block;animation:moj-spin .8s linear infinite;flex:none}
+@keyframes moj-spin {to{transform:rotate(360deg)}}
+html:has(link[href$="pages/problemas-editar.css"]) .cpugrp {margin:.35rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .jcheck {display:inline-flex;align-items:center;gap:.25rem;font-size:.85rem;margin-right:.4rem;white-space:nowrap}
+html:has(link[href$="pages/problemas-editar.css"]) .jcheck.off {opacity:.5}
+html:has(link[href$="pages/problemas-editar.css"]) .linklike {color:var(--accent,#5b8cff);text-decoration:underline}
+html:has(link[href$="pages/problemas-editar.css"]) details summary {cursor:pointer}
+html:has(link[href$="pages/problemas-editar.css"]) #tests textarea {min-height:4rem}
+html:has(link[href$="pages/problemas-editar.css"]) .pkgtree {font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;line-height:1.6;margin:.4rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .pkgtree ul {list-style:none;margin:0;padding-left:1.1rem;border-left:1px dashed #2a2a2a}
+html:has(link[href$="pages/problemas-editar.css"]) .pkgtree li {position:relative}
+html:has(link[href$="pages/problemas-editar.css"]) .pkgtree a {cursor:pointer;text-decoration:none;color:inherit;border-radius:3px;padding:0 .2rem}
+html:has(link[href$="pages/problemas-editar.css"]) .pkgtree a:hover {background:var(--accent,#5b8cff);color:#fff}
+html:has(link[href$="pages/problemas-editar.css"]) .pkgtree .dir {opacity:.85;font-weight:600}
+html:has(link[href$="pages/problemas-editar.css"]) .flash {outline:2px solid var(--accent,#5b8cff);outline-offset:2px;border-radius:4px;transition:outline .2s}
+html:has(link[href$="pages/problemas-editar.css"]) .collchip {cursor:pointer;border:1px solid #2a2a2a;border-radius:999px;padding:.1rem .6rem;font-size:.82rem}
+html:has(link[href$="pages/problemas-editar.css"]) .collchip:hover {border-color:var(--accent,#5b8cff)}
+html:has(link[href$="pages/problemas-editar.css"]) .collchip.on {background:#173d23;color:#7ee2a0}
+html:has(link[href$="pages/problemas-editar.css"]) .filttog {cursor:pointer;border:1px solid #2a2a2a;border-radius:999px;padding:.1rem .6rem;font-size:.82rem;background:transparent;color:inherit}
+html:has(link[href$="pages/problemas-editar.css"]) .filttog:hover {border-color:var(--accent,#5b8cff)}
+html:has(link[href$="pages/problemas-editar.css"]) .filttog.on {background:var(--accent,#5b8cff);color:#fff;border-color:var(--accent,#5b8cff)}
+html:has(link[href$="pages/problemas-editar.css"]) .ex {border:1px solid #2a2a2a;border-radius:.5rem;padding:.5rem;margin:.4rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .ex .grid2 textarea {min-height:4rem}
+html:has(link[href$="pages/problemas-editar.css"]) .ex .exexpl {width:100%;box-sizing:border-box;min-height:2.6rem;margin-top:.2rem}
+html:has(link[href$="pages/problemas-editar.css"]) .ex .exexpl-trans textarea.exexpl-l {width:100%;box-sizing:border-box;min-height:2.6rem;margin-top:.2rem}
+html:has(link[href$="pages/problemas-editar.css"]) .ex .exexpl-trans label {display:block;margin-top:.3rem}
+html:has(link[href$="pages/problemas-editar.css"]) .pill {display:inline-block;padding:.05rem .5rem;border-radius:999px;font-size:.78rem}
+html:has(link[href$="pages/problemas-editar.css"]) .pill.ok {background:#173d23;color:#7ee2a0}
+html:has(link[href$="pages/problemas-editar.css"]) .pill.no {background:#3d1717;color:#ffb0b0}
+html:has(link[href$="pages/problemas-editar.css"]) .pill.mut {background:#22262e;color:#9fb0c8}
+html:has(link[href$="pages/problemas-editar.css"]) .pill.warn {background:#3d3217;color:#ffd98a}
+html:has(link[href$="pages/problemas-editar.css"]) #msg {min-height:1.2rem}
+html:has(link[href$="pages/problemas-editar.css"]) .checks li {margin:.1rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .readybar {position:sticky;top:0;z-index:20;background:#14171c;border-bottom:1px solid #2a2a2a;
+      padding:.45rem .2rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy {display:inline-flex;gap:.35rem;align-items:center;font-size:.8rem;padding:.12rem .55rem;border-radius:999px;
+      border:1px solid #2a2a2a;cursor:pointer;white-space:nowrap;background:var(--card,#1b1f26)}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy .dot {width:.6rem;height:.6rem;border-radius:50%;background:#5a6473;flex:none}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy.ok .dot {background:#3ad07a}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy.todo .dot {background:#e0a64b}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy.bad .dot {background:#e0564b}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy.na {opacity:.45}
+html:has(link[href$="pages/problemas-editar.css"]) .rdy:hover {border-color:var(--accent,#5b8cff)}
+html:has(link[href$="pages/problemas-editar.css"]) .tabs {display:flex;gap:.2rem;flex-wrap:wrap;border-bottom:1px solid #2a2a2a;margin:.7rem 0 .2rem}
+html:has(link[href$="pages/problemas-editar.css"]) .tab {background:none;border:1px solid transparent;border-bottom:0;padding:.45rem .9rem;border-radius:.5rem .5rem 0 0;
+      cursor:pointer;color:#cdd6e4;font-size:.92rem;position:relative;top:1px}
+html:has(link[href$="pages/problemas-editar.css"]) .tab.on {background:var(--card,#1b1f26);border-color:#2a2a2a;font-weight:600}
+html:has(link[href$="pages/problemas-editar.css"]) .tab .mini {font-size:.7rem;opacity:.7;margin-left:.25rem}
+html:has(link[href$="pages/problemas-editar.css"]) .tabpane[hidden] {display:none}
+html:has(link[href$="pages/problemas-editar.css"]) .scoregroups {width:100%;border-collapse:collapse;margin:.3rem 0}
+html:has(link[href$="pages/problemas-editar.css"]) .scoregroups th {text-align:left;font-size:.78rem;opacity:.75;font-weight:600;padding:.2rem .4rem}
+html:has(link[href$="pages/problemas-editar.css"]) .scoregroups td {padding:.15rem .4rem;vertical-align:middle}
+html:has(link[href$="pages/problemas-editar.css"]) .scoregroups input {width:100%;box-sizing:border-box}
+html:has(link[href$="pages/problemas-editar.css"]) .scoregroups td.w input {max-width:6rem}
+html:has(link[href$="pages/problemas-editar.css"]) .scoregroups td.act {width:2rem;text-align:right}
+html:has(link[href$="pages/problemas-editar.css"]) .gtotal.ok {color:#7ee2a0}
+html:has(link[href$="pages/problemas-editar.css"]) .gtotal.no {color:#ffd98a}
+html:has(link[href$="pages/problemas-editar.css"]) .tgroup {max-width:11rem}
+html:has(link[href$="pages/problemas-editar.css"]) .sol-badge {display:inline-block;padding:.05rem .55rem;border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.02em}
+html:has(link[href$="pages/problemas-editar.css"]) .sb-good {background:#173d23;color:#7ee2a0}
+html:has(link[href$="pages/problemas-editar.css"]) .sb-wrong {background:#3d1717;color:#ffb0b0}
+html:has(link[href$="pages/problemas-editar.css"]) .sb-slow {background:#3d3417;color:#ffd98a}
+html:has(link[href$="pages/problemas-editar.css"]) .sb-pass {background:#22262e;color:#9fb0c8}
+html:has(link[href$="pages/problemas-editar.css"]) .sb-upcoming {background:#1c2030;color:#8aa0d0}
+html:has(link[href$="pages/problemas-editar.css"]) .sb-scr {background:#1c2c3d;color:#8ec9ff}
+html:has(link[href$="pages/problemas-editar.css"]) .subtabs .subsep {align-self:center;opacity:.35;margin:0 .2rem}
+html:has(link[href$="pages/problemas-editar.css"]) .lcard {border:1px solid #2a2a2a;border-radius:8px;padding:.6rem .8rem;margin:.6rem 0;background:rgba(255,255,255,.015)}
+html:has(link[href$="pages/problemas-editar.css"]) .lcard h4 {margin:0 0 .45rem;font-size:.95rem}
+html:has(link[href$="pages/problemas-editar.css"]) .limits-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.7rem .9rem}
+html:has(link[href$="pages/problemas-editar.css"]) .lfield {display:flex;flex-direction:column;gap:.15rem;min-width:0}
+html:has(link[href$="pages/problemas-editar.css"]) .lfield>label {font-size:.85rem;font-weight:600}
+html:has(link[href$="pages/problemas-editar.css"]) .lfield code {font-size:.78em;opacity:.8}
+html:has(link[href$="pages/problemas-editar.css"]) .lfield .lrow {display:flex;align-items:center;gap:.35rem}
+html:has(link[href$="pages/problemas-editar.css"]) .lfield .lrow input {width:8.5rem;max-width:100%}
+html:has(link[href$="pages/problemas-editar.css"]) .lfield .unit {font-size:.8rem;opacity:.65;min-width:2ch}
+html:has(link[href$="pages/problemas-editar.css"]) .ltoggles {display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;margin-top:.5rem}
+html:has(link[href$="pages/problemas-editar.css"]) .ltoggles label {display:flex;align-items:center;gap:.35rem;font-size:.88rem}
+html:has(link[href$="pages/problemas-editar.css"]) .ltoggles code {font-size:.75em;opacity:.6}
+html:has(link[href$="pages/problemas-editar.css"]) .bar2 {position:sticky;bottom:0;background:#14171c;border-top:1px solid #2a2a2a;padding:.6rem 0;display:flex;gap:.5rem;flex-wrap:wrap;z-index:15}
