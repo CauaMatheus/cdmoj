@@ -694,9 +694,9 @@ rep_css(){
   # o ui.css é um MANIFESTO de @import (docs/DESIGN.md): inlinado cru, os @import relativos não
   # resolveriam no blob:/srcdoc do visualizador e o relatório sairia sem estilo nenhum
   bash "$HERE/../bin/css-bundle.sh" "$MOJ_WEB/shared/ui.css"
-  # locais do placar (web/contest/score/index.html) e das estatísticas (…/statistics/index.html)
-  sed -n '/<style>/,/<\/style>/p' "$MOJ_WEB/contest/score/index.html" 2>/dev/null | sed '/<\/\?style>/d'
-  sed -n '/<style>/,/<\/style>/p' "$MOJ_WEB/contest/statistics/index.html" 2>/dev/null | sed '/<\/\?style>/d'
+  # próprios do placar e das estatísticas: eram o <style> de web/contest/{score,statistics}/index.html
+  # e hoje são arquivos de página do design system (shared/styles/pages/, docs/DESIGN.md)
+  cat "$MOJ_WEB/shared/styles/pages/contest-score.css" "$MOJ_WEB/shared/styles/pages/contest-statistics.css"
   cat <<'CSSEOF'
 /* exclusivos do relatório offline */
 body{background:var(--blue-bg)}

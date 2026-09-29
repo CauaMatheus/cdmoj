@@ -1,0 +1,10 @@
+/* styles/pages/contest-admin_tasks.css — CSS PRÓPRIO de contest/admin_tasks/index.html: era o <style> da página e é
+   carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
+   O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
+.field { margin:.5rem 0 }
+.field label { display:block; font-weight:600; font-size:.9rem; margin-bottom:.2rem }
+.field input, .field select { width:100%; box-sizing:border-box }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:.8rem }
+table.moj { width:100%; border-collapse:collapse; font-size:.92rem }
+table.moj th, table.moj td { padding:.35rem .4rem; border-top:1px solid #eef2f8; text-align:left }
+table.moj thead th { border-top:0; color:#64748b; font-size:.82rem }

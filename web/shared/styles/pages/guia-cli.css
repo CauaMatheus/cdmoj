@@ -1,0 +1,4 @@
+/* styles/pages/guia-cli.css — CSS PRÓPRIO de contest/cli.html, treino/cli.html, problemas/tutorial.html e treino/criar/tutorial.html: era o <style> da página e é
+   carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
+   O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
+.cheat td:first-child{white-space:nowrap;font-family:ui-monospace,monospace;font-size:.84rem}

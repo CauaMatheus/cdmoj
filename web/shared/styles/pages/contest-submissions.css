@@ -1,0 +1,4 @@
+/* styles/pages/contest-submissions.css — CSS PRÓPRIO de contest/submissions/index.html: era o <style> da página e é
+   carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
+   O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
+.subfilter { display:flex; gap:.35rem; flex-wrap:wrap; margin:.4rem 0 .6rem; }

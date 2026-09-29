@@ -1,0 +1,6 @@
+/* styles/pages/contest-allsubmissions.css — CSS PRÓPRIO de contest/allsubmissions/index.html: era o <style> da página e é
+   carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
+   O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
+.group-head { background:var(--blue-soft); color:var(--blue-dark); font-weight:700;
+  padding:.35rem .8rem; border-radius:8px; margin:1rem 0 .4rem; }
+.tools { display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; margin-bottom:.6rem; }

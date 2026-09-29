@@ -30,15 +30,25 @@ ck(){ if eval "$2"; then echo "  ok: $1"; ((pass++)); else echo "  FAIL: $1 ${DB
 files(){ find "$WEB" -type f \( -name '*.css' -o -name '*.html' -o -name '*.js' \) \
            -not -path "$WEB/shared/vendor/*" -not -name 'ui.bundle.css' -not -name '.ui.bundle.css.tmp' "$@" -print0; }
 
+# arquivos de UM tipo (vendor é código de terceiros); extra = filtros adicionais do find
+fw(){ local n=$1; shift; find "$WEB" -type f -name "$n" -not -path "$WEB/shared/vendor/*" \
+        -not -name 'ui.bundle.css' -not -name '.ui.bundle.css.tmp' "$@" -print0; }
+
 echo "== portões =="
 B="$(mktemp)"; trap 'rm -f "$B"' EXIT
 bash "$ROOT/bin/css-bundle.sh" "$WEB/shared/ui.css" > "$B"; rc=$?
 ck "manifesto shared/ui.css expande (css-bundle.sh rc=$rc)" '[[ $rc -eq 0 ]]'
 
 imports="$(sed -nE 's/^@import url\("([^"]+)"\);[[:space:]]*$/\1/p' "$WEB/shared/ui.css" | sort)"
-ondisk="$(cd "$WEB/shared" && find styles -name '*.css' | sort)"
+ondisk="$(cd "$WEB/shared" && find styles -name '*.css' -not -path 'styles/pages/*' | sort)"
 DBG="$(comm -3 <(echo "$imports" | sort -u) <(echo "$ondisk") | tr '\n' ' ')"
 ck "todo módulo de shared/styles/ está no manifesto (e só ele)" '[[ -z "$DBG" ]]'
+# styles/pages/ = CSS PRÓPRIO de uma tela, fora do manifesto: cada arquivo tem de ser carregado por
+# um <link> de alguma página, e todo <link> p/ pages/ tem de apontar p/ um arquivo que existe
+linked="$(fw '*.html' | xargs -0 grep -ohE '/shared/styles/pages/[a-zA-Z0-9_.-]+\.css' | sed 's#^/shared/##' | sort -u)"
+pages="$(cd "$WEB/shared" && find styles/pages -name '*.css' 2>/dev/null | sort)"
+DBG="$(comm -3 <(echo "$linked") <(echo "$pages") | tr '\n' ' ')"
+ck "todo arquivo de styles/pages/ é carregado por uma página (e todo <link> existe)" '[[ -z "${DBG// /}" ]]'
 DBG="$(echo "$imports" | uniq -d | tr '\n' ' ')"
 ck "nenhum módulo importado duas vezes" '[[ -z "$DBG" ]]'
 
@@ -60,9 +70,6 @@ if [[ -f $UB ]]; then
 fi
 
 echo "== catraca (legado fora do design system) =="
-# arquivos de UM tipo (vendor é código de terceiros); extra = filtros adicionais do find
-fw(){ local n=$1; shift; find "$WEB" -type f -name "$n" -not -path "$WEB/shared/vendor/*" \
-        -not -name 'ui.bundle.css' -not -name '.ui.bundle.css.tmp' "$@" -print0; }
 # conta ocorrências (grep -o) de uma ERE nos arquivos que chegam por NUL no stdin
 occ(){ local n; n="$(xargs -0 grep -ohE -- "$1" 2>/dev/null | wc -l)"; echo "${n//[^0-9]/}"; }
 Q="[\"'\`]"   # aspa simples, dupla ou crase (grep não entende \x27)

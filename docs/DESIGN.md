@@ -19,7 +19,18 @@ web/shared/styles/
     code-editor  chart  footer  panel
   domains/                        o que é de UMA área do produto
     statement  home  news  problem  treino-home  contest-list  score
+  pages/                          CSS PRÓPRIO de uma tela, FORA do manifesto: cada página o carrega
+                                  com um <link> seu (ex.: pages/problemas-editar.css)
 ```
+
+**`pages/`**: o que só uma tela usa não vai para o bundle de todo mundo. Cada página carrega o seu
+arquivo com um `<link>` logo depois do `ui.css`, que é o ponto onde o `<style>` dela ficava, então
+a cascata é a de antes. Arquivo compartilhado por telas irmãs é permitido (`pages/guia-cli.css`
+serve aos quatro guias de CLI e de autoria). Quando uma regra de `pages/` passar a servir a mais de
+uma área, ela sobe para `components/`. **Exceção:** os roteiros de ensaio
+(`web/contest/ajuda/ensaio/{pt,en,es}.html`) mantêm o `<style>` inline, porque o
+`server/bin/build-ensaio-pdf.sh` converte o HTML em PDF pelo LibreOffice, que não resolve
+`<link href="/shared/…">`.
 
 As 52 páginas continuam carregando só `<link rel="stylesheet" href="/shared/ui.css">`. Nenhuma
 página precisa saber em que módulo mora uma classe. Em produção esse endereço entrega o **bundle**
@@ -115,6 +126,8 @@ os módulos. Para editar CSS localmente, o mais simples é apagar o bundle
 - o CSS expandido é seguro para o relatório offline;
 - se `web/shared/ui.bundle.css` existe, ele é idêntico ao expandido de agora (fora a linha de
   cabeçalho). Bundle velho significa produção servindo estilo velho sem ninguém perceber.
+- todo arquivo de `styles/pages/` é carregado por alguma página, e todo `<link>` para `pages/`
+  aponta para um arquivo que existe.
 
 **Catraca** (o legado não pode crescer): hex fora do `tokens.css`, blocos e linhas de `<style>`
 no HTML, `style="…"`, estilo aplicado por JS, `<style>` criado por JS e `.css` avulso. Os

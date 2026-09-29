@@ -1,0 +1,9 @@
+/* styles/pages/treino-editores.css — CSS PRÓPRIO de treino/editores/index.html: era o <style> da página e é
+   carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
+   O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
+.stat-cards { display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0; }
+.stat-card { flex:1; min-width:150px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:1rem 1.1rem; box-shadow:var(--shadow-sm); }
+.big-num { font-size:1.9rem; font-weight:800; line-height:1; font-variant-numeric:tabular-nums; }
+.big-sub { color:var(--muted); font-size:.88rem; margin-top:.2rem; }
+svg.chart { max-width:100%; height:auto; display:block; margin:0 auto; }
+table.moj td.n, table.moj th.n { text-align:right; font-variant-numeric:tabular-nums; }

@@ -1639,8 +1639,10 @@ mexa na outra. O índice separa as coleções por `\u001f` (nome é texto livre:
   fallback textarea), gráficos SVG, bandeiras/assets offline.
 - **DESIGN SYSTEM (`docs/DESIGN.md`, 2026-09-29)**: `shared/ui.css` é só o MANIFESTO (uma linha
   `@import url("styles/….css");` por módulo; a ORDEM é a cascata) e o estilo mora em
-  `shared/styles/` — `tokens.css` (primitivos › SEMÂNTICOS `--color-*` › aliases legados `--blue`,
-  `--line`…), `base`, `utilities`, `responsive`, `print`, `components/`, `domains/`. Tela nova usa
+  `shared/styles/` — `tokens.css` (primitivos › SEMÂNTICOS `--color-*` › COMPONENTES › aliases
+  legados `--blue`, `--line`…), `base`, `utilities`, `responsive`, `print`, `components/`, `domains/`
+  e `pages/` (CSS PRÓPRIO de uma tela, fora do manifesto, por `<link>` no ponto do antigo `<style>`;
+  exceção: o `ensaio/*.html` segue inline porque vira PDF pelo LibreOffice). Tela nova usa
   componente + token SEMÂNTICO; nada de hex, `<style>`, `style="…"` ou `el(…,{style:'…'})` de
   aparência (exceção: valor que vem do DADO, passado como variável CSS). Quem lê o CSS como TEXTO
   expande os imports: `server/bin/css-bundle.sh` (relatório offline, testes) e o gêmeo

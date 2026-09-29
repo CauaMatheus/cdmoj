@@ -1,0 +1,7 @@
+/* styles/pages/contest-print.css — CSS PRÓPRIO de contest/print/index.html: era o <style> da página e é
+   carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
+   O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
+.bk-row { display:flex; justify-content:space-between; align-items:center; gap:.6rem;
+  border-top:1px solid var(--line); padding:.4rem 0; flex-wrap:wrap }
+.bk-up { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin:.4rem 0 .8rem }
+.pr-badge { font-size:.8rem; padding:.05rem .4rem; border-radius:.5rem; border:1px solid var(--line) }

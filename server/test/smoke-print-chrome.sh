@@ -50,7 +50,7 @@ ck "ui.css esconde #mojChiefAlert na impressão"   'hides "$UI" "#mojChiefAlert"
 
 echo "== etiquetas (contest/badges): a grade Pimaco não pode ser empurrada =="
 B="$WEB/contest/badges/index.html"
-BP="$(print_css "$B")"
+BP="$(print_css "$WEB/shared/styles/pages/contest-badges.css")"   # o CSS próprio da página (era o <style> dela)
 DBG="$BP"
 ck "etiquetas: o @media print esconde .sitefoot"       'hides "$BP" .sitefoot'
 ck "etiquetas: o @media print esconde #mojChiefAlert"  'hides "$BP" "#mojChiefAlert"'
