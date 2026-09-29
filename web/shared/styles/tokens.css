@@ -115,6 +115,118 @@
   --qual-draft-chip-bg:#f5e8b8; --qual-draft-sub:#8a7420;
   --virtual-pill-text:#1f4fa8; --virtual-pill-text-dark:#9cc0ff;
 
+  /* ---------- 3b. PÁGINAS (cor de UMA tela só — styles/pages/<tela>.css) ----------
+     Nome = <tela>-<seletor>-<propriedade>. Valor idêntico ao que estava no CSS da página.
+     Candidatas a virar semânticas (várias são quase iguais a um token existente). */
+  /* contest-admin */
+  --contest-admin-td-ua-text:#475569; --contest-admin-flag-anom-text:#b3261e;
+  --contest-admin-flag-warn-text:#b8730a; --contest-admin-pill-warn-bg:#fff3d6;
+  --contest-admin-pill-warn-text:#7a5c00; --contest-admin-pill-warn-border:#f3df9e;
+  --contest-admin-tr-flag-row-bad-td-bg:#fff5f4; --contest-admin-v-ok-text:#16794a;
+  --contest-admin-spark-row-peak-bg:#fff1f0; --contest-admin-spark-bar-bg:#1e57c4;
+  --contest-admin-spark-bar-bg-2:#b3261e; --contest-admin-tr-audit-login-td-text:#475569;
+  --contest-admin-tr-audit-admin-td-bg:#f6f9ff; --contest-admin-lang-chip-border:#e3e9f2;
+  --contest-admin-acc-item-border:#d7dee8; --contest-admin-acc-head-bg:#f4f9ff;
+  --contest-admin-ck-border:#eef2f7; --contest-admin-gen-card-border:#d7dee8;
+  /* contest-badges */
+  --contest-badges-sheet-text:#000; --contest-badges-univ-text:#333;
+  --contest-badges-cred-shared-text:#333; --contest-badges-tag-text:#333;
+  --contest-badges-foot-text:#444; --contest-badges-lbl-border:#b9b9b9;
+  /* contest-chief */
+  --contest-chief-tabbar-border:#e3e9f2; --contest-chief-tabbar-button-border:#d7dee8;
+  --contest-chief-button-active-bg:#1e57c4; --contest-chief-button-active-border:#1e57c4;
+  /* contest-clarification */
+  --contest-clarification-clar-border:#e3e9f2; --contest-clarification-clar-answered-border:#b6e7c6;
+  --contest-clarification-clar-notice-border:#f3df9e; --contest-clarification-clar-notice-bg:#fffdf5;
+  --contest-clarification-ans-bg:#f1f8f3; --contest-clarification-asker-text:#1e57c4;
+  --contest-clarification-clar-sec-border:#e3e9f2;
+  /* contest-jplag */
+  --contest-jplag-sim-high-text:#b3261e; --contest-jplag-jp-bar-bg:#f8fafc;
+  /* contest-log */
+  --contest-log-td-ua-text:#475569; --contest-log-alert-bg:#fff7e0; --contest-log-alert-border:#f3df9e;
+  --contest-log-alert-text:#7a5c00; --contest-log-flag-anom-text:#b3261e;
+  /* contest-score-reveal */
+  --contest-score-reveal-body-bg:#0f172a; --contest-score-reveal-muted-text:#94a3b8;
+  --contest-score-reveal-flash-up-0-bg:#d7f5dd; --contest-score-reveal-flash-down-0-bg:#fde0e4;
+  /* contest-score */
+  --contest-score-flash-up-0-bg:#d7f5dd; --contest-score-flash-down-0-bg:#fde0e4;
+  /* contest-staff */
+  --contest-staff-pr-auto-on-border:#0a7;
+  /* contest-statistics */
+  --contest-statistics-stat-card-border:#e3e9f2;
+  /* contest */
+  --contest-notifypulse-50-bg:#ffe08a; --contest-notify-banner-urgent-bg:#ffe08a;
+  --contest-prob-item-accepted-border:#abf7c3; --contest-prob-item-accepted-bg:#e2ffe9;
+  --contest-prob-row-bg:#f4f9ff;
+  /* problemas-editar */
+  --problemas-editar-box-header-border:#eee; --problemas-editar-box-header-text:#111;
+  --problemas-editar-caliblog-text:#111; --problemas-editar-td-bad-text:#ff8a8a;
+  --problemas-editar-td-drift-text:#eab308; --problemas-editar-got-text:#e0a64b;
+  --problemas-editar-solsum-ok-border:#2e6b44; --problemas-editar-solsum-todo-border:#8a6a2a;
+  --problemas-editar-solsum-bad-border:#8a2e2e; --problemas-editar-dot-bg:#e0a64b;
+  --problemas-editar-running-text:#ffd98a; --problemas-editar-spin-border:#ffd98a;
+  --problemas-editar-collchip-on-bg:#173d23; --problemas-editar-collchip-on-text:#7ee2a0;
+  --problemas-editar-pill-ok-bg:#173d23; --problemas-editar-pill-ok-text:#7ee2a0;
+  --problemas-editar-pill-no-bg:#3d1717; --problemas-editar-pill-no-text:#ffb0b0;
+  --problemas-editar-pill-mut-bg:#22262e; --problemas-editar-pill-mut-text:#9fb0c8;
+  --problemas-editar-pill-warn-bg:#3d3217; --problemas-editar-pill-warn-text:#ffd98a;
+  --problemas-editar-dot-bg-2:#5a6473; --problemas-editar-dot-bg-3:#3ad07a;
+  --problemas-editar-dot-bg-4:#e0564b; --problemas-editar-gtotal-ok-text:#7ee2a0;
+  --problemas-editar-gtotal-no-text:#ffd98a; --problemas-editar-sb-good-bg:#173d23;
+  --problemas-editar-sb-good-text:#7ee2a0; --problemas-editar-sb-wrong-bg:#3d1717;
+  --problemas-editar-sb-wrong-text:#ffb0b0; --problemas-editar-sb-slow-bg:#3d3417;
+  --problemas-editar-sb-slow-text:#ffd98a; --problemas-editar-sb-pass-bg:#22262e;
+  --problemas-editar-sb-pass-text:#9fb0c8; --problemas-editar-sb-upcoming-bg:#1c2030;
+  --problemas-editar-sb-upcoming-text:#8aa0d0; --problemas-editar-sb-scr-bg:#1c2c3d;
+  --problemas-editar-sb-scr-text:#8ec9ff;
+  /* problemas */
+  --problemas-pill-ok-bg:#173d23; --problemas-pill-ok-text:#7ee2a0; --problemas-pill-no-bg:#3d1717;
+  --problemas-pill-no-text:#ffb0b0; --problemas-pill-warn-bg:#3d3417;
+  --problemas-pill-warn-text:#ffe08a; --problemas-pill-mut-bg:#22262e;
+  --problemas-pill-mut-text:#9fb0c8; --problemas-x-text:#e66;
+  /* status */
+  --status-banner-ok-bg:#e7f7ec; --status-banner-ok-text:#137a3b; --status-banner-ok-border:#b6e7c6;
+  --status-banner-warn-bg:#fff7e0; --status-banner-warn-border:#f3df9e;
+  --status-banner-down-bg:#fdeaea; --status-banner-down-text:#b3261e;
+  --status-banner-down-border:#f3c0bd; --status-dot-ok-bg:#1f9d55; --status-dot-warn-bg:#d99e00;
+  --status-dot-down-bg:#d9433f; --status-stat-card-border:#e3e9f2; --status-ind-ok-text:#137a3b;
+  --status-ind-down-text:#b3261e; --status-upd-text:#94a3b8;
+  /* treino-admin */
+  --treino-admin-stat-card-hl-border:#cfe0f6; --treino-admin-btn-danger-bg:#e0436c;
+  /* treino-ajuda */
+  --treino-ajuda-pre-code-bg:#0f172a;
+  /* treino-cadastro */
+  --treino-cadastro-btn-bg:#2563eb; --treino-cadastro-tg-bg:#0088cc;
+  --treino-cadastro-msg-ok-text:#166534; --treino-cadastro-msg-err-bg:#fee2e2;
+  --treino-cadastro-msg-err-text:#991b1b; --treino-cadastro-msg-info-bg:#e0f2fe;
+  --treino-cadastro-msg-info-text:#075985;
+  /* treino-criar */
+  --treino-criar-prob-row-border:#e3e9f2; --treino-criar-bank-results-border:#e3e9f2;
+  --treino-criar-i-text:#94a3b8; --treino-criar-result-card-bg:#e7f7ec;
+  --treino-criar-result-card-border:#b6e7c6; --treino-criar-tabs-button-border:#d7dee8;
+  --treino-criar-button-active-bg:#1e57c4; --treino-criar-button-active-border:#1e57c4;
+  --treino-criar-warn-box-bg:#fff7e0; --treino-criar-warn-box-border:#f3df9e;
+  --treino-criar-warn-box-text:#7a5c00; --treino-criar-tag-chip-bg:#e8f0fe;
+  --treino-criar-tag-chip-text:#1850a9; --treino-criar-tag-chip-border:#c5d9f5;
+  --treino-criar-tag-chip-a-text:#1850a9; --treino-criar-lang-chip-border:#e3e9f2;
+  --treino-criar-steps-button-border:#d7dee8; --treino-criar-button-done-border:#8fbf9f;
+  --treino-criar-button-done-bg:#f2faf4; --treino-criar-start-card-border:#e3e9f2;
+  /* treino-stat */
+  --treino-stat-stat-card-hl-border:#cfe0f6; --treino-stat-pbar-done-i-bg:#22a55a;
+  --treino-stat-abadge-bg:#fffdf2; --treino-stat-abadge-border:#f0e6bb;
+  --treino-stat-abadge-text:#7a5b00; --treino-stat-abadge-lock-bg:#f6f8fb;
+  --treino-stat-abadge-lock-text:#a9b4c3;
+  /* treino-virtual */
+  --treino-virtual-vr-clock-low-text:#c0392b; --treino-virtual-ok-text:#1e8449;
+  --treino-virtual-no-text:#c0392b;
+  /* treino */
+  --treino-bn-purple-bg:#4a37c9; --treino-bn-green-bg:#2fb56b; --treino-bn-orange-bg:#f6ad55;
+  --treino-bn-orange-bg-2:#dd6b20; --treino-bn-teal-bg:#38b2ac; --treino-bn-teal-bg-2:#2c7a7b;
+  --treino-bn-pink-bg:#ed64a6; --treino-bn-pink-bg-2:#b83280; --treino-bn-slate-bg:#718096;
+  --treino-bn-slate-bg-2:#4a5568; --treino-pbar-done-i-bg:#22a55a; --treino-trend-li-bg:#f4f8ff;
+  --treino-sorttabs-a-bg:#f3f7fd; --treino-input-type-checkbox-accentcolo:#4a37c9;
+  --treino-kids-border:#e7ecf5; --treino-collection-on-bg:#4a37c9;
+
   /* ---------- 4. LEGADO (alias; não crie uso novo) ---------- */
   --blue:var(--color-primary); --blue-dark:var(--color-primary-strong);
   --blue-soft:var(--color-primary-soft); --blue-bg:var(--color-page);

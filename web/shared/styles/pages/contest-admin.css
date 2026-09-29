@@ -7,44 +7,44 @@
 .field input[type=checkbox], .field input[type=radio] { width:auto; vertical-align:middle; margin:0 .45em 0 0 }
 .field label:has(> input[type=checkbox]), .field label:has(> input[type=radio]) { display:inline-flex; align-items:center; font-weight:400 }
 .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:.8rem }
-.cred { font-family:var(--mono,monospace); background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:.1rem .4rem }
+.cred { font-family:var(--font-mono,monospace); background:var(--color-surface); border:1px solid var(--color-neutral); border-radius:6px; padding:.1rem .4rem }
 table.moj { width:100%; border-collapse:collapse; font-size:.9rem }
-table.moj th, table.moj td { padding:.35rem .4rem; border-top:1px solid #eef2f8; text-align:left }
-table.moj thead th { border-top:0; color:#64748b; font-size:.82rem }
-td.ua { max-width:300px; word-break:break-all; white-space:normal; font-size:.78rem; color:#475569 }
-td.ip { font-family:var(--mono,monospace); max-width:150px; word-break:break-all; white-space:normal }
-.flag-anom { color:#b3261e; font-weight:700 }
-.flag-warn { color:#b8730a; font-weight:600 }
-.pill.warn { background:#fff3d6; color:#7a5c00; border:1px solid #f3df9e }
-tr.flag-row-bad td { background:#fff5f4 }
-.v-ok { color:#16794a; font-weight:700 }
+table.moj th, table.moj td { padding:.35rem .4rem; border-top:1px solid var(--color-pending-bg); text-align:left }
+table.moj thead th { border-top:0; color:var(--color-text-muted); font-size:.82rem }
+td.ua { max-width:300px; word-break:break-all; white-space:normal; font-size:.78rem; color:var(--contest-admin-td-ua-text) }
+td.ip { font-family:var(--font-mono,monospace); max-width:150px; word-break:break-all; white-space:normal }
+.flag-anom { color:var(--contest-admin-flag-anom-text); font-weight:700 }
+.flag-warn { color:var(--contest-admin-flag-warn-text); font-weight:600 }
+.pill.warn { background:var(--contest-admin-pill-warn-bg); color:var(--contest-admin-pill-warn-text); border:1px solid var(--contest-admin-pill-warn-border) }
+tr.flag-row-bad td { background:var(--contest-admin-tr-flag-row-bad-td-bg) }
+.v-ok { color:var(--contest-admin-v-ok-text); font-weight:700 }
 .row-actions { display:flex; gap:.3rem; flex-wrap:wrap }
 .spark { display:flex; flex-direction:column; gap:2px }
 .spark-row { display:flex; align-items:center; gap:.5rem; padding:1px 3px }
-.spark-row.peak { background:#fff1f0; border-radius:4px }
-.spark-t { min-width:46px; color:#64748b }
-.spark-bar { height:12px; background:#1e57c4; border-radius:3px; min-width:2px }
-.spark-row.peak .spark-bar { background:#b3261e }
-tr.audit-login td { color:#475569 }
-tr.audit-admin td { background:#f6f9ff }
+.spark-row.peak { background:var(--contest-admin-spark-row-peak-bg); border-radius:4px }
+.spark-t { min-width:46px; color:var(--color-text-muted) }
+.spark-bar { height:12px; background:var(--contest-admin-spark-bar-bg); border-radius:3px; min-width:2px }
+.spark-row.peak .spark-bar { background:var(--contest-admin-spark-bar-bg-2) }
+tr.audit-login td { color:var(--contest-admin-tr-audit-login-td-text) }
+tr.audit-admin td { background:var(--contest-admin-tr-audit-admin-td-bg) }
 .lang-grid { display:flex; flex-wrap:wrap; gap:.3rem .8rem; margin:.3rem 0 }
-.lang-chip { display:inline-flex; align-items:center; font-weight:400; border:1px solid #e3e9f2; border-radius:8px; padding:.2rem .5rem; background:#fff }
+.lang-chip { display:inline-flex; align-items:center; font-weight:400; border:1px solid var(--contest-admin-lang-chip-border); border-radius:8px; padding:.2rem .5rem; background:var(--color-surface) }
 /* sanfona de problemas */
-.acc-item { border:1px solid #d7dee8; border-radius:8px; margin:.4rem 0; background:#fff; overflow:hidden }
+.acc-item { border:1px solid var(--contest-admin-acc-item-border); border-radius:8px; margin:.4rem 0; background:var(--color-surface); overflow:hidden }
 .acc-head { display:flex; align-items:center; gap:.4rem; padding:.5rem .7rem; cursor:pointer; flex-wrap:wrap }
-.acc-head:hover { background:#f4f9ff }
-.acc-tog { color:#64748b; width:1em }
-.acc-body { padding:.3rem .9rem .8rem; border-top:1px solid #eef2f8 }
+.acc-head:hover { background:var(--contest-admin-acc-head-bg) }
+.acc-tog { color:var(--color-text-muted); width:1em }
+.acc-body { padding:.3rem .9rem .8rem; border-top:1px solid var(--color-pending-bg) }
 /* Central: itens da checklist e cartões de "gerar" */
-.ck { display:flex; gap:.5rem; align-items:flex-start; padding:.4rem 0; border-bottom:1px solid #eef2f7 }
+.ck { display:flex; gap:.5rem; align-items:flex-start; padding:.4rem 0; border-bottom:1px solid var(--contest-admin-ck-border) }
 .ck:last-child { border-bottom:0 }
 .ck .ico { width:1.4rem; text-align:center; flex:0 0 auto }
 .ck .txt { flex:1; min-width:0 }
 .ck .txt b { display:block }
-.gen-card { border:1px solid #d7dee8; border-radius:10px; padding:.6rem .7rem; background:#fff;
+.gen-card { border:1px solid var(--contest-admin-gen-card-border); border-radius:10px; padding:.6rem .7rem; background:var(--color-surface);
   display:flex; flex-direction:column; gap:.35rem }
 .gen-card h4 { margin:0; font-size:.95rem }
-.gen-card .st { font-size:.82rem; color:#64748b; flex:1 }
+.gen-card .st { font-size:.82rem; color:var(--color-text-muted); flex:1 }
 @media (max-width:820px){
   /* no telefone o texto usa a largura toda e o botão cai numa linha própria */
   .ck { flex-wrap:wrap }

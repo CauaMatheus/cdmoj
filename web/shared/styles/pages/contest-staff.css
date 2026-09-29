@@ -1,8 +1,8 @@
 /* styles/pages/contest-staff.css — CSS PRÓPRIO de contest/staff/index.html: era o <style> da página e é
    carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
    O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
-.pr-badge { font-size:.8rem; padding:.05rem .4rem; border-radius:.5rem; border:1px solid var(--line); white-space:nowrap }
+.pr-badge { font-size:.8rem; padding:.05rem .4rem; border-radius:.5rem; border:1px solid var(--color-border); white-space:nowrap }
 .pr-auto { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin:.2rem 0 .8rem;
-  padding:.5rem .7rem; border:1px solid var(--line); border-radius:.6rem }
-.pr-auto.on { border-color:#0a7; background:rgba(0,170,119,.06) }
+  padding:.5rem .7rem; border:1px solid var(--color-border); border-radius:.6rem }
+.pr-auto.on { border-color:var(--contest-staff-pr-auto-on-border); background:rgba(0,170,119,.06) }
 table.moj td .row { gap:.35rem; flex-wrap:wrap }

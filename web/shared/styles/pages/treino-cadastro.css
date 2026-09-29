@@ -1,14 +1,14 @@
 /* styles/pages/treino-cadastro.css — CSS PRÓPRIO de treino/cadastro/index.html: era o <style> da página e é
    carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
    O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
-.card{max-width:34rem;margin:2rem auto;padding:1.5rem;border:1px solid var(--border,#e2e8f0);border-radius:.75rem}
+.card{max-width:34rem;margin:2rem auto;padding:1.5rem;border:1px solid var(--color-border-strong);border-radius:.75rem}
 .card h1{margin-top:0;font-size:1.4rem}
 .card label{display:block;margin:.75rem 0 .25rem;font-weight:600}
-.card input{width:100%;padding:.55rem;border:1px solid var(--border,#cbd5e1);border-radius:.5rem;font-size:1rem}
-.card .hint{color:#64748b;font-size:.85rem;margin:.25rem 0 0}
-.card .btn{margin-top:1rem;padding:.6rem 1rem;border:0;border-radius:.5rem;background:#2563eb;color:#fff;font-size:1rem;cursor:pointer}
+.card input{width:100%;padding:.55rem;border:1px solid var(--color-border-strong);border-radius:.5rem;font-size:1rem}
+.card .hint{color:var(--color-text-muted);font-size:.85rem;margin:.25rem 0 0}
+.card .btn{margin-top:1rem;padding:.6rem 1rem;border:0;border-radius:.5rem;background:var(--treino-cadastro-btn-bg);color:var(--color-text-inverse);font-size:1rem;cursor:pointer}
 .card .btn:disabled{opacity:.6;cursor:default}
-.tg{display:inline-block;margin-top:1rem;padding:.6rem 1rem;border-radius:.5rem;background:#0088cc;color:#fff;text-decoration:none;font-weight:600}
+.tg{display:inline-block;margin-top:1rem;padding:.6rem 1rem;border-radius:.5rem;background:var(--treino-cadastro-tg-bg);color:var(--color-text-inverse);text-decoration:none;font-weight:600}
 .msg{margin-top:1rem;padding:.75rem;border-radius:.5rem}
-.msg.ok{background:#dcfce7;color:#166534}.msg.err{background:#fee2e2;color:#991b1b}.msg.info{background:#e0f2fe;color:#075985}
+.msg.ok{background:var(--color-success-bg);color:var(--treino-cadastro-msg-ok-text)}.msg.err{background:var(--treino-cadastro-msg-err-bg);color:var(--treino-cadastro-msg-err-text)}.msg.info{background:var(--treino-cadastro-msg-info-bg);color:var(--treino-cadastro-msg-info-text)}
 .hidden{display:none}

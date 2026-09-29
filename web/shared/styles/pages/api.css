@@ -1,4 +1,4 @@
 /* styles/pages/api.css — CSS PRÓPRIO de api/index.html: era o <style> da página e é
    carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
    O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
-#swagger-ui { background:#fff; } .topbar.swagger-ui { display:none; }
+#swagger-ui { background:var(--color-surface); } .topbar.swagger-ui { display:none; }

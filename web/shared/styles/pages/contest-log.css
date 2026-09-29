@@ -2,9 +2,9 @@
    carregado só por ela(s), por um <link> no MESMO ponto do <head> (a cascata é a de antes).
    O que for comum a mais de uma tela vai para components/ (docs/DESIGN.md). */
 table.moj { width:100%; border-collapse:collapse; font-size:.9rem }
-table.moj th, table.moj td { padding:.35rem .4rem; border-top:1px solid #eef2f8; text-align:left }
-table.moj thead th { border-top:0; color:#64748b; font-size:.82rem }
-td.ua { max-width:340px; word-break:break-all; white-space:normal; font-size:.8rem; color:#475569 }
-td.ip { font-family:var(--mono,monospace); max-width:160px; word-break:break-all; white-space:normal }
-.alert { background:#fff7e0; border:1px solid #f3df9e; color:#7a5c00; padding:.5rem .7rem; border-radius:8px; margin:.4rem 0; font-size:.9rem }
-.flag-anom { color:#b3261e; font-weight:700 }
+table.moj th, table.moj td { padding:.35rem .4rem; border-top:1px solid var(--color-pending-bg); text-align:left }
+table.moj thead th { border-top:0; color:var(--color-text-muted); font-size:.82rem }
+td.ua { max-width:340px; word-break:break-all; white-space:normal; font-size:.8rem; color:var(--contest-log-td-ua-text) }
+td.ip { font-family:var(--font-mono,monospace); max-width:160px; word-break:break-all; white-space:normal }
+.alert { background:var(--contest-log-alert-bg); border:1px solid var(--contest-log-alert-border); color:var(--contest-log-alert-text); padding:.5rem .7rem; border-radius:8px; margin:.4rem 0; font-size:.9rem }
+.flag-anom { color:var(--contest-log-flag-anom-text); font-weight:700 }

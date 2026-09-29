@@ -4,16 +4,16 @@
 /* Login full-screen do contest (porta do protótipo, adaptado à identidade MOJ) */
 .contest-login-bg { min-height:100vh; display:flex; flex-direction:column; justify-content:center;
   align-items:center; padding:2rem 1rem; }
-.contest-login-bg .contest-name { font-size:2.3rem; font-weight:800; color:var(--blue-dark);
+.contest-login-bg .contest-name { font-size:2.3rem; font-weight:800; color:var(--color-primary-strong);
   text-align:center; margin:.4rem 0 1.4rem; max-width:900px; }
-.contest-login-bg .time-block { color:var(--muted); text-align:center; margin-bottom:1.4rem; font-size:1.05rem; }
-.contest-login-bg .countdown-big { font-size:3rem; color:var(--warn); font-weight:800;
+.contest-login-bg .time-block { color:var(--color-text-muted); text-align:center; margin-bottom:1.4rem; font-size:1.05rem; }
+.contest-login-bg .countdown-big { font-size:3rem; color:var(--color-warning); font-weight:800;
   font-variant-numeric:tabular-nums; letter-spacing:.05em; margin:.3rem 0 1.4rem; }
-.contest-login-bg .countdown-lbl { display:block; font-size:1rem; color:var(--blue-dark); font-weight:600; margin-bottom:.2rem; }
-.login-card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-  box-shadow:var(--shadow); padding:1.8rem 2rem; min-width:320px; max-width:380px; width:100%; }
+.contest-login-bg .countdown-lbl { display:block; font-size:1rem; color:var(--color-primary-strong); font-weight:600; margin-bottom:.2rem; }
+.login-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card); padding:1.8rem 2rem; min-width:320px; max-width:380px; width:100%; }
 .login-card .field { margin:.6rem 0; }
-.login-card .field label { font-weight:600; font-size:.9rem; color:var(--blue-dark); }
+.login-card .field label { font-weight:600; font-size:.9rem; color:var(--color-primary-strong); }
 .login-card .btn { width:100%; margin-top:.6rem; }
 .login-mini-brand { display:flex; align-items:center; gap:.5rem; margin-bottom:1rem; opacity:.9; }
 .login-mini-brand img { height:30px; }
@@ -22,39 +22,39 @@
 
 /* banner de novidades (notícias/clarifications) + badge de não lidas na nav */
 .notify-banner { display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
-  background:var(--blue-soft); color:var(--blue-dark); border:1px solid var(--blue);
+  background:var(--color-primary-soft); color:var(--color-primary-strong); border:1px solid var(--color-primary);
   border-radius:10px; padding:.5rem .9rem; margin:.6rem .9rem 0; font-weight:600; }
-.notify-banner a { color:var(--blue-dark); text-decoration:underline; cursor:pointer; }
+.notify-banner a { color:var(--color-primary-strong); text-decoration:underline; cursor:pointer; }
 /* clarification é crítico: pisca p/ chamar atenção enquanto houver não lida */
 .notify-banner.urgent { animation: notifyPulse 1.2s ease-in-out infinite; }
 @keyframes notifyPulse {
-  0%,100% { background:var(--blue-soft); border-color:var(--blue); }
-  50%     { background:#ffe08a; border-color:var(--warn,#e11); box-shadow:0 0 0 3px rgba(225,17,17,.18); }
+  0%,100% { background:var(--color-primary-soft); border-color:var(--color-primary); }
+  50%     { background:var(--contest-notifypulse-50-bg); border-color:var(--color-warning); box-shadow:0 0 0 3px rgba(225,17,17,.18); }
 }
-@media (prefers-reduced-motion: reduce) { .notify-banner.urgent { animation:none; background:#ffe08a; border-color:var(--warn,#e11); } }
+@media (prefers-reduced-motion: reduce) { .notify-banner.urgent { animation:none; background:var(--contest-notify-banner-urgent-bg); border-color:var(--color-warning); } }
 .nav-badge { display:inline-block; min-width:1.1rem; padding:0 .35rem; border-radius:999px;
-  background:var(--warn,#e11); color:#fff; font-size:.72rem; font-weight:800; text-align:center; }
+  background:var(--color-warning); color:var(--color-text-inverse); font-size:.72rem; font-weight:800; text-align:center; }
 
 /* problemas (accordion) */
-.prob-item { border:1px solid var(--line); border-radius:10px; margin:.5rem 0; overflow:hidden; background:#fff; }
+.prob-item { border:1px solid var(--color-border); border-radius:10px; margin:.5rem 0; overflow:hidden; background:var(--color-surface); }
 /* RESOLVIDO: tom claro da cor no fundo + a cor REAL na barra lateral (com contorno — é o
    contorno que faz a barra do balão BRANCO existir) + o selo "✔ resolvido". A linha NÃO é
    mais pintada com a cor crua: era isso que sumia no branco e que deixava título, hover e
    links ilegíveis nas cores escuras. As variáveis vêm do tintProbItem (contest.js). */
-.prob-item.accepted { border-color:var(--bln-edge,#abf7c3); background:var(--bln-tint,#e2ffe9);
+.prob-item.accepted { border-color:var(--bln-edge,var(--contest-prob-item-accepted-border)); background:var(--bln-tint,var(--contest-prob-item-accepted-bg));
   position:relative; }
 .prob-item.accepted::before { content:''; position:absolute; left:0; top:0; bottom:0; width:7px;
-  background:var(--bln,#e2ffe9); border-right:1px solid var(--bln-edge,#abf7c3); }
+  background:var(--bln,var(--contest-prob-item-accepted-bg)); border-right:1px solid var(--bln-edge,var(--contest-prob-item-accepted-border)); }
 .prob-item.accepted .prob-row { padding-left:1.2rem; }
 .prob-ok { margin-left:.5rem; flex:none; }
 .prob-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.6rem .9rem; cursor:pointer; flex-wrap:wrap; }
-.prob-row:hover { background:#f4f9ff; }
+.prob-row:hover { background:var(--contest-prob-row-bg); }
 .prob-left { display:flex; align-items:center; gap:.5rem; min-width:0; }
-.prob-toggle { color:var(--muted); font-size:.8rem; width:1em; }
+.prob-toggle { color:var(--color-text-muted); font-size:.8rem; width:1em; }
 .prob-sn { font-weight:800; }
-.prob-full { color:var(--ink); }
+.prob-full { color:var(--color-text); }
 .prob-right { display:flex; align-items:center; gap:.7rem; flex-wrap:wrap; }
-.prob-detail { padding:.2rem .9rem 1rem; border-top:1px solid var(--line); }
+.prob-detail { padding:.2rem .9rem 1rem; border-top:1px solid var(--color-border); }
 .prob-submit { display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
 .balloon-svg { width:20px; height:23px; vertical-align:middle; }
 /* problema no contest: enunciado | editor lado a lado, com modos de colapso */
@@ -66,7 +66,7 @@
 .prob-cols.only-editor .prob-statement-col { display:none; }
 .prob-viewmode { display:flex; gap:.3rem; flex-wrap:wrap; margin:.5rem 0; }
 .prob-viewmode .btn { padding:.3rem .7rem; font-size:.85rem; }
-.prob-viewmode .btn.active { background:var(--blue); color:#fff; }
+.prob-viewmode .btn.active { background:var(--color-primary); color:var(--color-text-inverse); }
 .subfilter { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:.6rem; }
 .subfilter .tag { cursor:pointer; }
-.subfilter .tag.active { background:var(--blue); color:#fff; }
+.subfilter .tag.active { background:var(--color-primary); color:var(--color-text-inverse); }

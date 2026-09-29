@@ -5,36 +5,36 @@
 .controls label { white-space:nowrap; font-weight:400; }
 .controls input[type=number] { width:4.6rem; }
 .dim-grid { display:flex; flex-wrap:wrap; gap:.3rem .8rem; align-items:center; }
-.dim-grid label { font-size:.85rem; color:var(--muted, #666); }
+.dim-grid label { font-size:.85rem; color:var(--color-text-muted); }
 
 /* folha A4 física: dimensões em mm; etiquetas posicionadas em absoluto */
 #sheets { margin:1rem auto; }
 .sheet { width:210mm; height:297mm; position:relative; overflow:hidden;
-         background:#fff; color:#000; margin:0 auto 8mm;
-         box-shadow:0 0 6px rgba(0,0,0,.3);
+         background:var(--color-surface); color:var(--contest-badges-sheet-text); margin:0 auto 8mm;
+         box-shadow:0 0 6px rgba(var(--rgb-black),.3);
          page-break-after:always; break-after:page; }
 .lbl { position:absolute; overflow:hidden; box-sizing:border-box; }
 .lbl-inner { position:relative; width:100%; height:100%; box-sizing:border-box;
              padding:2mm 2.5mm; display:flex; flex-direction:column;
              align-items:center; justify-content:center; text-align:center; gap:.4mm; }
 .lbl .name  { font-weight:700; line-height:1.12; }
-.lbl .univ  { color:#333; line-height:1.1; }
+.lbl .univ  { color:var(--contest-badges-univ-text); line-height:1.1; }
 .lbl .cred  { font-family:"Fira Code","DejaVu Sans Mono",ui-monospace,Menlo,Consolas,monospace;
               font-weight:600; letter-spacing:.02em; white-space:nowrap; }
 /* credencial que NÃO é do contest (conta compartilhada): rótulo, não senha */
-.lbl .cred.shared { font-family:inherit; font-weight:400; font-style:italic; color:#333; }
-.lbl .tag   { position:absolute; top:1mm; right:2mm; font-size:2.6mm; color:#333; }
+.lbl .cred.shared { font-family:inherit; font-weight:400; font-style:italic; color:var(--contest-badges-cred-shared-text); }
+.lbl .tag   { position:absolute; top:1mm; right:2mm; font-size:2.6mm; color:var(--contest-badges-tag-text); }
 .lbl .foot  { position:absolute; bottom:1mm; left:2mm; right:2mm;
-              font-size:2.4mm; color:#444; font-style:italic;
+              font-size:2.4mm; color:var(--contest-badges-foot-text); font-style:italic;
               white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-body.outline .lbl { outline:.3mm dashed #b9b9b9; outline-offset:-.15mm; }
+body.outline .lbl { outline:.3mm dashed var(--contest-badges-lbl-border); outline-offset:-.15mm; }
 
 @page { size: A4 portrait; margin: 0; }
 @media print {
   /* o rodapé do site e o alerta do juiz-chefe também: a grade Pimaco começa no topo da folha
      (@page margin 0) e qualquer linha antes dela desloca e corta etiquetas (Daniel Saad, 24/09) */
   header, nav, main.container, .no-print, footer, .sitefoot, #mojChiefAlert { display:none !important; }
-  body { margin:0; padding:0; background:#fff; }
+  body { margin:0; padding:0; background:var(--color-surface); }
   #sheets { margin:0; }
   .sheet { margin:0; box-shadow:none; }
 }

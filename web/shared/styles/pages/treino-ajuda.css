@@ -5,10 +5,10 @@
 .ajuda p, .ajuda li { max-width:70ch; }
 .io-demo { display:flex; gap:1rem; flex-wrap:wrap; margin:.8rem 0; }
 .io-demo > div { flex:1; min-width:130px; }
-.io-demo h4 { margin:0 0 .3rem; font-size:.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:.03em; }
-pre.code { background:#0f172a; color:#e2e8f0; border-radius:8px; padding:.75rem .9rem; overflow-x:auto;
+.io-demo h4 { margin:0 0 .3rem; font-size:.85rem; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.03em; }
+pre.code { background:var(--treino-ajuda-pre-code-bg); color:var(--color-code-text); border-radius:8px; padding:.75rem .9rem; overflow-x:auto;
            font-size:.85rem; line-height:1.5; margin:0; }
-pre.io { background:var(--bg-soft,#f1f5f9); color:inherit; border:1px solid var(--line); border-radius:8px;
+pre.io { background:var(--color-surface-sunken); color:inherit; border:1px solid var(--color-border); border-radius:8px;
          padding:.6rem .8rem; margin:0; font-size:.9rem; }
 .code-head { display:flex; align-items:center; gap:.6rem; margin:1rem 0 .35rem; }
 .code-head h4 { margin:0; font-size:.92rem; }
