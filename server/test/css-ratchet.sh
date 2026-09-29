@@ -40,7 +40,7 @@ bash "$ROOT/bin/css-bundle.sh" "$WEB/shared/ui.css" > "$B"; rc=$?
 ck "manifesto shared/ui.css expande (css-bundle.sh rc=$rc)" '[[ $rc -eq 0 ]]'
 
 imports="$(sed -nE 's/^@import url\("([^"]+)"\);[[:space:]]*$/\1/p' "$WEB/shared/ui.css" | sort)"
-ondisk="$(cd "$WEB/shared" && find styles -name '*.css' -not -path 'styles/pages/*' | sort)"
+ondisk="$(cd "$WEB/shared" && find styles -name '*.css' -not -path 'styles/pages/*' -not -name 'theme-dark.css' | sort)"
 DBG="$(comm -3 <(echo "$imports" | sort -u) <(echo "$ondisk") | tr '\n' ' ')"
 ck "todo módulo de shared/styles/ está no manifesto (e só ele)" '[[ -z "$DBG" ]]'
 # styles/pages/ = CSS PRÓPRIO de uma tela, fora do manifesto: cada arquivo tem de ser carregado por
@@ -69,6 +69,19 @@ if [[ -f $UB ]]; then
   ck "shared/ui.bundle.css em dia com os módulos" 'tail -n +2 "$UB" | cmp -s - <(bash "$ROOT/bin/css-bundle.sh" --strip-comments "$WEB/shared/ui.css")'
 fi
 
+# o tema escuro (styles/theme-dark.css) é GERADO do tokens.css por tokens-dark.py (fora do manifesto:
+# só quem escolhe o escuro o baixa) — token novo sem valor escuro = tela quebrada no escuro
+DBG="$(python3 "$ROOT/bin/tokens-dark.py" --check 2>&1 | tr '\n' ' ')"
+ck "theme-dark.css em dia com o tokens.css (tokens-dark.py)" '[[ -z "$DBG" ]]'
+# o boot do tema, INLINE no <head> de toda página que carrega o ui.css, é o texto EXATO do BOOT de
+# shared/theme.js (uma cópia divergente aplicaria o tema diferente, ou não aplicaria)
+BOOT="$(sed -nE 's/^export const BOOT = `(.*)`;$/\1/p' "$WEB/shared/theme.js" | sed 's#${HREF}#/shared/styles/theme-dark.css#')"
+DBG="$(fw '*.html' | xargs -0 grep -lF '/shared/ui.css' | while read -r f; do grep -qF -- "$BOOT" "$f" || echo "${f#"$WEB"/}"; done | tr '\n' ' ')"
+ck "boot do tema (inline) igual ao BOOT do theme.js em toda página" '[[ -n "$BOOT" && -z "$DBG" ]]'
+# ANTES do <link> do ui.css: depois de uma folha de estilo pendente o script inline trava a análise
+DBG="$(fw '*.html' | xargs -0 grep -lF '/shared/ui.css' | while read -r f; do
+  awk -v b="$BOOT" 'index($0,b){s=NR} /href="\/shared\/ui.css"/{c=NR} END{exit !(s && c && s<c)}' "$f" || echo "${f#"$WEB"/}"; done | tr '\n' ' ')"
+ck "boot do tema vem ANTES do <link> do ui.css" '[[ -z "$DBG" ]]'
 # o tokens.json/tokens.dark.json (formato DTCG, p/ ferramentas de design) é derivado do tokens.css
 DBG="$(python3 "$ROOT/bin/tokens-export.py" --check 2>&1 | tr '\n' ' ')"
 ck "tokens.json (DTCG) em dia com o tokens.css" '[[ -z "$DBG" ]]'
@@ -79,7 +92,7 @@ occ(){ local n; n="$(xargs -0 grep -ohE -- "$1" 2>/dev/null | wc -l)"; echo "${n
 Q="[\"'\`]"   # aspa simples, dupla ou crase (grep não entende \x27)
 HEX='#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?\b|#[0-9a-fA-F]{3}\b'
 declare -A M
-M[hex_fora_tokens]=$( { fw '*.css' -not -path "$STY/tokens.css"; fw '*.html'; fw '*.js'; } | occ "$HEX")
+M[hex_fora_tokens]=$( { fw '*.css' -not -path "$STY/tokens.css" -not -path "$STY/theme-dark.css"; fw '*.html'; fw '*.js'; } | occ "$HEX")
 M[html_style_blocos]=$(fw '*.html' | occ '<style')
 M[html_style_linhas]=$(fw '*.html' | xargs -0 awk '/<style/{s=1} s{n++} /<\/style>/{s=0} END{print n+0}' | awk '{t+=$1} END{print t+0}')
 M[html_style_attr]=$(fw '*.html' | occ 'style="')

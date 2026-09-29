@@ -1654,11 +1654,12 @@ mexa na outra. O índice separa as coleções por `\u001f` (nome é texto livre:
   concatenação) e o nginx o serve NO ENDEREÇO `/shared/ui.css` (`location =` com `try_files`; sem
   ele, o manifesto) — tira a cascata de 25 requisições da 1ª visita. Editou módulo num checkout com
   bundle ⇒ `make css-bundle` (ou apague o bundle), senão o nginx segue servindo o velho.
-  **TEMA ESCURO (opt-in)**: `<html data-theme="dark">` (botão ☾ do `shared/theme.js`; o `theme-boot.js`
-  no `<head>` aplica antes da pintura) redefine os tokens no FIM do `tokens.css`. Fundo sob texto BRANCO
-  usa `--color-*-fill` (a cor de marca de TEXTO clareia no escuro). Token novo de componente/página ganha o
-  valor escuro gerado pelo papel do nome (-bg/-text/-border). Cor de DADO aplicada como tom claro precisa
-  de regra própria no escuro (ex.: `pages/contest.css` › `.prob-item.accepted`).
+  **TEMA ESCURO (opt-in)**: `<html data-theme="dark">` + `styles/theme-dark.css` (GERADO por
+  `server/bin/tokens-dark.py`, fora do bundle: quem usa o claro não o baixa). O boot INLINE do `<head>` (texto
+  exato = `BOOT` do `shared/theme.js`, ANTES do `<link>` do ui.css — depois dele travava a análise: +220 ms)
+  aplica a escolha antes da pintura; o botão ☾ troca em lugar. Fundo sob texto BRANCO usa `--color-*-fill`.
+  Token novo no `tokens.css` ⇒ `tokens-dark.py` (a catraca reprova o escuro velho). Cor de DADO aplicada
+  como tom claro precisa de regra própria no escuro (ex.: `pages/contest.css` › `.prob-item.accepted`).
   **Refatorou estilo? Prove com o DIFF VISUAL**: `server/test/visual/css-visual-diff.sh [REF]` compara o
   estilo computado de todo elemento (deslogado + as telas logadas de `pages.txt`, sobre o fixture do
   `shots-ajuda.sh --serve`) entre REF e a árvore — 0 diferença = refatoração neutra.

@@ -21,8 +21,9 @@ SRC = os.path.join(STY, 'tokens.css')
 OUT = {'light': os.path.join(STY, 'tokens.json'), 'dark': os.path.join(STY, 'tokens.dark.json')}
 
 css = open(SRC, encoding='utf-8').read()
-dark_at = css.find('/* ---------- TEMA ESCURO')
-light_css, dark_css = (css[:dark_at], css[dark_at:]) if dark_at >= 0 else (css, '')
+light_css = css
+DARK = os.path.join(STY, 'theme-dark.css')        # o escuro é gerado por tokens-dark.py
+dark_css = open(DARK, encoding='utf-8').read() if os.path.exists(DARK) else ''
 nocom = lambda s: re.sub(r'/\*.*?\*/', '', s, flags=re.S)
 
 # nível de cada token = a seção do tokens.css em que ele é declarado

@@ -160,15 +160,27 @@ O padrão é o **claro**. O escuro vale só para quem clica no **☾** da barra 
 ao lado do idioma, e no chip de usuário das páginas de contest). A escolha fica salva no navegador
 (`localStorage` `moj_theme`).
 
-- **Como funciona:** `<html data-theme="dark">` redefine os tokens no fim do `tokens.css`
-  (bloco "TEMA ESCURO"). Nenhum componente conhece o tema: ele só lê tokens. Quem troca é o
-  `shared/theme.js` (sem recarregar); o `shared/theme-boot.js`, um script clássico síncrono no
-  `<head>`, aplica a escolha **antes da primeira pintura**, para a página não piscar clara.
-- **Semânticos à mão; o resto derivado.** Os tokens `--color-*` do escuro foram escolhidos à mão.
-  Os de componente, página e JS são **derivados** em OKLCH pelo papel do nome: `-bg` vira
+- **Como funciona:** `<html data-theme="dark">` + `web/shared/styles/theme-dark.css`, que
+  redefine os tokens. Nenhum componente conhece o tema: ele só lê tokens. **Quem usa o claro nunca
+  baixa o `theme-dark.css`** (ele fica fora do manifesto e do bundle).
+- **Antes da primeira pintura:** um **boot inline** de uma linha no `<head>` de cada página (o
+  texto exato é o `BOOT` do `shared/theme.js`) lê a escolha salva e, se for escura, escreve o
+  `<link>` do `theme-dark.css` e marca o `<html>`. `document.write` durante a análise gera um
+  `<link>` que bloqueia a renderização como um comum, então a página não pisca clara. O boot vai
+  **antes** do `<link>` do `ui.css`: um script inline depois de uma folha de estilo pendente espera
+  por ela e trava a análise (medido: +220 ms no `load` em 4G). Para o tema a ordem não importa,
+  porque `:root[data-theme="dark"]` vence o `:root` pela especificidade. O `css-ratchet.sh` confere
+  que o boot é idêntico em todas as páginas e vem antes do `ui.css`.
+- **Na troca:** o `shared/theme.js` (botão ☾) carrega o `theme-dark.css` quando alguém liga o
+  escuro e troca o tema sem recarregar.
+- **O `theme-dark.css` é GERADO** por `python3 server/bin/tokens-dark.py` a partir do `tokens.css`,
+  e não se edita à mão. Os tokens `--color-*` do escuro estão escolhidos à mão na tabela `SEM` do
+  gerador. Os de componente, página e JS são **derivados** em OKLCH pelo papel do nome: `-bg` vira
   superfície escura com a mesma matiz, `-text` vira texto claro, `-border` vira borda média, e o
-  que já era de tema escuro (os chips do editor) fica como está. O contraste de 149 pares texto ×
-  fundo foi conferido: todos ≥ 4,5:1 (WCAG AA).
+  que já era de tema escuro (os chips do editor) fica como está (`OVERRIDE` força um valor). O
+  gerador confere o contraste (149 pares texto × fundo, todos ≥ 4,5:1, WCAG AA) e não grava abaixo
+  disso. **Token novo no `tokens.css` ⇒ rode o gerador**; o `css-ratchet.sh` reprova o
+  `theme-dark.css` desatualizado.
 - **Papel duplo:** a mesma cor de marca não serve para texto e para fundo sob texto branco. Por
   isso existem os `--color-*-fill` (fundo de botão, topbar, hero, chip ativo). No claro eles têm o
   mesmo valor do texto de marca; no escuro o texto clareia e o preenchimento continua saturado.
