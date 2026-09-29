@@ -1,0 +1,53 @@
+/* styles/components/topbar.css — barra do topo, seletor de idioma, menu do usuário, quicknav
+   Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
+/* topbar */
+.topbar { background:linear-gradient(105deg,#163a6b 0%,var(--blue-dark) 45%,var(--blue) 100%);
+  color:#fff; box-shadow:0 2px 16px rgba(20,40,80,.18); position:sticky; top:0; z-index:50; }
+.topbar .bar { max-width:var(--page-max); margin:0 auto; padding:.7rem 1.2rem; display:flex;
+  align-items:center; gap:1rem; flex-wrap:wrap; }
+.topbar .brand { display:flex; align-items:center; gap:.55rem; font-weight:800; font-size:1.2rem;
+  letter-spacing:-.02em; color:#fff; }
+.topbar .brand:hover { text-decoration:none; opacity:.95; }
+.topbar .brand img { height:34px; filter:drop-shadow(0 1px 3px rgba(0,0,0,.25)); }
+.topbar .slogan { opacity:.8; font-weight:400; font-size:.82rem; }
+.topbar .spacer { flex:1; }
+.topbar a { color:#eaf2ff; opacity:.92; font-weight:500; } .topbar a:hover { opacity:1; color:#fff; }
+.topbar .navlinks a.active { opacity:1; color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:2px; }
+.badge-beta { background:var(--accent); color:#fff; font-size:.62rem; padding:.12rem .42rem;
+  border-radius:999px; font-weight:800; letter-spacing:.06em; vertical-align:middle;
+  box-shadow:0 1px 6px rgba(109,92,255,.5); }
+.navlinks { display:flex; gap:1.1rem; flex-wrap:wrap; align-items:center; font-size:.95rem; }
+.contest-title { font-weight:800; font-size:1.05rem; }
+.countdown { font-variant-numeric:tabular-nums; font-weight:700; }
+
+/* seletor de idioma (sutil, não botões) */
+.lang-toggle { display:inline-flex; align-items:center; gap:.1rem; }
+.lang-toggle .lang-opt { background:none; border:0; cursor:pointer; color:#eaf2ff; opacity:.5;
+  font-size:.8rem; font-weight:600; line-height:1; padding:.15rem .3rem; border-radius:6px;
+  transition:opacity .12s, background .12s; }
+.lang-toggle .lang-opt:hover { opacity:.85; background:rgba(255,255,255,.08); }
+.lang-toggle .lang-opt.active { opacity:1; color:#fff; font-weight:800;
+  text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px; }
+
+/* menu do usuário (avatar ▾ -> dropdown) */
+.user-menu { position:relative; display:inline-flex; }
+.user-menu-btn { display:inline-flex; align-items:center; gap:.45rem; background:none; border:0;
+  color:#fff; font-size:.95rem; font-weight:600; cursor:pointer; padding:.25rem .4rem;
+  border-radius:10px; transition:background .12s; }
+.user-menu-btn:hover { background:rgba(255,255,255,.14); }
+.user-menu-btn .caret { font-size:.7rem; opacity:.8; transition:transform .12s; }
+.user-menu-btn[aria-expanded="true"] .caret { transform:rotate(180deg); }
+.menu-panel { position:absolute; right:0; top:calc(100% + .4rem); min-width:12.5rem; max-width:calc(100vw - 16px);
+  background:var(--card); color:var(--ink); border:1px solid var(--line); border-radius:12px;
+  box-shadow:var(--shadow); z-index:60; padding:.3rem; display:none; }
+.menu-panel.open { display:block; }
+.menu-panel .menu-item { display:flex; align-items:center; gap:.5rem; width:100%; box-sizing:border-box;
+  text-align:left; background:none; border:0; color:var(--ink); opacity:1; font-size:.9rem;
+  font-weight:500; padding:.5rem .6rem; border-radius:8px; cursor:pointer; text-decoration:none; }
+.menu-panel .menu-item:hover { background:var(--blue-soft); color:var(--ink); text-decoration:none; opacity:1; }
+.menu-panel .menu-sep { height:1px; background:var(--line); margin:.3rem .25rem; }
+
+/* quicknav */
+.quicknav { background:#fff; border-bottom:1px solid var(--line); position:sticky; top:52px; z-index:40; }
+.quicknav .bar { max-width:var(--page-max); margin:0 auto; padding:.55rem 1.2rem; display:flex; gap:1.3rem; flex-wrap:wrap; }
+.quicknav a { color:var(--blue-dark); font-weight:600; font-size:.92rem; }

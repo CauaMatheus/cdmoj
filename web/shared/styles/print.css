@@ -1,0 +1,6 @@
+/* styles/print.css — regras de impressão: o cromo do site nunca vai ao papel
+   Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
+/* o CROMO do site nunca vai ao PAPEL (relato do Daniel Saad, 24/09/2026): o rodapé entra DEPOIS do
+   <main> e, nas etiquetas de credenciais, saía no topo da 1ª folha empurrando a grade Pimaco; o alerta
+   do juiz-chefe é fixo e sairia no topo de TODA folha. Teste: server/test/smoke-print-chrome.sh */
+@media print { .sitefoot, #mojChiefAlert { display: none !important; } }

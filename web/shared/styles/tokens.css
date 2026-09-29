@@ -1,0 +1,94 @@
+/* styles/tokens.css — TOKENS do design system do MOJ (a única fonte de cor, medida e sombra).
+   Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css.
+
+   Três níveis, e cada um só aponta para o de cima:
+     1. PRIMITIVOS  — a paleta crua (--blue-600, --slate-500, --space-4…). Não use direto em
+                      tela nova: eles dizem "qual azul", não "para quê".
+     2. SEMÂNTICOS  — o PAPEL (--color-primary, --color-border, --color-danger-bg…). É isto que
+                      componente e página usam. Trocar a identidade visual = mexer aqui.
+     3. LEGADO      — os nomes antigos (--blue, --line, --ink…), mantidos como ALIAS dos
+                      semânticos p/ os ~700 usos que já existem. Não crie uso novo deles.
+   Regra: cor/medida nova entra como primitivo + semântico AQUI, nunca como hex numa página
+   (server/test/css-ratchet.sh conta e barra o crescimento). */
+:root {
+  /* ---------- 1. PRIMITIVOS ---------- */
+  --blue-900:#163a6b; --blue-700:#1c4e86; --blue-600:#2b6cb0;
+  --blue-200:#d6e6fb; --blue-100:#e8f0fb; --blue-75:#eef3fb; --blue-60:#f3f7fd;
+  --blue-50:#f5f8fc; --blue-25:#fafcff;
+  --violet-500:#6d5cff;
+  --slate-950:#0d1626; --slate-900:#19222e; --slate-500:#64748b; --slate-400:#9aa7b8;
+  --slate-300:#cbd5e1; --slate-250:#c8cfd9; --slate-200:#d0d7de; --slate-150:#d7dee8;
+  --slate-100:#e6ebf3; --slate-75:#eef2f8; --slate-50:#f1f5f9; --slate-25:#f5f7fb;
+  --slate-code:#e2e8f0;
+  --green-700:#15803d; --green-100:#dcfce7;
+  --red-700:#be1241;   --red-100:#ffe1e8;
+  --amber-700:#9a6700; --amber-100:#fdf3d3;
+  --white:#ffffff;
+
+  --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem;
+  --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem;
+
+  --radius-sm:8px; --radius-md:10px; --radius-lg:12px; --radius-xl:14px; --radius-pill:999px;
+
+  --text-xs:.78rem; --text-sm:.85rem; --text-md:.95rem; --text-base:1rem;
+  --text-lg:1.1rem; --text-xl:1.3rem;
+
+  --font-sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-mono:"JetBrains Mono","Fira Mono","DejaVu Sans Mono",Consolas,monospace;
+
+  --elev-1:0 1px 3px rgba(20,40,80,.07);
+  --elev-2:0 1px 2px rgba(20,40,80,.04), 0 6px 20px rgba(20,40,80,.06);
+  --elev-3:0 2px 4px rgba(20,40,80,.05), 0 10px 30px rgba(20,40,80,.09);
+
+  --z-sticky:40; --z-topbar:50; --z-menu:60;
+  --page-max:1600px; /* teto da largura da página (container + barras); adapta abaixo, centraliza acima */
+
+  /* ---------- 2. SEMÂNTICOS ---------- */
+  --color-text:var(--slate-900);
+  --color-text-muted:var(--slate-500);
+  --color-text-subtle:var(--slate-400);        /* placeholder, dica apagada */
+  --color-text-inverse:var(--white);           /* texto sobre a topbar/hero/botão */
+
+  --color-page:var(--blue-50);                 /* fundo da página */
+  --color-surface:var(--white);                /* cartão, tabela, campo */
+  --color-surface-alt:var(--blue-25);          /* zebra, subcartão */
+  --color-surface-sunken:var(--slate-50);      /* bloco de E/S, recuo */
+  --color-surface-muted:var(--slate-25);       /* cartão secundário de painel */
+
+  --color-border:var(--slate-100);             /* divisória e contorno padrão */
+  --color-border-strong:var(--slate-200);      /* contorno que precisa aparecer (enunciado, editor) */
+
+  --color-primary:var(--blue-600);
+  --color-primary-strong:var(--blue-700);      /* hover, títulos */
+  --color-primary-soft:var(--blue-100);        /* fundo de destaque suave */
+  --color-primary-deep:var(--blue-900);        /* início do degradê da marca */
+  --color-accent:var(--violet-500);
+  --color-focus-ring:rgba(43,108,176,.16);
+
+  --color-success:var(--green-700); --color-success-bg:var(--green-100);
+  --color-danger:var(--red-700);    --color-danger-bg:var(--red-100);
+  --color-warning:var(--amber-700); --color-warning-bg:var(--amber-100);
+
+  --color-code-bg:var(--slate-950); --color-code-text:var(--slate-code);
+
+  --radius-card:var(--radius-xl);
+  --shadow-card:var(--elev-2);
+  --shadow-raised:var(--elev-1);
+
+  /* ---------- 3. LEGADO (alias; não crie uso novo) ---------- */
+  --blue:var(--color-primary); --blue-dark:var(--color-primary-strong);
+  --blue-soft:var(--color-primary-soft); --blue-bg:var(--color-page);
+  --accent:var(--color-accent); --purple:var(--color-accent);
+  --ink:var(--color-text); --muted:var(--color-text-muted); --line:var(--color-border);
+  --ok:var(--color-success); --ok-bg:var(--color-success-bg);
+  --err:var(--color-danger); --err-bg:var(--color-danger-bg);
+  --warn:var(--color-warning); --warn-bg:var(--color-warning-bg);
+  --card:var(--color-surface); --radius:var(--radius-card);
+  --shadow:var(--shadow-card); --shadow-sm:var(--shadow-raised);
+  --mono:var(--font-mono);
+  /* usados pelas páginas com <style> próprio mas NUNCA definidos até 2026-09-29: caíam no
+     fallback de tema ESCURO (`var(--border,#2a2a2a)`, `var(--bg,#14171c)`, `var(--fg,#cdd6e4)`)
+     num site claro — barra fixa do editor quase preta, texto cinza-claro sobre branco. */
+  --border:var(--color-border-strong); --fg:var(--color-text); --bg:var(--color-page);
+  --bg-soft:var(--color-surface-sunken); --card-bg:var(--color-surface-muted);
+}

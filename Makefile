@@ -22,18 +22,20 @@ UNITDIR    ?= $(HOME)/.config/containers/systemd
 HOST_HDR   ?= moj.charge.naquadah.com.br
 BASE       ?= http://127.0.0.1:8080
 
-.PHONY: help check check-jq cli-dist docs-html image pull push install-units deploy restart restart-judged \
+.PHONY: help check check-jq css-bundle cli-dist docs-html image pull push install-units deploy restart restart-judged \
         rollback status smoke logs shell dev
 
 help:
 	@sed -n '1,11p' Makefile
 
-## check — bash -n em todo .sh do server + docs traduzidos em dia + node --check nos ESM (via .mjs, senão passa falso)
+## check — bash -n em todo .sh do server + docs traduzidos em dia + design system (css-ratchet) + node --check nos ESM (via .mjs, senão passa falso)
 check:
 	@echo ">> bash -n server/**/*.sh"; \
 	find server -name '*.sh' -print0 | xargs -0 -n1 bash -n && echo "   sintaxe ok"; \
 	echo ">> docs traduzidos (pt·en·es) em dia com o PT — server/test/smoke-docs-i18n.sh"; \
 	o=$$(bash server/test/smoke-docs-i18n.sh 2>&1) || { printf '%s\n' "$$o" | grep -A30 FAIL; exit 1; }; echo "   docs ok"; \
+	echo ">> design system do web/ (manifesto, tokens, catraca do legado) — server/test/css-ratchet.sh"; \
+	o=$$(bash server/test/css-ratchet.sh 2>&1) || { printf '%s\n' "$$o" | grep -E 'FAIL|desceu'; exit 1; }; echo "   css ok"; \
 	echo ">> node --check web/**/*.js (ESM)"; \
 	if command -v node >/dev/null 2>&1; then \
 	  t=$$(mktemp -d); rc=0; \
@@ -111,7 +113,7 @@ deploy:
 	git pull --ff-only
 	git -C $(WORKROOT)/mojtools pull --ff-only || true
 	git -C $(WORKROOT)/moj-cli pull --ff-only || true
-	$(MAKE) version-json
+	$(MAKE) version-json css-bundle
 ifeq ($(FROM),registry)
 	$(MAKE) pull docs-html
 else
@@ -126,6 +128,17 @@ version-json:
 	@jq -cn --arg v "$$(git describe --always --dirty --tags 2>/dev/null || git rev-parse --short HEAD)" \
 	  --argjson t "$$(date +%s)" --arg c "$(MOJ_CONTACT)" '{version:$$v, built_at:$$t, contact:$$c}' > web/version.json
 	@echo ">> web/version.json: $$(cat web/version.json)"
+
+## css-bundle — web/shared/ui.bundle.css (gitignored): o manifesto shared/ui.css com os @import
+##   EXPANDIDOS num arquivo só. O nginx o serve NO LUGAR do /shared/ui.css quando existe (sem ele,
+##   o manifesto modular). Tira a cascata de 25 requisições da 1ª visita (docs/DESIGN.md).
+##   Só concatena (server/bin/css-bundle.sh) — sem transpilar/minificar; em dev ele é opcional.
+css-bundle:
+	@t=web/shared/.ui.bundle.css.tmp; \
+	{ printf '/* GERADO por `make css-bundle` a partir de shared/ui.css e shared/styles/ — NÃO EDITE (docs/DESIGN.md) */\n'; \
+	  bash server/bin/css-bundle.sh web/shared/ui.css; } > $$t && mv -f $$t web/shared/ui.bundle.css \
+	  || { rm -f $$t; echo "FAIL: css-bundle"; exit 1; }
+	@echo ">> web/shared/ui.bundle.css: $$(wc -c < web/shared/ui.bundle.css) bytes"
 
 ## restart / restart-judged — reinício independente
 # systemctl --user precisa do bus da sessão; sob `sudo -u moj make deploy` ele não existe

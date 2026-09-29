@@ -14,6 +14,7 @@ import { openHtmlReport } from '/shared/submission-links.js';
 import { balloonColorHex, balloonSVG, balloonEdge, balloonTint } from '/contest/score/score-colors.js';
 import { pickStmtLang, makeStmtLangChips, setChipsActive, rememberStmtLang, stmtHtmlLang } from '/shared/statement-langs.js';
 import { decorateSamples, downloadSamplesZip, SAMPLES_TAB_SCRIPT } from '/shared/statement-samples.js';
+import { bundledCss } from '/shared/css-bundle.js';
 
 const qs = new URLSearchParams(location.search);
 const CONTEST = (window.__MOJ_CONTEST || qs.get('c') || '');
@@ -506,11 +507,13 @@ function problemAccepted(p) {
 }
 
 // CSS p/ o caso raro de enunciado-FRAGMENTO: num documento blob: nem <link href="/shared/ui.css">
-// resolve (base URL opaca) — o CSS tem de ir INLINE. Busca uma vez e cacheia.
+// resolve (base URL opaca) — o CSS tem de ir INLINE. Busca uma vez e cacheia. O ui.css é um
+// manifesto de @import (docs/DESIGN.md), e @import relativo num blob: também não resolve: por
+// isso o texto vem EXPANDIDO (shared/css-bundle.js).
 let _uiCssText = null;
 async function uiCssText() {
   if (_uiCssText === null) {
-    try { _uiCssText = await (await fetch('/shared/ui.css')).text(); } catch { _uiCssText = ''; }
+    try { _uiCssText = await bundledCss('/shared/ui.css'); } catch { _uiCssText = ''; }
   }
   return _uiCssText;
 }

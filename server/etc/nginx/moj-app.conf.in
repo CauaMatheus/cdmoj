@@ -177,4 +177,18 @@ location ~ ^/relatorio/([a-z0-9][a-z0-9._-]*)/(.*)$ {
 # com TXT NOVO: no evento de 29-30/08 o placar passou a células em segundos (`icpc s`) e o
 # score-icpc.js em cache mostrou "1/17029" como minutos (issue #22). Só aqui: /docs/ e
 # /relatorio/ têm location própria e a API já é dinâmica.
-location / { try_files $uri $uri/ =404; add_header Cache-Control "no-cache, must-revalidate"; }
+location / {
+    try_files $uri $uri/ =404;
+    add_header Cache-Control "no-cache, must-revalidate";
+    # o MANIFESTO do design system servido EXPANDIDO (docs/DESIGN.md): `make css-bundle` (chamado
+    # pelo `make deploy`) grava web/shared/ui.bundle.css = os 24 módulos concatenados na ordem do
+    # manifesto. Sem ele o navegador só descobre os módulos DEPOIS de baixar o ui.css — uma ida e
+    # volta a mais antes da 1ª pintura, e 25 revalidações por navegação (medido: +350 ms em 4G).
+    # Sem o bundle (dev, checkout sem deploy) cai no manifesto: funciona igual, só mais lento. As
+    # páginas continuam pedindo /shared/ui.css. Mesmo no-cache do resto (o add_header de um bloco
+    # aninhado SUBSTITUI o do pai, por isso ele se repete aqui).
+    location = /shared/ui.css {
+        try_files /shared/ui.bundle.css /shared/ui.css =404;
+        add_header Cache-Control "no-cache, must-revalidate";
+    }
+}

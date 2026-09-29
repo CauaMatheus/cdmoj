@@ -691,7 +691,9 @@ bl_edge() {
 # são stacks do sistema), então inlinar é offline-safe.
 rep_css(){
   printf ':root{color-scheme:light}\n'
-  cat "$MOJ_WEB/shared/ui.css" 2>/dev/null
+  # o ui.css é um MANIFESTO de @import (docs/DESIGN.md): inlinado cru, os @import relativos não
+  # resolveriam no blob:/srcdoc do visualizador e o relatório sairia sem estilo nenhum
+  bash "$HERE/../bin/css-bundle.sh" "$MOJ_WEB/shared/ui.css"
   # locais do placar (web/contest/score/index.html) e das estatísticas (…/statistics/index.html)
   sed -n '/<style>/,/<\/style>/p' "$MOJ_WEB/contest/score/index.html" 2>/dev/null | sed '/<\/\?style>/d'
   sed -n '/<style>/,/<\/style>/p' "$MOJ_WEB/contest/statistics/index.html" 2>/dev/null | sed '/<\/\?style>/d'

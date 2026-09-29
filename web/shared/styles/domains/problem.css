@@ -1,0 +1,8 @@
+/* styles/domains/problem.css — página de problema: enunciado + envio lado a lado
+   Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
+/* problema: enunciado + envio lado a lado (telas largas) */
+.problem-cols { display:grid; grid-template-columns:1fr; gap:1.2rem; align-items:start; }
+@media (min-width:992px){
+  .problem-cols { grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); }
+  .problem-cols .submit-col { position:sticky; top:72px; }
+}

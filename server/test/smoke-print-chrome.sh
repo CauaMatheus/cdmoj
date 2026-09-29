@@ -40,7 +40,10 @@ PY
 }
 
 echo "== ui.css: regra global de impressão =="
-UI="$(print_css "$WEB/shared/ui.css")"
+# o ui.css é um manifesto de @import (docs/DESIGN.md): a regra mora num módulo — lê o CSS expandido
+UIB="$(mktemp)"; trap 'rm -f "$UIB"' EXIT
+bash "$ROOT/bin/css-bundle.sh" "$WEB/shared/ui.css" > "$UIB"
+UI="$(print_css "$UIB")"
 DBG="$UI"
 ck "ui.css esconde .sitefoot na impressão"        'hides "$UI" .sitefoot'
 ck "ui.css esconde #mojChiefAlert na impressão"   'hides "$UI" "#mojChiefAlert"'

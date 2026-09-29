@@ -1,0 +1,14 @@
+/* styles/components/tag.css — tags, coleções, dificuldade e dirt
+   Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
+/* difficulty / tags */
+.tag { display:inline-block; background:var(--blue-soft); color:var(--blue-dark); border-radius:999px;
+  padding:.15rem .65rem; font-size:.78rem; font-weight:600; margin:.12rem; transition:.12s; }
+.tag:hover { background:#d6e6fb; text-decoration:none; transform:translateY(-1px); }
+.tags-blur .tag { filter:blur(4px); } .tags-blur:hover .tag { filter:none; }
+/* coleções (curso/organização — cor distinta das tags; NUNCA borradas) */
+.collection { display:inline-block; background:#efeaff; color:#4a37c9; border-radius:999px;
+  padding:.15rem .65rem; font-size:.78rem; font-weight:600; margin:.12rem; transition:.12s; }
+.collection:hover { background:#e3dbff; text-decoration:none; transform:translateY(-1px); }
+.diff { font-weight:700; } .diff-easy{color:var(--ok);} .diff-med{color:var(--warn);} .diff-hard{color:var(--err);}
+/* dirt (shared/difficulty.js): baixo ≤20% · médio ≤50% · alto */
+.dirt-low{color:var(--ok);} .dirt-mid{color:var(--warn);} .dirt-high{color:var(--err);font-weight:700;}

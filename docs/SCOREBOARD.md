@@ -158,7 +158,7 @@ simplesmente a ignora; o front usa para pular a numeração e marcar a linha.
 
 **A BARRA DE FILTROS é a mesma no placar ao vivo e no relatório** (coorte · bandeira ·
 universidade · sede · busca · contador · limpar): mesmos rótulos, mesmos `id`
-(`fView`/`fFlag`/`fUniv`/`fRegion`/`fQ`/`fCount`) e o mesmo CSS (`.fbar` em `web/shared/ui.css`,
+(`fView`/`fFlag`/`fUniv`/`fRegion`/`fQ`/`fCount`) e o mesmo CSS (`.fbar` em `web/shared/styles/domains/score.css`, carregado pelo `ui.css`,
 que o relatório inlina). Ao vivo ela é montada por `renderFilters()` (`web/contest/score/score.js`)
 com as opções dos times PRESENTES no placar exibido; a sede vem da árvore do `regions.json` mais
 as sedes que aparecem no placar. Trocar de coorte é o único controle que fala com o servidor
@@ -292,7 +292,7 @@ revelação** e o placar do **relatório offline**, que inlina o mesmo CSS):
   o conteúdo quebra dentro dela. Antes era layout automático + `white-space:nowrap`: o nome
   comprido do time esticava a tabela e, com 14 problemas, em 1024px só três apareciam.
 - As larguras são **fração**, não pixel: o renderizador só carimba o cenário
-  (`--nprob`, e zera `--w-flag`/`--w-pen` quando a coluna não existe) e o `ui.css` divide —
+  (`--nprob`, e zera `--w-flag`/`--w-pen` quando a coluna não existe) e o `styles/domains/score.css` divide —
   colunas fixas (`#`, bandeira, Total, Penal.), os problemas ficam com `--w-prob-share` do que
   sobra e o time com o resto. Helper: `web/contest/score/score-cols.js` (`scoreCols`).
   ⚠ **Não use `min()`/`max()` na largura de `<col>`**: o Firefox ignora função de comparação
@@ -311,7 +311,7 @@ revelação** e o placar do **relatório offline**, que inlina o mesmo CSS):
 
 ### A estrela ★ não ocupa largura
 
-A ★ de first-to-solve é `position:absolute` no canto da célula (`ui.css`, `td.cell .fts`).
+A ★ de first-to-solve é `position:absolute` no canto da célula (`styles/domains/score.css`, `td.cell .fts`).
 Antes era um `span` inline antes do ponto do balão e do número: em coluna fixa de ~3,6% os três
 não cabiam e o número vazava para a coluna vizinha (issue #24). O número (`.pv`) continua
 inteiro e sem quebra; no celular a ★ some e a informação fica no `title`.

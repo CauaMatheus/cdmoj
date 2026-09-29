@@ -779,6 +779,10 @@ Deploy: `docs/DEPLOY.md`. Docs em HTML: `bash docs/build-html.sh`.
   `Cache-Control: no-cache, must-revalidate` — módulo ESM revalida por ETag a cada uso. Sem isso
   um deploy que muda o CONTRATO (TXT em segundos `icpc s`, 30/08) deixa JS velho no navegador do
   time lendo dado novo. Mudou o `.conf.in` ⇒ reinstalar/recarregar o nginx no deploy.
+  CSS INCLUSIVE, sem exceção: o que paga o CSS modular é o BUNDLE (`/shared/ui.css` servido já
+  concatenado, `make css-bundle`) — medido, com ele o `no-cache` fica igual ao ui.css único (o
+  manifesto cru custava +350 ms em 4G). `max-age` no CSS foi medido e DESCARTADO de propósito
+  (`docs/DESIGN.md` › Cache do CSS).
 - **Nome de bandeira = `flagName()` de `web/shared/flags.js`** (issue #21): nunca remonte o mapa
   do `index.json` à mão (UF só com prefixo `br-`; `sc` solto É Seychelles) e `flagEl` sem `title`
   já mostra o nome. No placar a regra por regex do `teams-meta` (`country`) é **FALLBACK**: a bandeira do
@@ -1633,6 +1637,21 @@ mexa na outra. O índice separa as coleções por `\u001f` (nome é texto livre:
 - Vanilla **ES modules, sem build**, servido estático. `shared/` = cliente de API (`api.js`),
   auth/token (`auth.js`), `ui.js` (`el()`, helpers de DOM), editor CodeMirror 6 (`editor.js`, com
   fallback textarea), gráficos SVG, bandeiras/assets offline.
+- **DESIGN SYSTEM (`docs/DESIGN.md`, 2026-09-29)**: `shared/ui.css` é só o MANIFESTO (uma linha
+  `@import url("styles/….css");` por módulo; a ORDEM é a cascata) e o estilo mora em
+  `shared/styles/` — `tokens.css` (primitivos › SEMÂNTICOS `--color-*` › aliases legados `--blue`,
+  `--line`…), `base`, `utilities`, `responsive`, `print`, `components/`, `domains/`. Tela nova usa
+  componente + token SEMÂNTICO; nada de hex, `<style>`, `style="…"` ou `el(…,{style:'…'})` de
+  aparência (exceção: valor que vem do DADO, passado como variável CSS). Quem lê o CSS como TEXTO
+  expande os imports: `server/bin/css-bundle.sh` (relatório offline, testes) e o gêmeo
+  `shared/css-bundle.js` (enunciado em aba `blob:`) — mexeu num, mexa no outro. O CSS expandido vai
+  inlinado no relatório: nada de `import `/`fetch(` nem em comentário de módulo. Guarda:
+  `server/test/css-ratchet.sh` (no `make check`) — portões (manifesto × disco, token usado sem
+  definição, bundle em dia) + CATRACA do legado (`css-ratchet.baseline`, só desce: `--update`).
+  **BUNDLE**: o `make deploy` roda `make css-bundle` ⇒ `web/shared/ui.bundle.css` (gitignored, só
+  concatenação) e o nginx o serve NO ENDEREÇO `/shared/ui.css` (`location =` com `try_files`; sem
+  ele, o manifesto) — tira a cascata de 25 requisições da 1ª visita. Editou módulo num checkout com
+  bundle ⇒ `make css-bundle` (ou apague o bundle), senão o nginx segue servindo o velho.
 - Editar e recarregar vale na hora (sem bundler). Validar: `node --check web/**/<arquivo>.js`.
 - Editor de problema: `web/problemas/editar.{html,js}` (abas; chama `/problems/*`).
   **🧪 testar no juiz** (2026-09-24): sub-aba de Soluções & Correção = o `moj testrun` na web — módulo

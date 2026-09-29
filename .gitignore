@@ -12,6 +12,9 @@ id_rsa*
 
 # rodapé: versão do deploy (make version-json; issue #20)
 /web/version.json
+# CSS do design system expandido num arquivo só (make css-bundle; docs/DESIGN.md)
+/web/shared/ui.bundle.css
+/web/shared/.ui.bundle.css.tmp
 
 # === estado de runtime (ancorado na raiz; não pegar dirs aninhados homônimos) ===
 /run/

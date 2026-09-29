@@ -11,7 +11,12 @@ um contato opcional. `make deploy` grava `web/version.json` (gitignored) com `gi
 `MOJ_CONTACT=<e-mail ou URL>` no ambiente do deploy para o link "contato" aparecer. Sem o
 arquivo, o rodapé mostra `dev`.
 
-Atenção: o `moj-app.conf.in` serve o estático com `Cache-Control: no-cache, must-revalidate` (issue #22: módulo ESM velho em cache depois de um deploy). Quando o `.conf.in` muda, reinstale ou recarregue o nginx no deploy seguinte.
+`make deploy` também grava `web/shared/ui.bundle.css` (`make css-bundle`, gitignored): o CSS do
+design system concatenado num arquivo só, que o nginx serve no endereço `/shared/ui.css`. Sem o
+arquivo, o nginx serve o manifesto modular (funciona, mas a primeira visita fica mais lenta). Ver
+`docs/DESIGN.md`.
+
+Atenção: o `moj-app.conf.in` serve o estático com `Cache-Control: no-cache, must-revalidate` (issue #22: módulo ESM velho em cache depois de um deploy), CSS inclusive (`docs/DESIGN.md`, "Cache do CSS"). Quando o `.conf.in` muda, reinstale ou recarregue o nginx no deploy seguinte.
 | API + judged | containers rootless (quadlets) da imagem podman | idem, ou os scripts à mão |
 | dono dos dados | um usuário de serviço (ex.: `moj`) | o seu usuário (`ribas`) |
 

@@ -9,7 +9,10 @@ web/
 │   ├── api.js           # cliente fetch (+ Bearer, tratamento de erro)
 │   ├── auth.js          # login/token (localStorage), status
 │   ├── i18n.js          # T('pt','en') + i18n-dom.js (data-en no HTML estático)
-│   ├── ui.css / ui.js   # identidade visual + el() e helpers de DOM (dom.js)
+│   ├── ui.css           # MANIFESTO do design system (docs/DESIGN.md) — só a ordem dos módulos
+│   ├── ui.bundle.css    # (gerado por `make css-bundle` no deploy, gitignored) o manifesto expandido
+│   ├── styles/          # tokens.css + base/utilities/responsive/print + components/ + domains/
+│   ├── ui.js            # el() e helpers de DOM (dom.js)
 │   ├── editor.js        # CodeMirror 6 (ESM) — editor embutido
 │   ├── contest-config/  # editores de config reusados na criação e no painel
 │   └── assets/          # logo_moj.png, flags/*.svg
