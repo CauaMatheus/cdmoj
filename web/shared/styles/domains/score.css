@@ -32,15 +32,15 @@ table.score col.c-prob  { width:var(--w-prob); }
 table.score col.c-total { width:var(--w-total); }
 table.score col.c-pen   { width:var(--w-pen); }
 table.score th, table.score td { padding:.4rem .35rem; text-align:center;
-  border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums;
+  border-bottom:1px solid var(--color-border); font-variant-numeric:tabular-nums;
   white-space:normal; overflow-wrap:anywhere; }
-table.score th { background:var(--blue-soft); color:var(--blue-dark); font-weight:700;
+table.score th { background:var(--color-primary-soft); color:var(--color-primary-strong); font-weight:700;
   cursor:pointer; user-select:none; position:sticky; top:0; z-index:1; line-height:1.15; }
 table.score th.prob { font-size:.95em; }
 table.score td.team { text-align:left; line-height:1.25; }
-table.score td.team .u { color:var(--muted); font-size:.8em; }
+table.score td.team .u { color:var(--color-text-muted); font-size:.8em; }
 table.score tr:hover td { background:var(--score-row-hover); }
-table.score .cl-place, table.score td.place { font-weight:800; color:var(--blue-dark); }
+table.score .cl-place, table.score td.place { font-weight:800; color:var(--color-primary-strong); }
 /* o número é uma unidade: não quebra no meio (só a coluna encolhe a fonte) */
 table.score td.cell .pv { font-size:.78em; font-variant-numeric:tabular-nums;
   overflow-wrap:normal; word-break:keep-all; }
@@ -58,28 +58,28 @@ table.score td.cell .bdot { display:inline-block; width:.62em; height:.62em; bor
 /* a bandeira vem com ALTURA inline (flags.js) e largura livre: numa coluna estreita ela
    TRANSBORDA e encosta na 1ª letra do nome do time (a célula não corta). O teto é da coluna. */
 table.score .flag-mini { max-width:100%; }
-.prob-wait-cell, table.score td.c-try { background:var(--score-try-bg); color:var(--warn); font-weight:700; }
+.prob-wait-cell, table.score td.c-try { background:var(--score-try-bg); color:var(--color-warning); font-weight:700; }
 .balloon-svg { width:20px; height:23px; vertical-align:middle; }
 /* embrulho do placar: ao contrário do .chart-wrap, NÃO rola — o layout já garante o encaixe */
 .board-wrap { overflow-x:visible; }
 /* BARRA DE FILTROS do placar (coorte, bandeira, universidade, sede, busca). Definição ÚNICA:
    vale para a página do contest e para o relatório offline, que inlina este arquivo — os dois
    filtram o mesmo placar, então filtram com a mesma cara. */
-.fbar { display:flex; flex-wrap:wrap; gap:.5rem .8rem; align-items:center; background:var(--card);
-  border:1px solid var(--line); border-radius:var(--radius); padding:.6rem .9rem; margin:.7rem 0;
-  box-shadow:var(--shadow-sm); }
-.fbar label { font-size:.85rem; color:var(--muted); display:flex; align-items:center; gap:.35rem; }
+.fbar { display:flex; flex-wrap:wrap; gap:.5rem .8rem; align-items:center; background:var(--color-surface);
+  border:1px solid var(--color-border); border-radius:var(--radius-card); padding:.6rem .9rem; margin:.7rem 0;
+  box-shadow:var(--shadow-raised); }
+.fbar label { font-size:.85rem; color:var(--color-text-muted); display:flex; align-items:center; gap:.35rem; }
 .fbar select { padding:.35rem .5rem; border:1px solid var(--color-border-control); border-radius:8px; background:var(--color-surface);
   font:inherit; font-size:.85rem; max-width:15rem; }
 .fbar input.filter { margin:0; width:16rem; padding:.35rem .5rem; border:1px solid var(--color-border-control);
   border-radius:8px; font:inherit; font-size:.85rem; max-width:100%; }
-.fbar .fcount { font-size:.85rem; color:var(--muted); margin-left:auto; }
+.fbar .fcount { font-size:.85rem; color:var(--color-text-muted); margin-left:auto; }
 .fbar button { padding:.35rem .7rem; border:1px solid var(--color-border-control); border-radius:8px; background:var(--color-surface);
-  font:inherit; font-size:.85rem; cursor:pointer; color:var(--blue-dark); }
-.fbar button:hover { background:var(--blue-soft); }
+  font:inherit; font-size:.85rem; cursor:pointer; color:var(--color-primary-strong); }
+.fbar button:hover { background:var(--color-primary-soft); }
 /* posição no placar GERAL, dentro da coluna # do placar de coorte (o número grande é a posição
    na coorte). No celular o rótulo do cabeçalho sai — o dado continua, com title. */
-.plg { display:block; font-size:.7em; font-weight:600; color:var(--muted); line-height:1.1; }
+.plg { display:block; font-size:.7em; font-weight:600; color:var(--color-text-muted); line-height:1.1; }
 /* CLASSIFICADO p/ a próxima fase — 3 camadas (pedido de 31/08: claro E elegante):
    linha tintada + barra de acento, pill 🎓 com rótulo, e sub-linha estilo PDA sob o nome.
    Rascunho (só admin) = âmbar tracejado. Classes próprias (não reusar .pill — cascata). */
@@ -155,7 +155,7 @@ tr.qual-row.draft .qual-sub { color:var(--qual-draft-sub); }
   table.score th { font-size:.7em; }
 }
 table.score tr.guest-row { background: rgba(var(--rgb-neutral),.07) }
-table.score tr.guest-row .cl-place { color: var(--muted); font-style: italic }
+table.score tr.guest-row .cl-place { color: var(--color-text-muted); font-style: italic }
 /* PARTICIPAÇÃO VIRTUAL (treino/virtual): linha virtual é um convidado com marca própria; `you` = quem olha */
 table.score tr.virtual-row { background: rgba(var(--rgb-virtual),.07) }
 table.score tr.you-row { background: rgba(var(--rgb-virtual),.18); outline: 2px solid rgba(var(--rgb-virtual),.55); outline-offset: -2px }
@@ -171,5 +171,5 @@ table.score tr.pinned-row { background: rgba(var(--rgb-pinned),.13) }
 .pill.virtual { background: rgba(var(--rgb-virtual),.15); color: var(--virtual-pill-text); border-color: rgba(var(--rgb-virtual),.45) }
 @media (prefers-color-scheme: dark) { .pill.virtual { color: var(--virtual-pill-text-dark) } table.score tr.virtual-row { background: rgba(var(--rgb-virtual-dark),.10) } }
 /* numeração PRÓPRIA dos convidados (GUEST_NUMBERING, flag g do TXT — issue #25) */
-.gplace { font-style: italic; color: var(--muted); font-weight: 600; }
+.gplace { font-style: italic; color: var(--color-text-muted); font-weight: 600; }
 @media (prefers-color-scheme: dark) { table.score tr.guest-row { background: rgba(var(--rgb-white),.05) } }

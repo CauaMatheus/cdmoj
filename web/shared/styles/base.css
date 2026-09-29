@@ -2,11 +2,11 @@
    Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
-body { margin:0; color:var(--ink); line-height:1.6; font-size:16px;
+body { margin:0; color:var(--color-text); line-height:1.6; font-size:16px;
   overflow-x:clip;  /* rolagem lateral vive nos contêineres (.chart-wrap etc.), nunca no body */
   font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-  background:linear-gradient(180deg,var(--color-primary-faint) 0%,var(--blue-bg) 240px,var(--blue-bg)) no-repeat; }
-a { color:var(--blue); text-decoration:none; } a:hover { color:var(--blue-dark); text-decoration:underline; }
+  background:linear-gradient(180deg,var(--color-primary-faint) 0%,var(--color-page) 240px,var(--color-page)) no-repeat; }
+a { color:var(--color-primary); text-decoration:none; } a:hover { color:var(--color-primary-strong); text-decoration:underline; }
 h1,h2,h3 { line-height:1.25; letter-spacing:-.01em; }
 .container { max-width:var(--page-max); margin:0 auto; padding:1.4rem 1.2rem 3rem; }

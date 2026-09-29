@@ -1,7 +1,7 @@
 /* styles/utilities.css — utilitários de uma propriedade (.muted, .center, .small, .hidden, .notice, .error-box)
    Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
 /* utils */
-.muted { color:var(--muted); } .center { text-align:center; } .small { font-size:.85rem; }
+.muted { color:var(--color-text-muted); } .center { text-align:center; } .small { font-size:.85rem; }
 .hidden { display:none !important; }
-.notice { background:var(--warn-bg); color:var(--warn); padding:.6rem .9rem; border-radius:10px; border:1px solid var(--notice-border); }
-.error-box { background:var(--err-bg); color:var(--err); padding:.6rem .9rem; border-radius:10px; }
+.notice { background:var(--color-warning-bg); color:var(--color-warning); padding:.6rem .9rem; border-radius:10px; border:1px solid var(--notice-border); }
+.error-box { background:var(--color-danger-bg); color:var(--color-danger); padding:.6rem .9rem; border-radius:10px; }

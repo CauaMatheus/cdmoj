@@ -2,22 +2,22 @@
    Parte do design system do MOJ: ver docs/DESIGN.md. Carregado por shared/ui.css. */
 /* lista de contests (home): cartões com status */
 .contest-group { margin:.4rem 0 1.2rem; }
-.contest-group .gh { display:flex; align-items:center; gap:.5rem; font-weight:800; color:var(--blue-dark);
-  font-size:1.02rem; margin:.8rem 0 .55rem; padding-bottom:.32rem; border-bottom:2px solid var(--line); }
-.contest-group .gh .count { background:var(--blue-soft); color:var(--blue-dark); border-radius:999px;
+.contest-group .gh { display:flex; align-items:center; gap:.5rem; font-weight:800; color:var(--color-primary-strong);
+  font-size:1.02rem; margin:.8rem 0 .55rem; padding-bottom:.32rem; border-bottom:2px solid var(--color-border); }
+.contest-group .gh .count { background:var(--color-primary-soft); color:var(--color-primary-strong); border-radius:999px;
   font-size:.74rem; padding:.05rem .55rem; font-weight:800; }
 .contest-card { display:flex; align-items:center; gap:.9rem; flex-wrap:wrap; background:var(--color-surface);
-  border:1px solid var(--line); border-left:4px solid var(--color-neutral); border-radius:12px;
+  border:1px solid var(--color-border); border-left:4px solid var(--color-neutral); border-radius:12px;
   padding:.65rem .9rem; margin:.45rem 0; transition:box-shadow .12s, transform .12s; }
-.contest-card:hover { box-shadow:var(--shadow-sm); transform:translateX(2px); }
-.contest-card.open { border-left-color:var(--ok); }
-.contest-card.upcoming { border-left-color:var(--accent); }
+.contest-card:hover { box-shadow:var(--shadow-raised); transform:translateX(2px); }
+.contest-card.open { border-left-color:var(--color-success); }
+.contest-card.upcoming { border-left-color:var(--color-accent); }
 .contest-card .cc-main { flex:1 1 240px; min-width:0; }
 .contest-card .cc-title { font-weight:700; font-size:1.03rem; }
-.contest-card .cc-meta { display:flex; gap:.9rem; flex-wrap:wrap; font-size:.8rem; color:var(--muted); margin-top:.15rem; }
-.contest-card .cc-when { font-weight:700; color:var(--blue-dark); }
+.contest-card .cc-meta { display:flex; gap:.9rem; flex-wrap:wrap; font-size:.8rem; color:var(--color-text-muted); margin-top:.15rem; }
+.contest-card .cc-when { font-weight:700; color:var(--color-primary-strong); }
 .contest-card .cc-actions { display:flex; gap:.4rem; flex-wrap:wrap; }
 .cc-badge { font-size:.72rem; font-weight:800; padding:.2rem .55rem; border-radius:999px; white-space:nowrap; flex:0 0 auto; }
-.cc-badge.open { background:var(--ok-bg); color:var(--ok); }
-.cc-badge.upcoming { background:var(--badge-upcoming-bg); color:var(--accent); }
-.cc-badge.closed { background:var(--color-pending-bg); color:var(--muted); }
+.cc-badge.open { background:var(--color-success-bg); color:var(--color-success); }
+.cc-badge.upcoming { background:var(--badge-upcoming-bg); color:var(--color-accent); }
+.cc-badge.closed { background:var(--color-pending-bg); color:var(--color-text-muted); }
