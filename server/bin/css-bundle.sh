@@ -34,5 +34,13 @@ _cb_emit() {  # arquivo profundidade
   done < "$f"
 }
 
-[[ $# -eq 1 ]] || { echo "uso: css-bundle.sh <entrada.css>" >&2; exit 64; }
-_cb_emit "$1" 0
+# --strip-comments: tira os /* comentários */ e as linhas em branco (o bundle SERVIDO — `make
+# css-bundle`: 30 → 19 KB com gzip). Não muda nenhuma regra: nenhuma string do CSS contém "/*".
+STRIP=0; [[ ${1:-} == --strip-comments ]] && { STRIP=1; shift; }
+[[ $# -eq 1 ]] || { echo "uso: css-bundle.sh [--strip-comments] <entrada.css>" >&2; exit 64; }
+if (( STRIP )); then
+  set -o pipefail
+  _cb_emit "$1" 0 | perl -0777 -pe 's{/\*.*?\*/}{}gs; s/[ \t]+$//mg; s/\n{2,}/\n/g; s/\A\n+//'
+else
+  _cb_emit "$1" 0
+fi

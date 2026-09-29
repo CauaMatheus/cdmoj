@@ -132,11 +132,12 @@ version-json:
 ## css-bundle — web/shared/ui.bundle.css (gitignored): o manifesto shared/ui.css com os @import
 ##   EXPANDIDOS num arquivo só. O nginx o serve NO LUGAR do /shared/ui.css quando existe (sem ele,
 ##   o manifesto modular). Tira a cascata de 25 requisições da 1ª visita (docs/DESIGN.md).
-##   Só concatena (server/bin/css-bundle.sh) — sem transpilar/minificar; em dev ele é opcional.
+##   Só concatena e tira os comentários (server/bin/css-bundle.sh --strip-comments) — sem transpilar;
+##   em dev ele é opcional (os módulos seguem comentados; só o arquivo servido sai enxuto).
 css-bundle:
 	@t=web/shared/.ui.bundle.css.tmp; \
 	{ printf '/* GERADO por `make css-bundle` a partir de shared/ui.css e shared/styles/ — NÃO EDITE (docs/DESIGN.md) */\n'; \
-	  bash server/bin/css-bundle.sh web/shared/ui.css; } > $$t && mv -f $$t web/shared/ui.bundle.css \
+	  bash server/bin/css-bundle.sh --strip-comments web/shared/ui.css; } > $$t && mv -f $$t web/shared/ui.bundle.css \
 	  || { rm -f $$t; echo "FAIL: css-bundle"; exit 1; }
 	@echo ">> web/shared/ui.bundle.css: $$(wc -c < web/shared/ui.bundle.css) bytes"
 

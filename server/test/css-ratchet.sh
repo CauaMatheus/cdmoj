@@ -66,7 +66,7 @@ ck "CSS expandido é seguro p/ o relatório offline" '[[ -z "$DBG" ]]'
 UB="$WEB/shared/ui.bundle.css"
 if [[ -f $UB ]]; then
   DBG="bundle ≠ módulos — rode: make css-bundle"
-  ck "shared/ui.bundle.css em dia com os módulos" 'tail -n +2 "$UB" | cmp -s - "$B"'
+  ck "shared/ui.bundle.css em dia com os módulos" 'tail -n +2 "$UB" | cmp -s - <(bash "$ROOT/bin/css-bundle.sh" --strip-comments "$WEB/shared/ui.css")'
 fi
 
 # o tokens.json/tokens.dark.json (formato DTCG, p/ ferramentas de design) é derivado do tokens.css

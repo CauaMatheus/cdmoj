@@ -112,8 +112,11 @@ de espaço), `fetch(` e `<script src=`. Isso vale inclusive para comentários de
 ## Bundle do deploy (`make css-bundle`)
 
 O `make deploy` roda `make css-bundle`, que grava `web/shared/ui.bundle.css`: uma linha de
-cabeçalho ("GERADO… NÃO EDITE") seguida da saída do `css-bundle.sh`. É **só concatenação**, sem
-transpilar nem minificar, e o arquivo fica fora do git, no molde do `web/version.json`. A escrita
+cabeçalho ("GERADO… NÃO EDITE") seguida da saída do `css-bundle.sh --strip-comments`. É **só
+concatenação e remoção de comentários** (nenhuma regra muda; os módulos seguem comentados para quem
+desenvolve), e o arquivo fica fora do git, no molde do `web/version.json`. Tirar os comentários
+leva o bundle de 30 para 19 KB com gzip (o `ui.css` original tinha 16,5 KB). Conferido no diff
+visual: com o bundle no lugar do manifesto, 18/18 telas iguais. A escrita
 é atômica: se o manifesto não expandir, o alvo falha, o bundle anterior fica intacto e o deploy
 para antes do restart.
 
