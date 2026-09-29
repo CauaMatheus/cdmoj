@@ -177,6 +177,22 @@ ao lado do idioma, e no chip de usuário das páginas de contest). A escolha fic
   o problema resolvido na tela do contest mistura a cor do balão à superfície escura
   (`pages/contest.css`).
 
+## Por que não `@layer` (avaliado em 29/09/2026)
+
+Camadas de cascata (`@layer`) deixariam a ordem explícita, mas **mudam o resultado** da cascata que
+o site tem hoje. Numa camada posterior, uma regra vence **independentemente da especificidade**, e
+o site depende de especificidade em pontos conhecidos. Testado com o diff visual (cada módulo na sua
+camada, as páginas na última): **84 de 216** páginas × largura mudaram (79 no celular). Exemplos:
+
+- o `responsive.css` usa `body .tabbar` / `body table.moj td` de propósito, para vencer o CSS de
+  página no celular. Com camadas, a página passa a vencer sempre (o padding das células muda);
+- a coluna numérica das tabelas (`table.moj td.n`, alinhada à direita) perde para o
+  `table.moj td { text-align:left }` das páginas, e **os números desalinham**, inclusive no desktop;
+- o `!important` inverte a ordem das camadas, o que afeta os utilitários atômicos.
+
+Para adotar camadas um dia, primeiro é preciso tirar do CSS de página as regras que só funcionam
+pela especificidade (migrando-as para componentes). Depois o diff visual tem de sair limpo.
+
 ## Diff visual (`server/test/visual/css-visual-diff.sh`)
 
 A prova de que uma refatoração de estilo "não mudou nada", ou a lista exata do que mudou. Ele
